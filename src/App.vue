@@ -1,9 +1,14 @@
 <template>
   <nav>
     <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+    <router-link :to="{ name: 'my-cookbook' }">My Cookbook</router-link> |
+    <router-link :to="{ name: 'recipe-details' }">Recipe Details</router-link> |
+    <router-link :to="{ name: 'search-recipe-results' }"
+      >Recipe Search Result</router-link
+    >
+    |
   </nav>
-  <router-view/>
+  <router-view />
 </template>
 
 <style>
