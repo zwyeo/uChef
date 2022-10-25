@@ -25,6 +25,7 @@ export default createStore({
         },
       }).then((res) => {
         const data = res.data.results;
+
         console.log(data);
         commit("getRecipes", data); // This will pass data into getRecipe muatation as payload
       });

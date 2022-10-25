@@ -1,5 +1,5 @@
 <template>
-  <nav>
+  <!-- <nav>
     <router-link to="/">Home</router-link> |
     <router-link :to="{ name: 'my-cookbook' }">My Cookbook</router-link> |
     <router-link :to="{ name: 'recipe-details' }">Recipe Details</router-link> |
@@ -7,7 +7,7 @@
       >Recipe Search Result</router-link
     >
     |
-  </nav>
+  </nav> -->
   <router-view />
 </template>
 
@@ -16,7 +16,7 @@
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  /* text-align: center; */
   color: #2c3e50;
 }
 
