@@ -16,9 +16,10 @@ const routes = [
     component: MyCookbook,
   },
   {
-    path: "/recipe-details",
+    path: "/recipe-details/:id",
     name: "recipe-details",
     component: RecipeDetails,
+    props: true,
   },
   {
     path: "/search-recipe-results",
