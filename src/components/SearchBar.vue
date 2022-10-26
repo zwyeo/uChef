@@ -39,8 +39,9 @@ export default {
       get() {
         return this.$store.state.queryParams;
       },
+      // newValue is the user's search result
       set(newValue) {
-        // console.log(newValue);
+        console.log(newValue);
         this.$store.dispatch("setQueryParam", newValue);
       },
     },
