@@ -4,11 +4,12 @@
       <input
         type="text"
         class="form-control"
-        placeholder="Search food recipe"
+        :placeholder="$store.state.searchDesc"
         aria-label="Input group example"
         aria-describedby="basic-addon1"
         v-model="searchQuery"
         @keyup.enter="$store.dispatch('getRecipes')"
+        @change="$store.dispatch('showPreviews')"
       />
       <span class="input-group-text" id="basic-addon1">
         <svg
