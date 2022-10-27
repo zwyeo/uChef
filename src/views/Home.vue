@@ -34,7 +34,7 @@
         }"
       >
         <recipe-card
-          class="mx-2"
+          class="rc mx-2"
           :key="recipe.id"
           :title="recipe.title"
           :img="recipe.image"
@@ -61,3 +61,9 @@ export default {
   },
 };
 </script>
+<style scoped>
+/* remove the underline in recipe card */
+a {
+  text-decoration: none;
+}
+</style>
