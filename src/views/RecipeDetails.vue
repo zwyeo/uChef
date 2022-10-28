@@ -21,11 +21,11 @@
       </div>
       <div class="row">
         <!-- Picture -->
-        <div class="col-md-8">
+        <div class="col-md-7">
           <img :src="image" class="recipe-picture" />
         </div>
         <!-- Info -->
-        <div class="col-md-4">
+        <div class="col-md-5 infoCol">
           <div class="recipe-info">
             <h3>Info</h3>
             <!-- Time -->
@@ -351,7 +351,7 @@ table {
   margin-top: 24px;
 }
 .recipe-picture {
-  max-width: 100%;
+  width: 700px;
   height: auto;
   margin-bottom: 24px;
   margin-top: 6px;
@@ -371,8 +371,9 @@ table {
   -moz-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
 }
-.recipe-info i {
-  color: #a44c9f;
+
+.colInfo{
+ 
 }
 .recipe-ingredients {
   background-color: #f9f9f9;
