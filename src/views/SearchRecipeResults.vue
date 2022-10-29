@@ -1,6 +1,29 @@
 <template>
   <search-bar></search-bar>
-  <button @click="$store.commit('searchByIngredients')">Ingredients👨‍🍳</button>
+  <br />
+  Sort By:
+  <br />
+  <input
+    type="radio"
+    id="health"
+    value="healthiness"
+    name="sort"
+    @click="sortSet"
+  />
+  <label for="health">Healthy✅</label>
+  <br />
+  <input
+    type="radio"
+    id="popul"
+    value="popularity"
+    name="sort"
+    @click="sortSet"
+  />
+  <label for="popul">Popularity⭐️</label>
+  <br />
+  <input type="radio" id="price" value="price" name="sort" @click="sortSet" />
+  <label for="price">Price💰</label>
+  <br />
   <br />
   Filter by:
   <select v-model="selectedFilter">
@@ -8,30 +31,33 @@
       {{ category }}
     </option>
   </select>
-  <h2>Selected</h2>
-  {{ $store.state.selectedCategory }}
+
   <div v-if="$store.state.selectedCategory == 'Nutrition'">
-    <b>For empty search query</b>
     <br />
     Calories<input type="number" v-model="inputedCalories" />
+    <br />
+    <br />
     <button @click="$store.dispatch('nutritionFilterBlank')">
-      Filter with blank search query
+      Filter Calories for ALL food
     </button>
-    <button>Filter search by ingredients</button>
-
-    <br />
-    From store: {{ $store.state.calories }}
-    <br />
-
-    <!-- <br />
-    Carbs<input type="number" />
-    <br />
-    Protein<input type="number" />
-    <br />
-    Fat<input type="number" /> -->
   </div>
   <div v-if="$store.state.selectedCategory == 'Prep Time'">
+    <br />
     Max time taken to cook<input type="number" v-model="inputedMaxTime" />
+  </div>
+  <div v-if="$store.state.selectedCategory == 'Allergy'">
+    <br />
+    Exclude these foods:
+    <button value="dairy" @click="allergyCheck">Dairy 🥛</button>
+    <button value="egg" @click="allergyCheck">Eggs 🍳</button>
+    <button value="seafood" @click="allergyCheck">Seafood 🐟</button>
+    <button value="soy" @click="allergyCheck">Soy 🫘</button>
+  </div>
+  <br />
+  <div>
+    <h2>Build Your Meal</h2>
+    <button @click="$store.commit('searchByIngredients')">Ingredients👨‍🍳</button>
+    Idk how to compare both arrays and use filters
   </div>
   <h2>Preview</h2>
   {{ $store.state.previews }}
@@ -71,6 +97,15 @@ export default {
       set(setMaxTime) {
         this.$store.dispatch("setMaxTime", setMaxTime);
       },
+    },
+  },
+  methods: {
+    allergyCheck() {
+      this.$store.state.selectedAllergies.push(event.target.value);
+      console.log(this.$store.state.selectedAllergies.join());
+    },
+    sortSet() {
+      this.$store.state.sortBy = event.target.value;
     },
   },
 };

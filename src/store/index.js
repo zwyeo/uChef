@@ -12,6 +12,9 @@ export default createStore({
     calories: "",
     nutrition: {},
     maxtime: "",
+    selectedAllergies: [],
+    ingredientSearch: {},
+    sortBy: "",
   },
   mutations: {
     getRecipes(state, payload) {
@@ -56,6 +59,7 @@ export default createStore({
         }).then((res) => {
           const data = res.data;
           console.log(data);
+          this.state.ingredientSearch = data; //to save search by ingredient results into a separate array for comparing purposes
           commit("getRecipes", data); // This will pass data into getRecipe muatation as payload
 
           //find matching title using normal search?? do this so if search by ingredients also can use filters
@@ -73,6 +77,17 @@ export default createStore({
         if (this.state.maxtime > 0) {
           //check if max time field is filled
           parameters.maxReadyTime = this.state.maxtime;
+        }
+        if (this.state.selectedAllergies.length > 0) {
+          //check for allergies
+          console.log(this.state.selectedAllergies);
+          parameters.intolerances = this.state.selectedAllergies.join();
+        }
+        if (this.state.sortBy.length > 0) {
+          parameters.sort = this.state.sortBy;
+          if (this.state.sortBy == "price") {
+            parameters.sortDirection = "asc"; //sort price by descending order/ cheapest first
+          }
         }
         url = "https://api.spoonacular.com/recipes/complexSearch";
         axios(url, {
@@ -100,7 +115,7 @@ export default createStore({
         },
       }).then((response) => {
         const data = response.data;
-        console.log(response.data);
+        // console.log(response.data);
         commit("showPreviews", data);
       });
     },
