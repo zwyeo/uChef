@@ -1,32 +1,30 @@
 <template>
-  <div class="d-flex mt-3">
-    <div class="input-group w-50">
-      <input
-        type="text"
-        class="form-control"
-        :placeholder="$store.state.searchDesc"
-        aria-label="Input group example"
-        aria-describedby="basic-addon1"
-        v-model="searchQuery"
-        @keyup.enter="$store.dispatch('getRecipes')"
-        @change="$store.dispatch('showPreviews')"
-      />
-      <span class="input-group-text" id="basic-addon1">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          fill="currentColor"
-          class="bi bi-search"
-          viewBox="0 0 16 16"
-          @click="$store.dispatch('getRecipes')"
-        >
-          <path
-            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
-          ></path>
-        </svg>
-      </span>
+  <div
+    class="d-flex text-center rounded-pill w-50 pe-2 border border-secondary px-2 mt-2"
+  >
+    <div class="pt-2 icon">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        fill="currentColor"
+        class="bi bi-search mb-1"
+        viewBox="0 0 16 16"
+        @click="$store.dispatch('getRecipes')"
+      >
+        <path
+          d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+        ></path>
+      </svg>
     </div>
+    <input
+      type="text"
+      :placeholder="$store.state.searchDesc"
+      class="text-light w-5 form-control rounded-pill text-dark input border-0"
+      v-model="searchQuery"
+      @keyup.enter="$store.dispatch('getRecipes')"
+      @change="$store.dispatch('showPreviews')"
+    />
   </div>
 </template>
 
@@ -50,9 +48,13 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.input:focus {
+  box-shadow: none;
+  text-decoration: none;
+}
 
-<!-- <button
-      @click="$store.dispatch('getRecipes')"
-      class="btn btn-primary"
-    ></button> -->
+.icon {
+  padding-left: -5px;
+}
+</style>
