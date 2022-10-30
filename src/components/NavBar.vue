@@ -3,11 +3,13 @@
     <!-- LEFT SECTION -->
     <!-- Logo -->
     <div class="col-lg-4">
-      <img
-        class="img-fluid logoSize mt-3"
-        src="../assets/uchef-logo.png"
-        alt="uchef-logo"
-      />
+      <router-link to="/">
+        <img
+          class="img-fluid logoSize mt-3"
+          src="../assets/uchef-logo.png"
+          alt="uchef-logo"
+        />
+      </router-link>
     </div>
 
     <!-- MIDDLE SECTION -->
