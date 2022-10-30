@@ -1,6 +1,5 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 import { onUnmounted } from "vue";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -20,9 +19,9 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-
 const db = app.firestore();
+const usersCollection = db.collections("users");
+const recipesCollection = db.collections("recipes");
 
 export const createUser = user => {
     return usersCollection.add(user)
@@ -48,4 +47,31 @@ export const useLoadUsers = () => {
     })
     onUnmounted(close)
     return users
+}
+
+
+export const createRecipe = recipe => {
+    return recipesCollection.add(recipe)
+}
+
+export const getRecipe = async id => {
+    const recipe = await recipesCollection.doc(id).get()
+    return recipe.exists ? recipe.data() : null
+}
+
+export const updateRecipe = (id, recipe) => {
+    return recipesCollection.doc(id).update(recipe)
+}
+
+export const deleteRecipe = id => {
+    return recipesCollection.doc(id).delete()
+}
+
+export const useLoadRecipes = () => {
+    const recipes = ref([])
+    const close = recipesCollection.onSnapshot(snapshot => {
+        recipes.value = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+    })
+    onUnmounted(close)
+    return recipes
 }
