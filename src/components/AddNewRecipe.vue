@@ -1,12 +1,7 @@
 <template>
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-primary btn-circle btn-xl" data-bs-toggle="modal" data-bs-target="#addRecipe"
-    style="
-        padding: 0.1%;
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-    ">
+    style="padding: 0.1%; position: fixed; bottom: 20px; right: 20px;">
     +
     </button>
 
@@ -58,8 +53,8 @@
                     </div> <!-- container -->
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" v-on:click="createNewRecipe()" data-bs-dismiss="modal">Create Recipe</button>
                 </div>
             </div>
         </div>
@@ -67,6 +62,9 @@
 </template>
 
 <script>
+    // import { createRecipe } from "@/firebase"
+    // import { reactive } from "vue"
+    
     export default {
         name: "AddNewRecipe",
         data() {
