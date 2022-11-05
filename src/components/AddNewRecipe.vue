@@ -161,6 +161,7 @@ export default {
   methods: {
     createNewRecipe() {
       // This will post the user data to firebase
+
       axios.post(
         "https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/{user}/myrecipe.json",
         {
