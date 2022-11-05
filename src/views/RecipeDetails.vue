@@ -21,11 +21,12 @@
       </div>
       <div class="row">
         <!-- Picture -->
-        <div class="col-md-7">
+        <div class="col-md-7 c1">
           <img :src="image" class="recipe-picture" />
+          <button class="bookmark">bookmark</button>
         </div>
         <!-- Info -->
-        <div class="col-md-5 infoCol">
+        <div class="col-md-5 c2">
           <div class="recipe-info">
             <h3>Info</h3>
             <!-- Time -->
@@ -95,7 +96,8 @@
             </div>
             <!-- End of serves -->
           </div>
-          <!--End of recipe info-->
+          <!--BOOKMARK-->
+          
         </div>
       </div>
       <!-- Ingredients -->
@@ -351,10 +353,11 @@ table {
   margin-top: 24px;
 }
 .recipe-picture {
-  width: 700px;
+  width: auto;
   height: auto;
   margin-bottom: 24px;
   margin-top: 6px;
+  z-index: -1;
   -webkit-box-shadow: 0px 0px 0px 2px rgba(0, 0, 0, 0.6), 0px 0px 0px 14px #fff,
     0px 0px 0px 18px rgba(0, 0, 0, 0.2), 6px 6px 8px 17px #555;
   -moz-box-shadow: 0px 0px 0px 2px rgba(0, 0, 0, 0.6), 0px 0px 0px 14px #fff,
@@ -372,43 +375,7 @@ table {
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
 }
 
-.recipe-ingredients {
-  background-color: #f9f9f9;
-  margin-top: 24px;
-}
-.ingredients-list dl {
-  display: inline-block;
-  width: 100%;
-  padding: 0;
-  margin: 0;
-  overflow: hidden;
-}
-.ingredients-list dt {
-  width: 15%;
-  float: left;
-  margin: 0 0 8px;
-  padding: 0 10px;
-  font-size: 13px;
-  line-height: 37px;
-  background: #f9f9f9;
-  -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
-  -moz-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
-}
-.ingredients-list dd {
-  width: 85%;
-  float: left;
-  margin: 0 0 8px;
-  padding: 0 15px;
-  font-size: 13px;
-  line-height: 37px;
-  font-weight: 600;
-  background: #a44c9f;
-  color: #f9f9f9;
-  -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
-  -moz-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
-}
+
 .recipe-steps ol {
   counter-reset: li;
   list-style: none;
@@ -465,6 +432,26 @@ table {
   border-left-color: #a44c9f;
 }
 
+.c1{
+  padding-left: 25px;
+  padding-right:0px;
+  width: 670px;
+  position: relative;
+}
+.c2{
+  margin-top: 100px;
+  /* margin-right: 100px; */
+  padding-left: 0;
+  padding-right: 100px;
+  
+}
+.bookmark{
+  position: absolute;
+  border-radius: 50%;
+  bottom: 0;
+  right:50px;
+  padding: 10px;
+}
 svg {
   color: #a44c9f;
 }
