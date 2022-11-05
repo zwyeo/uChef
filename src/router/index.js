@@ -3,12 +3,24 @@ import Home from "../views/Home.vue";
 import MyCookbook from "../views/MyCookbook.vue";
 import RecipeDetails from "../views/RecipeDetails.vue";
 import SearchRecipeResults from "../views/SearchRecipeResults.vue";
+import Login from "../views/Login.vue";
+import Register from "../views/Register.vue";
 
 const routes = [
   {
     path: "/",
     name: "home",
     component: Home,
+  },
+  {
+    path: "/login",
+    name: "login",
+    component: Login,
+  },
+  {
+    path: "/register",
+    name: "register",
+    component: Register,
   },
   {
     path: "/my-cookbook",
