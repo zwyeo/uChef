@@ -1,6 +1,7 @@
 <template>
   <nav-bar></nav-bar>
   <banner></banner>
+  <recipe-card></recipe-card>
 </template>
 
 <script>
