@@ -1,5 +1,4 @@
 <template>
-  <search-bar></search-bar>
   <br />
   Sort By:
   <br />
@@ -66,11 +65,8 @@
 </template>
 
 <script>
-import SearchBar from "../components/SearchBar.vue";
 export default {
-  components: {
-    SearchBar,
-  },
+  components: {},
   computed: {
     selectedFilter: {
       get() {

@@ -109,13 +109,9 @@
 </template>
 
 <script>
-import SearchBar from "./SearchBar.vue";
-
 export default {
   name: "NavBar",
-  components: {
-    SearchBar,
-  },
+  components: {},
   props: [],
   data() {
     return {
