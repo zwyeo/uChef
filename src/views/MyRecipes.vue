@@ -62,7 +62,7 @@ import RecipeCard from "../components/RecipeCard.vue";
 import AddNewRecipe from "../components/AddNewRecipe.vue";
 
 export default {
-  name: "MyCookbook",
+  name: "MyRecipes",
   components: {
     NavBar,
     RecipeCard,

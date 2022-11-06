@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
-import MyCookbook from "../views/MyCookbook.vue";
+import MyRecipes from "../views/MyRecipes.vue";
+import MyBookmarks from "../views/MyBookmarks.vue";
 import RecipeDetails from "../views/RecipeDetails.vue";
 import SearchRecipeResults from "../views/SearchRecipeResults.vue";
 import Login from "../views/Login.vue";
@@ -23,9 +24,14 @@ const routes = [
     component: Register,
   },
   {
-    path: "/my-cookbook",
-    name: "my-cookbook",
-    component: MyCookbook,
+    path: "/my-recipes",
+    name: "my-recipes",
+    component: MyRecipes,
+  },
+  {
+    path: "/my-bookmarks",
+    name: "my-bookmarks",
+    component: MyBookmarks,
   },
   {
     path: "/recipe-details/:id",

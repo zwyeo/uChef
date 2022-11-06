@@ -1,104 +1,111 @@
 <template>
-  <div class="d-flex justify-content-between sticky-lg-top p-3 bg-white">
-    <!-- LEFT SECTION -->
-    <!-- Logo -->
-    <div class="col-lg-4">
-      <router-link to="/">
-        <img
-          class="img-fluid logoSize mt-3"
-          src="../assets/uchef-logo.png"
-          alt="uchef-logo"
-        />
-      </router-link>
+  <!-- ##### Header Area Start ##### -->
+  <header class="header-area">
+    <!-- Top Header Area -->
+
+    <!-- Navbar Toggler -->
+    <div class="classy-navbar-toggler">
+      <span class="navbarToggler"><span></span><span></span><span></span></span>
     </div>
 
-    <!-- MIDDLE SECTION -->
-    <!-- Search Bar -->
-    <div class="col-lg-4">
-      <search-bar></search-bar>
-    </div>
+    <!-- Search Wrapper -->
+    <div class="search-wrapper" :class="{ on: isSearchExpand }">
+      <!-- Close Btn -->
+      <div class="close-btn" @click="closeSearchBox">
+        <i class="fa fa-times" aria-hidden="true"></i>
+      </div>
 
-    <!-- RIGHT SECTION -->
-    <div class="col-auto d-flex">
-      <router-link to="/my-cookbook">
-        <div class="d-flex align-items-center cookbook">
-          <!-- My Cookbook -->
-          <p class="pt-3">My Cookbook</p>
-          <!-- book icon -->
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="25"
-            height="25"
-            fill="currentColor"
-            class="bi bi-book ms-2"
-            viewBox="0 0 16 16"
-          >
-            <path
-              d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"
-            />
-          </svg>
-        </div>
-      </router-link>
-
-      <div
-        class="d-flex mx-5 align-items-center justify-content-center bg-secondary rounded-pill m-3"
-        style="width: 100px; height: 30px"
-      >
-        <!-- Profile -->
-        <div class="dropdown w-25">
-          <a
-            class="btn btn-secondary"
-            href="#"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            <div class="d-flex">
-              <!-- menu icon -->
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="25"
-                height="25"
-                fill="currentColor"
-                class="bi bi-list menu-dropdown"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
-                />
-              </svg>
-            </div>
-            <!-- User icon -->
+      <div class="container">
+        <div
+          class="d-flex text-center rounded-pill w-50 pe-2 border border-secondary px-2 mt-2"
+        >
+          <div class="pt-2 icon">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="25"
-              height="25"
+              width="16"
+              height="16"
               fill="currentColor"
-              class="bi bi-person"
+              class="bi bi-search mb-1"
               viewBox="0 0 16 16"
+              @click="$store.dispatch('getRecipes')"
             >
               <path
-                d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"
-              />
+                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+              ></path>
             </svg>
-          </a>
-
-          <ul class="dropdown-menu">
-            <!-- CURRENTLY DISPLAY LOGIN LOGOUT SIGNUP -->
-            <router-link to="/register"
-              ><li><a class="dropdown-item">Register</a></li></router-link
-            >
-            <router-link to="/login"
-              ><li><a class="dropdown-item">Login</a></li></router-link
-            >
-
-            <li><a class="dropdown-item">Log Out</a></li>
-          </ul>
+          </div>
+          <input
+            type="text"
+            :placeholder="$store.state.searchDesc"
+            class="text-light w-5 form-control rounded-pill input border-0"
+            v-model="searchQuery"
+            style="background-color: #40ba37"
+            @keyup.enter="$store.dispatch('getRecipes')"
+            @change="$store.dispatch('showPreviews')"
+          />
         </div>
       </div>
     </div>
-  </div>
+
+    <!-- Navbar Area -->
+    <div class="delicious-main-menu mt-5">
+      <div class="classy-nav-container breakpoint-off">
+        <div class="container">
+          <!-- Menu -->
+          <nav class="classy-navbar justify-content-between" id="deliciousNav">
+            <!-- Logo -->
+            <router-link to="/"
+              ><a class="nav-brand"><img src="../assets/logo.png" alt="" /></a
+            ></router-link>
+
+            <!-- Navbar Toggler -->
+            <div class="classy-navbar-toggler">
+              <span class="navbarToggler"
+                ><span></span><span></span><span></span
+              ></span>
+            </div>
+
+            <!-- Menu -->
+            <div class="classy-menu">
+              <!-- close btn -->
+              <div class="classycloseIcon">
+                <div class="cross-wrap">
+                  <span class="top"></span><span class="bottom"></span>
+                </div>
+              </div>
+
+              <!-- Nav Start -->
+              <div class="classynav">
+                <ul>
+                  <li class="active">
+                    <router-link to="/"> Home </router-link>
+                  </li>
+
+                  <li>
+                    <router-link to="/my-recipes">My Recipes</router-link>
+                  </li>
+                  <li>
+                    <router-link to="/my-bookmarks">My Bookmarks</router-link>
+                  </li>
+                </ul>
+
+                <!-- Newsletter Form -->
+                <div class="search-btn" @click="openSearchBox">
+                  <i class="fa fa-search" aria-hidden="true"></i>
+                </div>
+
+                <!-- Profile -->
+                <div class="search-btn">
+                  <i class="fa fa-user" aria-hidden="true"></i>
+                </div>
+              </div>
+              <!-- Nav End -->
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </header>
 </template>
 
 <script>
@@ -110,12 +117,44 @@ export default {
     SearchBar,
   },
   props: [],
+  data() {
+    return {
+      isSearchExpand: false,
+    };
+  },
   computed() {},
-  methods: {},
+  methods: {
+    // expand the search functionality when search icon is pressed
+    openSearchBox() {
+      this.isSearchExpand = true;
+    },
+    closeSearchBox() {
+      this.isSearchExpand = false;
+    },
+    // searchQuery is different from the usual computed because it required getter and setter
+    searchQuery: {
+      get() {
+        return this.$store.state.queryParams;
+      },
+      // newValue is the user's search result
+      set(newValue) {
+        console.log(newValue);
+        this.$store.dispatch("setQueryParam", newValue);
+      },
+    },
+  },
 };
 </script>
 
 <style scoped>
+@import url(../css/bootstrap.min.css);
+@import url(../css/owl.carousel.min.css);
+@import url(../css/animate.css);
+@import url(../css/magnific-popup.css);
+@import url(../css/font-awesome.min.css);
+@import url(../css/custom-icon.css);
+@import url(../css/classy-nav.min.css);
+@import url(../css/nice-select.min.css);
 a {
   text-decoration: none;
 }
@@ -140,5 +179,221 @@ a {
 
 .menu-dropdown {
   cursor: pointer;
+}
+
+.input:focus {
+  box-shadow: none;
+  text-decoration: none;
+}
+/* Start */
+.search-wrapper {
+  width: 100%;
+  height: 70px;
+  position: fixed;
+  z-index: 200;
+  top: -80px;
+  left: 0;
+  background-color: #40ba37;
+  -webkit-transition-duration: 700ms;
+  transition-duration: 700ms;
+}
+.search-wrapper form {
+  position: relative;
+  z-index: 1;
+}
+.search-wrapper form input {
+  width: 90%;
+  height: 40px;
+  border: 2px solid #ffffff;
+  font-size: 12px;
+  font-style: italic;
+  padding: 0 20px;
+  margin: 15px 0;
+}
+@media only screen and (max-width: 767px) {
+  .search-wrapper form input {
+    width: 80%;
+  }
+}
+.search-wrapper form button {
+  position: absolute;
+  width: 60px;
+  height: 40px;
+  z-index: 1;
+  top: 15px;
+  border: none;
+  right: 10%;
+  cursor: pointer;
+  outline: none;
+}
+@media only screen and (max-width: 767px) {
+  .search-wrapper form button {
+    right: 20%;
+  }
+}
+.search-wrapper .close-btn {
+  position: absolute;
+  width: 70px;
+  height: 100%;
+  background-color: #000000;
+  line-height: 50px;
+  color: #ffffff;
+  text-align: center;
+  cursor: pointer;
+  line-height: 70px;
+  font-size: 12px;
+  right: 0;
+  top: 0;
+  z-index: 100;
+}
+.search-wrapper.on {
+  top: 0;
+}
+
+.header-area {
+  position: relative;
+  z-index: 100;
+  width: 100%;
+}
+.header-area .top-header-area {
+  width: 100%;
+  height: 50px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #dddee9;
+}
+@media only screen and (max-width: 767px) {
+  .header-area .top-header-area {
+    height: 70px;
+  }
+}
+
+.header-area .delicious-main-menu {
+  position: relative;
+  width: 100%;
+  z-index: 100;
+  height: 145px;
+}
+@media only screen and (max-width: 767px) {
+  .header-area .delicious-main-menu {
+    height: 80px;
+  }
+}
+.header-area .delicious-main-menu .classy-nav-container {
+  background-color: transparent;
+}
+.header-area .delicious-main-menu .classy-navbar {
+  height: 145px;
+  padding: 0;
+}
+@media only screen and (max-width: 767px) {
+  .header-area .delicious-main-menu .classy-navbar {
+    height: 80px;
+  }
+}
+.header-area .delicious-main-menu .classy-navbar .classynav ul li a {
+  font-weight: 600;
+}
+.header-area .delicious-main-menu .classy-navbar .classynav ul li a:hover,
+.header-area .delicious-main-menu .classy-navbar .classynav ul li a:focus {
+  font-weight: 600;
+}
+.header-area .delicious-main-menu .classy-navbar .classynav > ul > li > a {
+  text-transform: uppercase;
+  padding: 12px 18px 11px;
+  background-color: transparent;
+  border-bottom: 3px solid transparent;
+  line-height: 1;
+  color: #474747;
+  font-weight: 600;
+}
+.header-area .delicious-main-menu .classy-navbar .classynav > ul > li > a:hover,
+.header-area
+  .delicious-main-menu
+  .classy-navbar
+  .classynav
+  > ul
+  > li
+  > a:focus {
+  font-size: 14px;
+  color: #ffffff;
+  background-color: #40ba37;
+  border-bottom: 3px solid #1c8314;
+}
+.header-area
+  .delicious-main-menu
+  .classy-navbar
+  .classynav
+  > ul
+  > li
+  > a:hover::after,
+.header-area
+  .delicious-main-menu
+  .classy-navbar
+  .classynav
+  > ul
+  > li
+  > a:focus::after {
+  color: #ffffff;
+}
+.header-area
+  .delicious-main-menu
+  .classy-navbar
+  .classynav
+  > ul
+  > li.active
+  > a {
+  color: #ffffff;
+  background-color: #40ba37;
+  border-bottom: 3px solid #1c8314;
+}
+.header-area
+  .delicious-main-menu
+  .classy-navbar
+  .classynav
+  > ul
+  > li.active
+  > a::after {
+  color: #ffffff;
+}
+.header-area .delicious-main-menu .classynav .search-btn {
+  color: #b6b6b6;
+  margin-left: 150px;
+  cursor: pointer;
+  -webkit-transition-duration: 500ms;
+  transition-duration: 500ms;
+}
+.header-area .delicious-main-menu .classynav .search-btn i {
+  -webkit-transition-duration: 500ms;
+  transition-duration: 500ms;
+}
+.header-area .delicious-main-menu .classynav .search-btn:hover i,
+.header-area .delicious-main-menu .classynav .search-btn:focus i {
+  color: #40ba37;
+}
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  .header-area .delicious-main-menu .classynav .search-btn {
+    margin-left: 50px;
+    margin-bottom: 20px;
+  }
+}
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .header-area .delicious-main-menu .classynav .search-btn {
+    margin-left: 30px;
+    margin-top: px;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .header-area .delicious-main-menu .classynav .search-btn {
+    margin-left: 30px;
+    margin-top: 30px;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .header-area .nav-brand img {
+    max-width: 90px;
+  }
+}
+.nav-brand {
+  width: 90px;
 }
 </style>
