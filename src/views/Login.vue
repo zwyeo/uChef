@@ -24,7 +24,7 @@
             role="tab"
             aria-controls="pills-register"
             aria-selected="false"
-            >Register</a
+            >Sign Up</a
           >
         </router-link>
       </li>
@@ -82,10 +82,11 @@
               placeholder="Password"
               v-model="password"
             />
-            <!-- <label class="form-label" for="loginPassword">Password</label> -->
+            <div class="text-center text-danger" v-if="errorMsg">
+              {{ errorMsg }}
+            </div>
           </div>
 
-          <!-- 2 column grid layout -->
           <div class="row mb-4">
             <div class="col-md-6 d-flex justify-content-center">
               <!-- Checkbox -->
@@ -111,11 +112,21 @@
 
           <!-- Submit button -->
           <button
+            v-if="!isLoading"
             @click="authethicate()"
             type="submit"
             class="btn btn-primary btn-block mb-4"
           >
             Sign in
+          </button>
+          <button
+            v-if="isLoading"
+            @click="authethicate()"
+            type="submit"
+            class="btn btn-primary btn-block mb-4"
+          >
+            <span class="spinner-border spinner-border-sm btn-spin"></span>
+            Authethicating...
           </button>
 
           <!-- Register buttons -->
@@ -143,6 +154,8 @@ export default {
     return {
       email: "testuser@gmail.com",
       password: "test123",
+      errorMsg: "",
+      isLoading: false,
     };
   },
   methods: {
@@ -151,19 +164,40 @@ export default {
 
       // sign in with email and password
       const auth = getAuth();
+      this.isLoading = true;
       signInWithEmailAndPassword(auth, this.email, this.password)
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
+          console.log(user);
           this.$router.push("/");
         })
         .catch((error) => {
           const errorCode = error.code;
-          const errorMessage = error.message;
+          // const errorMessage = error.message;
+          switch (errorCode) {
+            case "auth/invalid-email":
+              this.errorMsg = "Invalid email!";
+              break;
+            case "auth/user-not-found":
+              this.errorMsg = "No account with that email was found!";
+              break;
+            case "auth/wrong-password":
+              this.errorMsg = "Incorrect password!";
+              break;
+            default:
+              this.errorMsg = "Email or password was incorrect";
+              break;
+          }
         });
     },
   },
 };
 </script>
 
-<style></style>
+<style scoped>
+.btn-spin {
+  padding: relative;
+  top: -3px;
+}
+</style>

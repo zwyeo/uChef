@@ -15,6 +15,9 @@ export default createStore({
     selectedAllergies: [],
     ingredientSearch: {},
     sortBy: "",
+
+    // To track user session
+    user: { loggedIn: false, data: null },
   },
   mutations: {
     getRecipes(state, payload) {
@@ -41,6 +44,14 @@ export default createStore({
     },
     setMaxTime(state, setMaxTime) {
       state.maxtime = setMaxTime;
+    },
+
+    // For user authetication
+    SET_LOGGED_IN(state, value) {
+      state.user.loggedIn = value;
+    },
+    SET_USER(state, data) {
+      state.user.data = data;
     },
   },
   actions: {
@@ -142,6 +153,10 @@ export default createStore({
       commit("setMaxTime", setMaxTime);
     },
   },
-  getters: {},
+  getters: {
+    user(state) {
+      return state.user;
+    },
+  },
   modules: {},
 });

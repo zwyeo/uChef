@@ -24,7 +24,7 @@
             role="tab"
             aria-controls="pills-register"
             aria-selected="false"
-            >Register</a
+            >Sign Up</a
           >
         </router-link>
       </li>
@@ -111,11 +111,22 @@
 
           <!-- Submit button -->
           <button
+            v-if="!isLoading"
             @click="createUser()"
             type="submit"
             class="btn btn-primary btn-block mb-4"
           >
             Sign Up
+          </button>
+
+          <button
+            v-if="isLoading"
+            @click="createUser()"
+            type="submit"
+            class="btn btn-primary btn-block mb-4"
+          >
+            <span class="spinner-border spinner-border-sm btn-spin"></span>
+            Authethicating...
           </button>
 
           <!-- Register buttons -->
@@ -143,10 +154,12 @@ export default {
     return {
       email: "",
       password: "",
+      isLoading: false,
     };
   },
   methods: {
     createUser() {
+      this.isLoading = true;
       const auth = getAuth();
       // creating a user account
       event.preventDefault();
@@ -167,4 +180,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.btn-spin {
+  padding: relative;
+  top: -3px;
+}
+</style>
