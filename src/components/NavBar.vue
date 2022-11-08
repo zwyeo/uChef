@@ -55,7 +55,8 @@
           <nav class="classy-navbar justify-content-between" id="deliciousNav">
             <!-- Logo -->
             <router-link to="/"
-              ><a class="nav-brand"><img src="../assets/logo.png" alt="" /></a
+              ><a class="nav-brand"
+                ><img src="../assets/logo.png" alt="uChef" /></a
             ></router-link>
 
             <!-- Navbar Toggler -->
@@ -86,6 +87,9 @@
                   </li>
                   <li>
                     <router-link to="/my-bookmarks">My Bookmarks</router-link>
+                  </li>
+                  <li style="cursor: pointer" @click="logOut">
+                    LOG OUT (FOR TESTING)
                   </li>
                 </ul>
 
@@ -139,6 +143,11 @@ export default {
     closeSearchBox() {
       this.isSearchExpand = false;
     },
+    logOut() {
+      this.$store.state.userId = "";
+      this.$router.push("/");
+      alert("You have logged out!");
+    },
   },
 };
 </script>
@@ -155,6 +164,7 @@ export default {
 a {
   text-decoration: none;
 }
+
 .logoSize {
   width: 50px;
   height: 50px;
