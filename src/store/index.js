@@ -52,7 +52,7 @@ export default createStore({
     },
   },
   actions: {
-    // This fn is to retrive recipe data from SPOONACULAR API
+    // This fn is to retrive recipe data from themealdb API
     getRecipes({ commit }) {
       let userQuery = this.state.queryParam;
       let url = "https://themealdb.com/api/json/v1/1/search.php";

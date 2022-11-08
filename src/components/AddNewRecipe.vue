@@ -100,12 +100,11 @@
               <!-- Okay I have absolutely no idea how to v-model this-->
               <td>Upload Image</td>
               <td>
-                <input
-                  type="file"
-                  name="newRecipeImage"
-                  id="newRecipeImage"
-                  class="form-control"
-                />
+                <div v-if="newRecipeImagePreview != null">
+                    Preview:
+                    <img :src="newRecipeImagePreview" height="268" width="356" alt="">
+                </div>
+                <input type="file" class="form-control" @change="previewImage">
               </td>
             </tr>
           </table>
@@ -146,6 +145,7 @@
 // import { createRecipe } from "@/firebase"
 // import { reactive } from "vue"
 import axios from "axios";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 export default {
   name: "AddNewRecipe",
@@ -156,29 +156,57 @@ export default {
       newRecipePrepTime: 0,
       newRecipeCookTime: 0,
       newRecipeYields: 0,
+
+      newRecipeImage: null,
+      newRecipeImagePreview: null,
+      newRecipeImagePath: null
     };
   },
   methods: {
+    previewImage(event) {
+      this.newRecipeImage = event.target.files[0]
+      console.log(this.newRecipeImage)
+      this.newRecipeImagePreview = URL.createObjectURL(this.newRecipeImage)
+    },
+
     createNewRecipe() {
-      // This will post the user data to firebase
 
-      axios.post(
-        "https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/{user}/myrecipe.json",
-        {
-          Name: this.newRecipeName,
-          Description: this.newRecipeDescription,
-          prepTime: this.newRecipePrepTime,
-          cookTime: this.newRecipeCookTime,
-          yields: this.newRecipeYields,
-        }
-      );
+      // Get storage from firebase and create reference child (naming needs work)
+      const storage = getStorage();
+      const storageRef = ref(storage, "user/" + this.newRecipeImage.name);
 
-      // clear inputs
-      this.newRecipeName = "";
-      this.newRecipeDescription = "";
-      this.newRecipePrepTime = 0;
-      this.newRecipeCookTime = 0;
-      this.newRecipeYields = 0;
+      // Upload function for uploading image into firebase cloud storage
+      // Note: anything that requires the data from inside this function needs to be written inside, as this is an async request
+      uploadBytes(storageRef, this.newRecipeImage).then((snapshot) => {
+        console.log('Uploaded image successfully!');
+        getDownloadURL(storageRef).then(downloadURL => {
+          this.newRecipeImagePath = downloadURL
+          console.log("Download URL:" + this.newRecipeImagePath)
+
+          // this posts the below data to the firebase realtime database
+          axios.post(
+            "https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/{user}/myrecipe.json",
+            {
+              name: this.newRecipeName,
+              description: this.newRecipeDescription,
+              prepTime: this.newRecipePrepTime,
+              cookTime: this.newRecipeCookTime,
+              yields: this.newRecipeYields,
+              imgPath: this.newRecipeImagePath
+            }
+          );
+
+          // clear inputs
+          this.newRecipeName = "";
+          this.newRecipeDescription = "";
+          this.newRecipePrepTime = 0;
+          this.newRecipeCookTime = 0;
+          this.newRecipeYields = 0;
+          this.newRecipeImage = null;
+          this.newRecipeImagePreview = null;
+          this.newRecipeImagePath = null;
+        });
+      });
     },
   },
 };
