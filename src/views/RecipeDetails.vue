@@ -198,74 +198,92 @@ export default {
     };
   },
   created() {
+    // populating firebase database
+    axios.get("www.themealdb.com/api/json/v1/1/random.php")
+    .then(response=>{
+      console.log(response.data)
+    })
+  }
+}
+    // axios.post(
+    //         "https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/community/.json",
+    //         {
+    //           name: this.newRecipeName,
+    //           description: this.newRecipeDescription,
+    //           prepTime: this.newRecipePrepTime,
+    //           cookTime: this.newRecipeCookTime,
+    //           yields: this.newRecipeYields,
+    //           imgPath: this.newRecipeImagePath
+    //         }
+    //       );
     // api for title, image, minutes to make, summary,analysed instructions and servings
-    let url = "https://api.spoonacular.com/recipes/" + this.id + "/information";
-    axios(url, {
-      params: {
-        apiKey: process.env.VUE_APP_SPOONACULAR_API,
-      },
-    }).then((response) => {
-      // console.log(response.data);
-      this.title = response.data.title;
-      this.image = response.data.image;
-      this.minutes = response.data.readyInMinutes;
-      this.summary = response.data.summary;
-      this.servings = response.data.servings;
+//     let url = "https://api.spoonacular.com/recipes/" + this.id + "/information";
+//     axios(url, {
+//       params: {
+//         apiKey: process.env.VUE_APP_SPOONACULAR_API,
+//       },
+//     }).then((response) => {
+//       // console.log(response.data);
+//       this.title = response.data.title;
+//       this.image = response.data.image;
+//       this.minutes = response.data.readyInMinutes;
+//       this.summary = response.data.summary;
+//       this.servings = response.data.servings;
 
-      // retrieving analysed instructions and formatting it
-      let stepsarray = response.data.analyzedInstructions[0].steps;
-      console.log(stepsarray);
-      for (let s of stepsarray) {
-        this.instructions.push(s.step);
-      }
-    });
+//       // retrieving analysed instructions and formatting it
+//       let stepsarray = response.data.analyzedInstructions[0].steps;
+//       console.log(stepsarray);
+//       for (let s of stepsarray) {
+//         this.instructions.push(s.step);
+//       }
+//     });
 
-    // api for calories
-    let url2 =
-      "https://api.spoonacular.com/recipes/" +
-      this.id +
-      "/nutritionWidget.json";
-    axios(url2, {
-      params: {
-        apiKey: process.env.VUE_APP_SPOONACULAR_API,
-      },
-    }).then((response) => {
-      //   console.log(response);
-      this.calories = response.data.calories.slice(0, -1);
-    });
+//     // api for calories
+//     let url2 =
+//       "https://api.spoonacular.com/recipes/" +
+//       this.id +
+//       "/nutritionWidget.json";
+//     axios(url2, {
+//       params: {
+//         apiKey: process.env.VUE_APP_SPOONACULAR_API,
+//       },
+//     }).then((response) => {
+//       //   console.log(response);
+//       this.calories = response.data.calories.slice(0, -1);
+//     });
 
-    // api for ingredients
-    let url3 =
-      "https://api.spoonacular.com/recipes/" +
-      this.id +
-      "/ingredientWidget.json";
-    axios(url3, {
-      params: {
-        apiKey: process.env.VUE_APP_SPOONACULAR_API,
-      },
-    }).then((response) => {
-      let ingredients = response.data.ingredients;
-      let desc = "";
-      for (let i of ingredients) {
-        let name = i.name;
-        let value = i.amount.metric.value;
-        let unit = i.amount.metric.unit;
-        if (unit == "" || unit == "g") {
-          desc = value + unit + " " + name;
-        } else {
-          desc = value + " " + unit + " " + name;
-        }
-        this.ingredient_list.push(desc);
-      }
-      // console.log(this.ingredient_list);
-    });
-  },
-  computed: {
-    numOfIngredients() {
-      return this.ingredient_list.length;
-    },
-  },
-};
+//     // api for ingredients
+//     let url3 =
+//       "https://api.spoonacular.com/recipes/" +
+//       this.id +
+//       "/ingredientWidget.json";
+//     axios(url3, {
+//       params: {
+//         apiKey: process.env.VUE_APP_SPOONACULAR_API,
+//       },
+//     }).then((response) => {
+//       let ingredients = response.data.ingredients;
+//       let desc = "";
+//       for (let i of ingredients) {
+//         let name = i.name;
+//         let value = i.amount.metric.value;
+//         let unit = i.amount.metric.unit;
+//         if (unit == "" || unit == "g") {
+//           desc = value + unit + " " + name;
+//         } else {
+//           desc = value + " " + unit + " " + name;
+//         }
+//         this.ingredient_list.push(desc);
+//       }
+//       // console.log(this.ingredient_list);
+//     });
+//   },
+//   computed: {
+//     numOfIngredients() {
+//       return this.ingredient_list.length;
+//     },
+//   },
+
 </script>
 <!-- CSS files
   ============== -->

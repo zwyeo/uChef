@@ -27,6 +27,8 @@
 import NavBar from "../components/NavBar.vue";
 import RecipeCard from "@/components/RecipeCard.vue";
 import Banner from "@/components/Banner.vue";
+import axios from "axios";
+
 
 export default {
   name: "Home",
@@ -38,7 +40,32 @@ export default {
   data() {
     return {};
   },
+  created(){
+    // for(let i =0; i<10; i++){
+    //   axios.get("https://themealdb.com/api/json/v1/1/random.php")
+    // .then(response=>{
+    //   console.log(response.data)
+    //   let obj = response.data.meals[0];
+    //   let id = obj.idMeal
+    //   let title = obj.strMeal;
+    //   let img = obj.strMealThumb
+
+    //   console.log(obj.idMeal)
+      
+    //   axios.post(
+    //         "https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/community/.json",
+    //         {
+    //          id: id,
+    //          img: img,
+    //          title: title,
+    //         }
+    //       );
+    // })
+    // }
+     
+  }
 };
+// 52929
 </script>
 <style scoped>
 /* remove the underline in recipe card */
