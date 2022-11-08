@@ -1,13 +1,13 @@
 <template>
+  <nav-bar></nav-bar>
+  <banner></banner>
   <div class="container-fluid px-5">
-    <nav-bar></nav-bar>
-    <banner></banner>
     <h2 class="text-center p-5">The Most Popular Recipes</h2>
     <div class="row recipe-card-style">
       <div
         v-for="recipe in $store.state.recipes"
         :key="recipe.idMeal"
-        class="col-lg-4"
+        class="col-xl-4 col-lg-6"
       >
         <!-- <router-link
           :to="{ name: 'recipe-details', params: { id: recipe.idMeal } }"
@@ -29,7 +29,6 @@ import RecipeCard from "@/components/RecipeCard.vue";
 import Banner from "@/components/Banner.vue";
 import axios from "axios";
 
-
 export default {
   name: "Home",
   components: {
@@ -40,7 +39,7 @@ export default {
   data() {
     return {};
   },
-  created(){
+  created() {
     // for(let i =0; i<10; i++){
     //   axios.get("https://themealdb.com/api/json/v1/1/random.php")
     // .then(response=>{
@@ -49,9 +48,7 @@ export default {
     //   let id = obj.idMeal
     //   let title = obj.strMeal;
     //   let img = obj.strMealThumb
-
     //   console.log(obj.idMeal)
-      
     //   axios.post(
     //         "https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/community/.json",
     //         {
@@ -62,8 +59,7 @@ export default {
     //       );
     // })
     // }
-     
-  }
+  },
 };
 // 52929
 </script>

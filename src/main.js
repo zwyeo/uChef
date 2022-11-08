@@ -3,6 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import { initializeApp } from "firebase/app";
+import "animate.css";
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 

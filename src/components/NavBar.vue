@@ -103,6 +103,7 @@
                   <i class="fa fa-user" aria-hidden="true"></i>
                 </div>
               </div>
+
               <!-- Nav End -->
             </div>
           </nav>
