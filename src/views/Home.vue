@@ -1,5 +1,4 @@
 <template>
-  <div class="container-fluid px-5">
     <nav-bar></nav-bar>
     <banner></banner>
     <h2 class="text-center p-5">The Most Popular Recipes</h2>
@@ -9,18 +8,18 @@
         :key="recipe.idMeal"
         class="col-lg-4"
       >
-        <!-- <router-link
+        <router-link
           :to="{ name: 'recipe-details', params: { id: recipe.idMeal } }"
-        > -->
+        >
         <recipe-card
           :title="recipe.strMeal"
           :img="recipe.strMealThumb"
           class="mb-5"
         ></recipe-card>
-        <!-- </router-link> -->
+        </router-link>
       </div>
     </div>
-  </div>
+  
 </template>
 
 <script>

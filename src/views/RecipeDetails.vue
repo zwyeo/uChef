@@ -1,195 +1,195 @@
 <template>
-  <!-- Website Logo
-  ================= -->
-  <section id="logo">
-    <div class="container text-center">
-      <img src="../assets/logo-white.svg" alt="logo" />
-      <br />
-      <h1>Recipe Page</h1>
-    </div>
-  </section>
+      <div>
+        <nav-bar></nav-bar>
+      </div>
+      <!-- Receipe Slider -->
+      <div class="container mb-1">
+          <div class="row">
+              <div class="col-12">
+                  <div class="receipe-slider">
+                  <img :src="image" alt="">
+                  </div>
+              </div>
+          </div>
+      </div>
 
-  <!-- Recipe Section
-  =================== -->
-  <section id="recipe">
-    <div class="container">
-      <div class="row">
-        <!-- Title -->
-        <div class="col-12">
-          <h2>{{ title }}</h2>
-        </div>
-      </div>
-      <div class="row">
-        <!-- Picture -->
-        <div class="col-md-7 c1">
-          <img :src="image" class="recipe-picture" />
-          <button class="bookmark">bookmark</button>
-        </div>
-        <!-- Info -->
-        <div class="col-md-5 c2">
-          <div class="recipe-info">
-            <h3>Info</h3>
-            <!-- Time -->
-            <div class="row">
-              <div class="col-2 text-center">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  class="bi bi-stopwatch"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="M8.5 5.6a.5.5 0 1 0-1 0v2.9h-3a.5.5 0 0 0 0 1H8a.5.5 0 0 0 .5-.5V5.6z"
-                  />
-                  <path
-                    d="M6.5 1A.5.5 0 0 1 7 .5h2a.5.5 0 0 1 0 1v.57c1.36.196 2.594.78 3.584 1.64a.715.715 0 0 1 .012-.013l.354-.354-.354-.353a.5.5 0 0 1 .707-.708l1.414 1.415a.5.5 0 1 1-.707.707l-.353-.354-.354.354a.512.512 0 0 1-.013.012A7 7 0 1 1 7 2.071V1.5a.5.5 0 0 1-.5-.5zM8 3a6 6 0 1 0 .001 12A6 6 0 0 0 8 3z"
-                  />
-                </svg>
+      <!-- Receipe Content Area -->
+      <div class="receipe-content-area">
+          <div class="container">
+
+              <div class="row">
+                  <div class="col-12 col-md-8">
+                      <div class="receipe-headline my-5">
+                          <span>April 05, 2018</span>
+                          <h2>{{title}}</h2>
+                          <div class="receipe-duration">
+                              <h6>Prep: 15 mins</h6>
+                              <h6>Cook: 30 mins</h6>
+                              <h6>Yields: 8 Servings</h6>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="col-12 col-md-4">
+                      <div class="receipe-ratings  my-5 ">
+                          <div class="ratings">
+                              <i class="fa fa-star" aria-hidden="true"></i>
+                              <i class="fa fa-star" aria-hidden="true"></i>
+                              <i class="fa fa-star" aria-hidden="true"></i>
+                              <i class="fa fa-star" aria-hidden="true"></i>
+                              <i class="fa fa-star-o" aria-hidden="true"></i>
+                          </div>
+                          <a href="#" class="btn delicious-btn">For Begginers</a>
+                      </div>
+                  </div>
               </div>
-              <div class="col-6">Time</div>
-              <div class="col-4">{{ minutes }} mins</div>
-            </div>
-            <!-- Difficulty -->
-            <div class="row">
-              <div class="col-2 text-center">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  class="bi bi-fire"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16Zm0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15Z"
-                  />
-                </svg>
+
+              <div class="row">
+                  <div class="col-12 col-lg-8">
+                      <!-- Single Preparation Step -->
+                      <div v-for="(item, index) in instructions" :key="item" class="single-preparation-step d-flex">
+                          <h4>0{{index+1}}</h4>
+                          <p>{{item}} </p>
+                      </div>
+                  </div>
+
+                  <!-- Ingredients -->
+                  <div class="col-12 col-lg-4">
+                      <div class="ingredients">
+                          <h4>Ingredients</h4>
+
+                          <!-- Custom Checkbox -->
+                          <div class="custom-control custom-checkbox">
+                              <input type="checkbox" class="custom-control-input" id="customCheck1">
+                              <label class="custom-control-label" for="customCheck1">4 Tbsp (57 gr) butter</label>
+                          </div>
+
+                          <!-- Custom Checkbox -->
+                          <div class="custom-control custom-checkbox">
+                              <input type="checkbox" class="custom-control-input" id="customCheck2">
+                              <label class="custom-control-label" for="customCheck2">2 large eggs</label>
+                          </div>
+
+                          <!-- Custom Checkbox -->
+                          <div class="custom-control custom-checkbox">
+                              <input type="checkbox" class="custom-control-input" id="customCheck3">
+                              <label class="custom-control-label" for="customCheck3">2 yogurt containers granulated sugar</label>
+                          </div>
+
+                          <!-- Custom Checkbox -->
+                          <div class="custom-control custom-checkbox">
+                              <input type="checkbox" class="custom-control-input" id="customCheck4">
+                              <label class="custom-control-label" for="customCheck4">1 vanilla or plain yogurt, 170g container</label>
+                          </div>
+
+                          <!-- Custom Checkbox -->
+                          <div class="custom-control custom-checkbox">
+                              <input type="checkbox" class="custom-control-input" id="customCheck5">
+                              <label class="custom-control-label" for="customCheck5">2 yogurt containers unbleached white flour</label>
+                          </div>
+
+                          <!-- Custom Checkbox -->
+                          <div class="custom-control custom-checkbox">
+                              <input type="checkbox" class="custom-control-input" id="customCheck6">
+                              <label class="custom-control-label" for="customCheck6">1.5 yogurt containers milk</label>
+                          </div>
+
+                          <!-- Custom Checkbox -->
+                          <div class="custom-control custom-checkbox">
+                              <input type="checkbox" class="custom-control-input" id="customCheck7">
+                              <label class="custom-control-label" for="customCheck7">1/4 tsp cinnamon</label>
+                          </div>
+
+                          <!-- Custom Checkbox -->
+                          <div class="custom-control custom-checkbox">
+                              <input type="checkbox" class="custom-control-input" id="customCheck8">
+                              <label class="custom-control-label" for="customCheck8">1 cup fresh blueberries </label>
+                          </div>
+                      </div>
+                  </div>
               </div>
-              <div class="col-6">Calories</div>
-              <div class="col-4">{{ calories }}</div>
-            </div>
-            <!-- Serves -->
-            <div class="row">
-              <div class="col-2 text-center">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  class="bi bi-people-fill"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"
-                  />
-                  <path
-                    fill-rule="evenodd"
-                    d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z"
-                  />
-                  <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" />
-                </svg>
+
+              <div class="row">
+                  <div class="col-12">
+                      <div class="section-heading text-left">
+                          <h3>Leave a comment</h3>
+                      </div>
+                  </div>
               </div>
-              <div class="col-6">Servings</div>
-              <div class="col-4">{{ servings }}</div>
+
+              <div class="row">
+                  <div class="col-12">
+                      <div class="contact-form-area">
+                          <form action="#" method="post">
+                              <div class="row">
+                                  <div class="col-12 col-lg-6">
+                                      <input type="text" class="form-control" id="name" placeholder="Name">
+                                  </div>
+                                  <div class="col-12 col-lg-6">
+                                      <input type="email" class="form-control" id="email" placeholder="E-mail">
+                                  </div>
+                                  <div class="col-12">
+                                      <input type="text" class="form-control" id="subject" placeholder="Subject">
+                                  </div>
+                                  <div class="col-12">
+                                      <textarea name="message" class="form-control" id="message" cols="30" rows="10" placeholder="Message"></textarea>
+                                  </div>
+                                  <div class="col-12">
+                                      <button class="btn delicious-btn mt-30" type="submit">Post Comments</button>
+                                  </div>
+                              </div>
+                          </form>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+
+
+    <!-- ##### Follow Us Instagram Area End ##### -->
+
+    <!-- ##### Footer Area Start ##### -->
+    <!-- <footer class="footer-area">
+        <div class="container h-100">
+            <div class="row h-100">
+                <div class="col-12 h-100 d-flex flex-wrap align-items-center justify-content-between">
+                    Footer Social Info
+                    <div class="footer-social-info text-right">
+                        <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
+                        <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                        <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                        <a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a>
+                        <a href="#"><i class="fa fa-behance" aria-hidden="true"></i></a>
+                        <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                    </div>
+                    Footer Logo
+                    <div class="footer-logo">
+                        <a href="index.html"><img src="img/core-img/logo.png" alt=""></a>
+                    </div>
+                  </div>
             </div>
-            <!-- End of serves -->
-          </div>
-          <!--BOOKMARK-->
-          
         </div>
-      </div>
-      <!-- Ingredients -->
-      <div class="row">
-        <div class="col-12">
-          <h3>Ingredients</h3>
-          <ul class="list-group">
-            <li
-              v-for="ingredient in ingredient_list"
-              :key="ingredient"
-              class="list-group-item"
-            >
-              <span class="pull-left"
-                ><svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  class="bi bi-cart-fill"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
-                  />
-                </svg>
-              </span>
-              &nbsp;{{ ingredient }}
-            </li>
-          </ul>
-        </div>
-      </div>
-      <!-- Directions -->
-      <div class="row">
-        <div class="col-12">
-          <div class="recipe-steps">
-            <h3>Steps</h3>
-            <ol>
-              <li v-for="instruction in instructions" :key="instruction">
-                {{ instruction }}
-              </li>
-            </ol>
-          </div>
-        </div>
-      </div>
-      <!--End of directions-->
-    </div>
-  </section>
-  <!-- <section class="py-5">
-    <div class="container px-4 px-lg-5 my-5">
-      <div class="row">
-        <div class="col-md-6">
-          <img class="card-img-top mb-5 mb-md-0" :src="image" alt="..." />
-        </div> -->
-  <!-- End of Column1 -->
-  <!-- <div class="col-md-6">
-          <h1 class="display-5 fw-bolder">{{ title }}</h1>
-          <div class="fs-5 ms-4">
-            <p
-              class="lead"
-              style="font-family: 'Courier New', Courier, monospace"
-            >
-              {{ numOfIngredients }} Ingredients <span>|</span>
-              {{ minutes }} Minutes
-            </p>
-          </div>
-          <h3>Summary</h3>
-          <p v-html="summary"></p>
-        </div> -->
-  <!-- end of column2 -->
-  <!-- </div>
-      <hr />
-      <h3>Instructions</h3>
-      <ol>
-        <li v-for="instruction in instructions" :key="instruction">
-          {{ instruction }}
-        </li>
-      </ol>
-      <p>The recipe ID is {{ id }}</p>
-    </div>
-  </section> -->
+    </footer> -->
+    "Heat the olive oil in a large frying pan and cook the onion for 1-2 mins just until softened. Add the chicken and fry for 7-10 mins until cooked through and the onions have turned golden. Grate over the ginger, stir through the harissa to coat everything and cook for 1 min more.\r\n\r\nTip in the apricots, chickpeas and couscous, then pour over the stock and stir once. Cover with a lid or tightly cover the pan with foil and leave for about 5 mins until the couscous has soaked up all the stock and is soft. Fluff up the couscous with a fork and scatter over the coriander to serve. Serve with extra harissa, if you like."
+
 </template>
 
+
+
 <script>
+import NavBar from "../components/NavBar.vue"
 import axios from "axios";
 
+
 export default {
+  components: { NavBar },
   props: ["id"],
   data() {
     return {
       title: null,
       image: null,
-      minutes: null,
+      // minutes: null,
       summary: null,
       instructions: [],
       calories: null,
@@ -198,24 +198,22 @@ export default {
     };
   },
   created() {
-    // populating firebase database
-    axios.get("www.themealdb.com/api/json/v1/1/random.php")
+    let url = "https://themealdb.com/api/json/v1/1/lookup.php"
+    axios.get(url,{
+      params:{
+        i : this.id,
+      }
+    })
     .then(response=>{
       console.log(response.data)
+      let obj = response.data.meals[0];
+      this.title = obj.strMeal;
+      this.image = obj.strMealThumb;
+      let instruction = obj.strInstructions.split(".");
+      this.instructions = instruction.slice(0,-1)
     })
-  }
-}
-    // axios.post(
-    //         "https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/community/.json",
-    //         {
-    //           name: this.newRecipeName,
-    //           description: this.newRecipeDescription,
-    //           prepTime: this.newRecipePrepTime,
-    //           cookTime: this.newRecipeCookTime,
-    //           yields: this.newRecipeYields,
-    //           imgPath: this.newRecipeImagePath
-    //         }
-    //       );
+}}
+    
     // api for title, image, minutes to make, summary,analysed instructions and servings
 //     let url = "https://api.spoonacular.com/recipes/" + this.id + "/information";
 //     axios(url, {
@@ -288,189 +286,467 @@ export default {
 <!-- CSS files
   ============== -->
 <style scoped>
+  * {
+  margin: 0;
+  padding: 0; }
+
 body {
-  background-color: #a44c9f;
-  color: #666;
-  font-size: 16px;
-  font-family: "Montserrat", sans-serif;
-  font-weight: 400;
-  line-height: 1.5;
-  overflow-x: hidden;
-}
-ol,
-ul {
-  list-style: none;
-}
-blockquote,
-q {
-  quotes: none;
-}
-blockquote:before,
-blockquote:after,
-q:before,
-q:after {
-  content: "";
-  content: none;
-}
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px; }
 
-/*
-** Website Logo
-** -----------------------------------------------------------------------------
-*/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #000000;
+  line-height: 1.3;
+  font-weight: 600; }
 
-#logo {
-  width: 100%;
-  min-height: 250px;
-  margin-left: auto;
-  margin-right: auto;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-image: radial-gradient(
-      rgba(126, 0, 119, 0.15),
-      rgba(126, 0, 119, 0.75)
-    ),
-    url("../assets/kitchen-banner.jpg");
-}
-#logo img {
-  height: 100px;
-  width: auto;
-  margin-top: 24px;
-}
-#logo h1 {
-  font-family: "Quirlycues";
-  font-size: 72px;
-  font-weight: normal;
-  padding-top: 24px;
-  color: #f9f9f9;
-}
+p {
+  color: #9b9b9b;
+  font-size: 14px;
+  line-height: 2;
+  font-weight: 400; }
 
-/*
-** Recipe Section
-** -----------------------------------------------------------------------------
-*/
-
-#recipe {
-  background-color: #f1f1f1;
-  padding-top: 12px;
-  padding-bottom: 24px;
-}
-#recipe h2 {
-  color: #333;
-  font-family: "Dancing Script", cursive;
-  font-size: 2em;
-  margin-bottom: 24px;
-  margin-top: 12px;
-}
-#recipe h3 {
-  background-color: #f1f1f1;
-  margin-top: 24px;
-}
-.recipe-picture {
-  width: auto;
-  height: auto;
-  margin-bottom: 24px;
-  margin-top: 6px;
-  z-index: -1;
-  -webkit-box-shadow: 0px 0px 0px 2px rgba(0, 0, 0, 0.6), 0px 0px 0px 14px #fff,
-    0px 0px 0px 18px rgba(0, 0, 0, 0.2), 6px 6px 8px 17px #555;
-  -moz-box-shadow: 0px 0px 0px 2px rgba(0, 0, 0, 0.6), 0px 0px 0px 14px #fff,
-    0px 0px 0px 18px rgba(0, 0, 0, 0.2), 6px 6px 8px 17px #555;
-  box-shadow: 0px 0px 0px 2px rgba(0, 0, 0, 0.6), 0px 0px 0px 14px #fff,
-    0px 0px 0px 18px rgba(0, 0, 0, 0.2), 6px 6px 8px 17px #555;
-}
-.recipe-info .row {
-  margin-top: 12px;
-  padding-top: 6px;
-  padding-bottom: 6px;
-  background-color: #f9f9f9;
-  -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
-  -moz-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
-}
-
-
-.recipe-steps ol {
-  counter-reset: li;
-  list-style: none;
-  padding: 0;
-  margin-bottom: 4em;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
-}
-.recipe-steps ol ol {
-  margin: 0 0 0 2em;
-}
-.recipe-steps li {
-  position: relative;
-  display: block;
-  padding: 0.4em 0.4em 0.4em 0.8em;
-  *padding: 0.4em;
-  margin: 0.5em 0 0.5em 2.5em;
-  background: #f9f9f9;
-  color: #222;
+a,
+a:hover,
+a:focus {
+  -webkit-transition-duration: 500ms;
+  transition-duration: 500ms;
   text-decoration: none;
-  transition: all 0.3s ease-out;
-  -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
-  -moz-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
-}
-.recipe-steps li:hover {
-  background: #f1f1f1;
-}
-.recipe-steps li:before {
-  content: counter(li);
-  counter-increment: li;
-  position: absolute;
-  left: -2.5em;
-  top: 50%;
-  margin-top: -1em;
-  background: #a44c9f;
-  height: 2em;
-  width: 2em;
-  line-height: 2em;
-  text-align: center;
-  font-weight: bold;
-  color: #f9f9f9;
-}
-.recipe-steps li:after {
-  position: absolute;
-  content: "";
-  border: 0.5em solid transparent;
-  left: -1em;
-  top: 50%;
-  margin-top: -0.5em;
-  transition: all 0.3s ease-out;
-}
-.recipe-steps li:hover:after {
-  left: -0.5em;
-  border-left-color: #a44c9f;
-}
+  outline: 0 solid transparent;
+  color: #000000;
+  font-weight: 600;
+  font-size: 14px;
+  color: #474747; }
 
-.c1{
-  padding-left: 25px;
-  padding-right:0px;
-  width: 670px;
+ul,
+ol {
+  margin: 0; }
+  ul li,
+  ol li {
+    list-style: none; }
+
+
+img{
+  height: auto;
+  max-width: 100%;
+ 
+}
+/* Spacing */
+
+
+.mt-30 {
+  margin-top: 30px !important; }
+
+
+
+/* Section Heading */
+.section-heading {
   position: relative;
-}
-.c2{
-  margin-top: 100px;
-  /* margin-right: 100px; */
-  padding-left: 0;
-  padding-right: 100px;
-  
-}
-.bookmark{
-  position: absolute;
-  border-radius: 50%;
-  bottom: 0;
-  right:50px;
-  padding: 10px;
-}
-svg {
-  color: #a44c9f;
-}
+  z-index: 1;
+  margin-bottom: 80px;
+  text-align: center; }
+  .section-heading h3 {
+    font-size: 30px;
+    margin-bottom: 0; }
+  .section-heading.text-left {
+    text-align: left !important; }
+  .section-heading.white h3 {
+    color: #ffffff; }
+
+/* Preloader */
+#preloader {
+  background-color: #ffffff;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 5000; }
+  #preloader img {
+    width: 30px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    z-index: 10; }
+  #preloader .circle-preloader {
+    display: block;
+    width: 60px;
+    height: 60px;
+    border: 2px solid #ccc;
+    border-bottom-color: #1c8314;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    animation: spin 2s infinite linear; }
+@-webkit-keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg); } }
+@keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg); } }
+/* Miscellaneous */
+
+
+/* ScrollUp */
+#scrollUp {
+  background-color: #40ba37;
+  border-radius: 0;
+  bottom: 60px;
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.3);
+  color: #ffffff;
+  font-size: 24px;
+  height: 40px;
+  line-height: 38px;
+  right: 60px;
+  text-align: center;
+  width: 40px;
+  -webkit-transition-duration: 500ms;
+  transition-duration: 500ms; }
+  #scrollUp:hover {
+    background-color: #141414; }
+  @media only screen and (max-width: 767px) {
+    #scrollUp {
+      bottom: 30px;
+      right: 30px; } }
+
+/* Button */
+.delicious-btn {
+  display: inline-block;
+  min-width: 160px;
+  height: 60px;
+  color: #ffffff;
+  border: none;
+  border-left: 3px solid #1c8314;
+  border-radius: 0;
+  padding: 0 30px;
+  font-size: 16px;
+  line-height: 58px;
+  font-weight: 600;
+  -webkit-transition-duration: 500ms;
+  transition-duration: 500ms;
+  text-transform: capitalize;
+  background-color: #40ba37; }
+  .delicious-btn.active, .delicious-btn:hover, .delicious-btn:focus {
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: #1c8314;
+    border-color: #40ba37; }
+  .delicious-btn.btn-2 {
+    background-color: #1c8314;
+    border-color: #40ba37; }
+    .delicious-btn.btn-2.active, .delicious-btn.btn-2:hover, .delicious-btn.btn-2:focus {
+      background-color: #40ba37;
+      border-color: #1c8314; }
+  .delicious-btn.btn-3 {
+    background-color: #474747;
+    border-color: #1c8314; }
+    .delicious-btn.btn-3.active, .delicious-btn.btn-3:hover, .delicious-btn.btn-3:focus {
+      background-color: #40ba37;
+      border-color: #1c8314; }
+  .delicious-btn.btn-4 {
+    background-color: transparent;
+    border: 3px solid #40ba37;
+    line-height: 53px;
+    color: #40ba37; }
+    @media only screen and (max-width: 767px) {
+      .delicious-btn.btn-4 {
+        height: 40px;
+        line-height: 33px; } }
+    .delicious-btn.btn-4.active, .delicious-btn.btn-4:hover, .delicious-btn.btn-4:focus {
+      line-height: 53px;
+      color: #ffffff;
+      background-color: #40ba37; }
+      @media only screen and (max-width: 767px) {
+        .delicious-btn.btn-4.active, .delicious-btn.btn-4:hover, .delicious-btn.btn-4:focus {
+          height: 40px;
+          line-height: 33px; } }
+  @media only screen and (max-width: 767px) {
+    .delicious-btn {
+      height: 40px;
+      line-height: 39px; } }
+
+
+/* :: 8.0 Best Receipe Area */
+    .ratings i {
+      font-size: 11px;
+      color: #fbb710;
+      display: inline-block;
+      padding: 0 1px; }
+
+
+/* :: 15.0 Receipe Area */
+
+  @media only screen and (min-width: 768px) and (max-width: 991px) {
+    .receipe-post-search .col-12 {
+      margin-bottom: 30px; } }
+  @media only screen and (max-width: 767px) {
+    .receipe-post-search .col-12 {
+      margin-bottom: 15px; } }
+
+.receipe-slider {
+  position: relative;
+  z-index: 1; }
+  .receipe-slider .owl-prev,
+  .receipe-slider .owl-next {
+    background-color: transparent;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    color: #ffffff;
+    top: 50%;
+    margin-top: -20px;
+    left: 4%;
+    position: absolute;
+    z-index: 10;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transition-duration: 500ms;
+    transition-duration: 500ms;
+    border-bottom: 3px solid #1c8314; }
+    @media only screen and (max-width: 767px) {
+      .receipe-slider .owl-prev,
+      .receipe-slider .owl-next {
+        font-size: 14px; } }
+  .receipe-slider .owl-next {
+    left: auto;
+    right: 4%; }
+  .receipe-slider:hover .owl-prev, .receipe-slider:hover .owl-next {
+    opacity: 1;
+    visibility: visible; }
+
+.receipe-headline span {
+  font-size: 14px;
+  display: block;
+  color: #a4a4a4;
+  margin-bottom: 0; }
+.receipe-headline h2 {
+  font-size: 36px;
+  color: #474747;
+  margin-bottom: 30px; }
+  @media only screen and (max-width: 767px) {
+    .receipe-headline h2 {
+      font-size: 24px; } }
+.receipe-headline .receipe-duration {
+  border-left: 3px solid #40ba37;
+  padding: 15px; }
+  .receipe-headline .receipe-duration h6 {
+    font-size: 15px;
+    margin-bottom: 5px; }
+    .receipe-headline .receipe-duration h6:last-child {
+      margin-bottom: 0; }
+
+.receipe-ratings .ratings {
+  margin-bottom: 30px; }
+.receipe-ratings i {
+  font-size: 18px;
+  color: #fbb710;
+  padding: 0 3px; }
+
+.single-preparation-step {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 50px; }
+  .single-preparation-step h4 {
+    color: #474747;
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 60px;
+    flex: 0 0 60px;
+    max-width: 60px;
+    width: 60px;
+    margin-bottom: 0; }
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .ingredients {
+    margin-bottom: 80px; } }
+@media only screen and (max-width: 767px) {
+  .ingredients {
+    margin-bottom: 80px; } }
+.ingredients h4 {
+  color: #474747;
+  margin-bottom: 30px; }
+.ingredients .custom-checkbox .custom-control-label::before {
+  border-radius: 0; }
+.ingredients .custom-control-label::before {
+  width: 30px;
+  height: 30px;
+  background-color: #f3f5f8; }
+.ingredients .custom-control {
+  padding-left: 2.5rem;
+  margin-bottom: 30px;
+  min-height: 35px; }
+.ingredients .custom-control-label {
+  margin-bottom: 0;
+  padding-top: 5px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #2f2f2f; }
+.ingredients .custom-control-label::after {
+  top: 10px;
+  left: 5px;
+  width: 20px;
+  height: 20px; }
+.ingredients .custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+  background-color: #40ba37; }
+
+/* :: 16.0 Footer Area CSS */
+.footer-area {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 140px;
+  background-color: #ffffff; }
+  @media only screen and (max-width: 767px) {
+    .footer-area {
+      height: 150px;
+      border-top: 1px solid #ebebeb;
+      margin-top: 30px; } }
+  .footer-area .footer-social-info {
+    padding-right: 15px; }
+    .footer-area .footer-social-info a {
+      display: inline-block;
+      color: #b6b6b6;
+      font-size: 13px;
+      margin-right: 30px; }
+      .footer-area .footer-social-info a:last-child {
+        margin-right: 0; }
+      .footer-area .footer-social-info a:hover, .footer-area .footer-social-info a:focus {
+        color: #40ba37; }
+  .footer-area p {
+    color: #4b4b4b;
+    font-weight: 600;
+    margin-bottom: 0;
+    padding-left: 15px; }
+    @media only screen and (max-width: 767px) {
+      .footer-area p {
+        padding-left: 0; } }
+    .footer-area p a {
+      color: #4b4b4b;
+      font-weight: 600; }
+      .footer-area p a:hover, .footer-area p a:focus {
+        color: #40ba37; }
+  @media only screen and (max-width: 767px) {
+    .footer-area .footer-logo {
+      max-width: 90px; } }
+
+.follow-us-instagram {
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid #dcdcdc; }
+  .follow-us-instagram h5 {
+    font-size: 18px;
+    padding: 35px 0;
+    margin-bottom: 0; }
+  .follow-us-instagram .insta-feeds {
+    position: relative;
+    z-index: 1; }
+    .follow-us-instagram .insta-feeds .single-insta-feeds {
+      position: relative;
+      z-index: 1;
+      -webkit-box-flex: 0;
+      -ms-flex: 0 0 14.2857%;
+      flex: 0 0 14.2857%;
+      max-width: 14.2857%;
+      width: 14.2857%;
+      -webkit-transition-duration: 500ms;
+      transition-duration: 500ms;
+      overflow: hidden; }
+      @media only screen and (max-width: 767px) {
+        .follow-us-instagram .insta-feeds .single-insta-feeds {
+          -webkit-box-flex: 0;
+          -ms-flex: 0 0 25%;
+          flex: 0 0 25%;
+          max-width: 25%;
+          width: 25%; } }
+      @media only screen and (min-width: 576px) and (max-width: 767px) {
+        .follow-us-instagram .insta-feeds .single-insta-feeds {
+          -webkit-box-flex: 0;
+          -ms-flex: 0 0 20%;
+          flex: 0 0 20%;
+          max-width: 20%;
+          width: 20%; } }
+      .follow-us-instagram .insta-feeds .single-insta-feeds img {
+        width: 100%;
+        -webkit-transition-duration: 500ms;
+        transition-duration: 500ms; }
+      .follow-us-instagram .insta-feeds .single-insta-feeds .insta-icon {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(64, 186, 55, 0.9);
+        top: 0;
+        left: 0;
+        z-index: 10;
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -ms-grid-row-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        -webkit-transition-duration: 500ms;
+        transition-duration: 500ms; }
+        .follow-us-instagram .insta-feeds .single-insta-feeds .insta-icon a {
+          display: inline-block;
+          color: #ffffff;
+          font-size: 18px; }
+      .follow-us-instagram .insta-feeds .single-insta-feeds:hover img {
+        -webkit-transform: scale(1.2) rotate(2.5deg);
+        transform: scale(1.2) rotate(2.5deg); }
+      .follow-us-instagram .insta-feeds .single-insta-feeds:hover .insta-icon {
+        opacity: 1;
+        visibility: visible; }
+
+
+
+
+
+
+
+.contact-form-area .form-control {
+  height: 52px;
+  width: 100%;
+  background-color: #f3f5f8;
+  font-size: 12px;
+  font-style: italic;
+  margin-bottom: 15px;
+  border: none;
+  border-left: 3px solid #f3f5f8;
+  border-radius: 0;
+  padding: 15px 30px;
+  -webkit-transition-duration: 500ms;
+  transition-duration: 500ms; }
+  .contact-form-area .form-control:focus {
+    border-left: 3px solid #40ba37;
+    box-shadow: none; }
+.contact-form-area textarea.form-control {
+  height: 200px;
+  -webkit-transition-duration: 500ms;
+  transition-duration: 500ms; }
+
+
+
+
 </style>
