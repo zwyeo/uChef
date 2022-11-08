@@ -1,6 +1,6 @@
 <template>
-  <div class="card card-style" style="width: 18rem">
-    <img :src="ImageBitmap" class="img-style" :alt="title" />
+  <div class="card card-style" style="width: 20rem">
+    <img :src="img" class="img-style" :alt="title" />
     <div class="card-body">
       <div class="receipe-content">
         <h5>{{ title }}</h5>
@@ -19,6 +19,7 @@
 
 <script>
 export default {
+  // to add ratings props!!
   props: ["title", "img"],
 };
 </script>
@@ -27,7 +28,7 @@ export default {
 .card-style {
   cursor: pointer;
   font-size: 16px;
-  background-color: #f6f6c9;
+  /* background-color: #f6f6c9; */
   color: #40ba37;
   border-radius: 5px;
   box-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.24);

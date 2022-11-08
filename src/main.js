@@ -8,14 +8,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDs3f8X_O2I4LjZObiD9JkeLe0MuFi6-8M",
-  authDomain: "wad-proj-22042.firebaseapp.com",
-  databaseURL:
-    "https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "wad-proj-22042",
-  storageBucket: "wad-proj-22042.appspot.com",
-  messagingSenderId: "231907482770",
-  appId: "1:231907482770:web:7e50ceb9acbe9320995a4b",
+  apiKey: process.env.VUE_APP_FIREBASE_API,
+  authDomain: process.env.VUE_APP_FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.VUE_APP_FIREBASE_URL,
+  projectId: process.env.VUE_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.VUE_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.VUE_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.VUE_APP_FIREBASE_APP_ID,
 };
 
 // Initialize Firebase

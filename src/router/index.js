@@ -27,13 +27,13 @@ const routes = [
     path: "/my-recipes",
     name: "my-recipes",
     component: MyRecipes,
-    meta: { requriesAuth: true },
+    // meta: { requriesAuth: true },
   },
   {
     path: "/my-bookmarks",
     name: "my-bookmarks",
     component: MyBookmarks,
-    meta: { requriesAuth: true },
+    // meta: { requriesAuth: true },
   },
   {
     path: "/recipe-details/:id",
