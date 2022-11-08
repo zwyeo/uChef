@@ -1,5 +1,6 @@
 <template>
-  <div class="w-25 mx-auto mt-5">
+  <div class="w-25 mx-auto">
+    <img src="../assets/logo.png" alt="uChef Logo" />
     <!-- Pills navs -->
     <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
       <li class="nav-item" role="presentation">
@@ -65,7 +66,7 @@
           <div class="form-outline mb-4">
             <input
               type="email"
-              id="loginName"
+              id="email"
               class="form-control"
               placeholder="Email"
               v-model="email"
@@ -169,10 +170,17 @@ export default {
           // Signed in
           const user = userCredential.user;
           console.log(user);
+
+          this.$store.commit("set_userId", user.uid);
+
+          // reset the values
+          this.email = "";
+          this.password = "";
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
+          console.log(errorMessage);
           // ..
         });
     },

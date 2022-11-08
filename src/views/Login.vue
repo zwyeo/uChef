@@ -1,11 +1,12 @@
 <template>
-  <div class="w-25 mx-auto mt-5">
+  <div class="w-25 mx-auto">
+    <img src="../assets/logo.png" alt="uChef Logo" />
     <!-- Pills navs -->
     <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
       <li class="nav-item" role="presentation">
         <router-link to="/login">
           <a
-            class="nav-link active"
+            class="nav-link nav-style active"
             id="tab-login"
             data-mdb-toggle="pill"
             role="tab"
@@ -170,7 +171,9 @@ export default {
           // Signed in
           const user = userCredential.user;
           console.log(user);
+          this.$store.commit("set_userId", user.uid);
           this.$router.push("/");
+          // console.log(this.$store.state.userId);
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -199,5 +202,8 @@ export default {
 .btn-spin {
   padding: relative;
   top: -3px;
+}
+
+.nav-style {
 }
 </style>
