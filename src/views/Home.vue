@@ -1,7 +1,26 @@
 <template>
-  <nav-bar></nav-bar>
-  <banner></banner>
-  <recipe-card></recipe-card>
+  <div class="container-fluid px-5">
+    <nav-bar></nav-bar>
+    <banner></banner>
+    <h2 class="text-center p-5">The Most Popular Recipes</h2>
+    <div class="row recipe-card-style">
+      <div
+        v-for="recipe in $store.state.recipes"
+        :key="recipe.idMeal"
+        class="col-lg-4"
+      >
+        <!-- <router-link
+          :to="{ name: 'recipe-details', params: { id: recipe.idMeal } }"
+        > -->
+        <recipe-card
+          :title="recipe.strMeal"
+          :img="recipe.strMealThumb"
+          class="mb-5"
+        ></recipe-card>
+        <!-- </router-link> -->
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -25,6 +44,11 @@ export default {
 /* remove the underline in recipe card */
 a {
   text-decoration: none;
+}
+
+.recipe-card-style {
+  padding-left: 15em;
+  padding-right: 15em;
 }
 
 /* Start */

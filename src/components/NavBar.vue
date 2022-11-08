@@ -118,15 +118,7 @@ export default {
       isSearchExpand: false,
     };
   },
-  computed() {},
-  methods: {
-    // expand the search functionality when search icon is pressed
-    openSearchBox() {
-      this.isSearchExpand = true;
-    },
-    closeSearchBox() {
-      this.isSearchExpand = false;
-    },
+  computed: {
     // searchQuery is different from the usual computed because it required getter and setter
     searchQuery: {
       get() {
@@ -134,9 +126,18 @@ export default {
       },
       // newValue is the user's search result
       set(newValue) {
-        console.log(newValue);
+        // console.log(newValue);
         this.$store.dispatch("setQueryParam", newValue);
       },
+    },
+  },
+  methods: {
+    // expand the search functionality when search icon is pressed
+    openSearchBox() {
+      this.isSearchExpand = true;
+    },
+    closeSearchBox() {
+      this.isSearchExpand = false;
     },
   },
 };

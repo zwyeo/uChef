@@ -27,7 +27,7 @@ const routes = [
     path: "/my-recipes",
     name: "my-recipes",
     component: MyRecipes,
-   // meta: { requriesAuth: true },
+    // meta: { requriesAuth: true },
   },
   {
     path: "/my-bookmarks",

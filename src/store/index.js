@@ -58,58 +58,71 @@ export default createStore({
     // This fn is to retrive recipe data from SPOONACULAR API
     getRecipes({ commit }) {
       let userQuery = this.state.queryParam;
-      let url = "";
-      if (userQuery.includes(",")) {
-        //for searching by ingredients
-        url = "https://api.spoonacular.com/recipes/findByIngredients";
-        axios(url, {
+      let url = "https://themealdb.com/api/json/v1/1/search.php";
+      axios
+        .get(url, {
           params: {
-            ingredients: userQuery, //different param for ingredient search
-            apiKey: process.env.VUE_APP_SPOONACULAR_API,
+            s: userQuery,
           },
-        }).then((res) => {
-          const data = res.data;
+        })
+        .then((res) => {
+          const data = res.data.meals;
           console.log(data);
-          this.state.ingredientSearch = data; //to save search by ingredient results into a separate array for comparing purposes
-          commit("getRecipes", data); // This will pass data into getRecipe muatation as payload
-
-          //find matching title using normal search?? do this so if search by ingredients also can use filters
+          commit("getRecipes", data); // This will pass data into getRecipe mutation as payload
         });
-      } else {
-        let parameters = {
-          //init new params object
-          query: userQuery,
-          apiKey: process.env.VUE_APP_SPOONACULAR_API,
-        };
-        if (this.state.calories > 0) {
-          //check if calories field is filled
-          parameters.maxCalories = this.state.calories;
-        }
-        if (this.state.maxtime > 0) {
-          //check if max time field is filled
-          parameters.maxReadyTime = this.state.maxtime;
-        }
-        if (this.state.selectedAllergies.length > 0) {
-          //check for allergies
-          console.log(this.state.selectedAllergies);
-          parameters.intolerances = this.state.selectedAllergies.join();
-        }
-        if (this.state.sortBy.length > 0) {
-          parameters.sort = this.state.sortBy;
-          if (this.state.sortBy == "price") {
-            parameters.sortDirection = "asc"; //sort price by descending order/ cheapest first
-          }
-        }
-        url = "https://api.spoonacular.com/recipes/complexSearch";
-        axios(url, {
-          params: parameters,
-        }).then((res) => {
-          const data = res.data.results;
 
-          console.log(data);
-          commit("getRecipes", data); // This will pass data into getRecipe muatation as payload
-        });
-      }
+      //-------TO BE DELETE (JADEN CONFIRM)------
+      // if (userQuery.includes(",")) {
+      //   //for searching by ingredients
+      //   url = "https://api.spoonacular.com/recipes/findByIngredients"; // USING SPOONACULAR API
+      //   axios(url, {
+      //     params: {
+      //       ingredients: userQuery, //different param for ingredient search
+      //       apiKey: process.env.VUE_APP_SPOONACULAR_API,
+      //     },
+      //   }).then((res) => {
+      //     const data = res.data;
+      //     console.log(data);
+      //     this.state.ingredientSearch = data; //to save search by ingredient results into a separate array for comparing purposes
+      //     commit("getRecipes", data); // This will pass data into getRecipe muatation as payload
+
+      //     //find matching title using normal search?? do this so if search by ingredients also can use filters
+      //   });
+      // } else {
+      //   let parameters = {
+      //     //init new params object
+      //     query: userQuery,
+      //     apiKey: process.env.VUE_APP_SPOONACULAR_API,
+      //   };
+      //   if (this.state.calories > 0) {
+      //     //check if calories field is filled
+      //     parameters.maxCalories = this.state.calories;
+      //   }
+      //   if (this.state.maxtime > 0) {
+      //     //check if max time field is filled
+      //     parameters.maxReadyTime = this.state.maxtime;
+      //   }
+      //   if (this.state.selectedAllergies.length > 0) {
+      //     //check for allergies
+      //     console.log(this.state.selectedAllergies);
+      //     parameters.intolerances = this.state.selectedAllergies.join();
+      //   }
+      //   if (this.state.sortBy.length > 0) {
+      //     parameters.sort = this.state.sortBy;
+      //     if (this.state.sortBy == "price") {
+      //       parameters.sortDirection = "asc"; //sort price by descending order/ cheapest first
+      //     }
+      //   }
+      //   url = "https://api.spoonacular.com/recipes/complexSearch";
+      //   axios(url, {
+      //     params: parameters,
+      //   }).then((res) => {
+      //     const data = res.data.results;
+
+      //     console.log(data);
+      //     commit("getRecipes", data); // This will pass data into getRecipe muatation as payload
+      //   });
+      // }
     },
     // This fn receive user input from searchbar and pass payload to mutation
     setQueryParam({ commit }, newValue) {
@@ -151,6 +164,45 @@ export default createStore({
     },
     setMaxTime({ commit }, setMaxTime) {
       commit("setMaxTime", setMaxTime);
+    },
+
+    // FOR FIREBASE AUTH
+    async register(context, { email, password, name }) {
+      const response = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      if (response) {
+        context.commit("SET_USER", response.user);
+        response.user.updateProfile({ displayName: name });
+      } else {
+        throw new Error("Unable to register user");
+      }
+    },
+    async logIn(context, { email, password }) {
+      const response = await signInWithEmailAndPassword(auth, email, password);
+      if (response) {
+        context.commit("SET_USER", response.user);
+      } else {
+        throw new Error("login failed");
+      }
+    },
+    async logOut(context) {
+      await signOut(auth);
+      context.commit("SET_USER", null);
+    },
+
+    async fetchUser(context, user) {
+      context.commit("SET_LOGGED_IN", user !== null);
+      if (user) {
+        context.commit("SET_USER", {
+          displayName: user.displayName,
+          email: user.email,
+        });
+      } else {
+        context.commit("SET_USER", null);
+      }
     },
   },
   getters: {
