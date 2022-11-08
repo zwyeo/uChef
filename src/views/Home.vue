@@ -9,15 +9,15 @@
         :key="recipe.idMeal"
         class="col-xl-4 col-lg-6"
       >
-        <!-- <router-link
+        <router-link
           :to="{ name: 'recipe-details', params: { id: recipe.idMeal } }"
-        > -->
-        <recipe-card
-          :title="recipe.strMeal"
-          :img="recipe.strMealThumb"
-          class="mb-5"
-        ></recipe-card>
-        <!-- </router-link> -->
+        >
+          <recipe-card
+            :title="recipe.strMeal"
+            :img="recipe.strMealThumb"
+            class="mb-5"
+          ></recipe-card>
+        </router-link>
       </div>
     </div>
   </div>
