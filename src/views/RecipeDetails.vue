@@ -6,8 +6,8 @@
       <div class="container mb-1">
           <div class="row">
               <div class="col-12">
-                  <div class="receipe-slider">
-                  <img :src="image" alt="">
+                  <div class="outer">
+                  <img :src="image" class="img-fluid" alt="">
                   </div>
               </div>
           </div>
@@ -20,13 +20,14 @@
               <div class="row">
                   <div class="col-12 col-md-8">
                       <div class="receipe-headline my-5">
-                          <span>April 05, 2018</span>
                           <h2>{{title}}</h2>
-                          <div class="receipe-duration">
+                          <a :href="video" class="btn video-btn  delicious-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/></svg> Watch Video</a>
+
+                          <!-- <div class="receipe-duration">
                               <h6>Prep: 15 mins</h6>
                               <h6>Cook: 30 mins</h6>
                               <h6>Yields: 8 Servings</h6>
-                          </div>
+                          </div> -->
                       </div>
                   </div>
 
@@ -39,7 +40,7 @@
                               <i class="fa fa-star" aria-hidden="true"></i>
                               <i class="fa fa-star-o" aria-hidden="true"></i>
                           </div>
-                          <a href="#" class="btn delicious-btn">For Begginers</a>
+                          <a href="#" class="btn delicious-btn">Bookmark</a>
                       </div>
                   </div>
               </div>
@@ -189,11 +190,8 @@ export default {
     return {
       title: null,
       image: null,
-      // minutes: null,
-      summary: null,
+      video: null,
       instructions: [],
-      calories: null,
-      servings: null,
       ingredient_list: [],
     };
   },
@@ -211,6 +209,7 @@ export default {
       this.image = obj.strMealThumb;
       let instruction = obj.strInstructions.split(".");
       this.instructions = instruction.slice(0,-1)
+      this.video = obj.strYoutube
     })
 }}
     
@@ -330,11 +329,6 @@ ol {
     list-style: none; }
 
 
-img{
-  height: auto;
-  max-width: 100%;
- 
-}
 /* Spacing */
 
 
@@ -479,6 +473,8 @@ img{
       height: 40px;
       line-height: 39px; } }
 
+   
+
 
 /* :: 8.0 Best Receipe Area */
     .ratings i {
@@ -497,13 +493,18 @@ img{
     .receipe-post-search .col-12 {
       margin-bottom: 15px; } }
 
-.receipe-slider {
+svg{
+  width: 50px
+}
+
+/* .receipe-slider {
   position: relative;
-  z-index: 1; }
-  .receipe-slider .owl-prev,
+  z-index: 1; 
+} */
+  /* .receipe-slider .owl-prev,
   .receipe-slider .owl-next {
     background-color: transparent;
-    width: 40px;
+    width: 40px;;
     height: 40px;
     line-height: 40px;
     color: #ffffff;
@@ -529,7 +530,7 @@ img{
     right: 4%; }
   .receipe-slider:hover .owl-prev, .receipe-slider:hover .owl-next {
     opacity: 1;
-    visibility: visible; }
+    visibility: visible; } */
 
 .receipe-headline span {
   font-size: 14px;
@@ -605,124 +606,10 @@ img{
 .ingredients .custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
   background-color: #40ba37; }
 
-/* :: 16.0 Footer Area CSS */
-.footer-area {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  height: 140px;
-  background-color: #ffffff; }
-  @media only screen and (max-width: 767px) {
-    .footer-area {
-      height: 150px;
-      border-top: 1px solid #ebebeb;
-      margin-top: 30px; } }
-  .footer-area .footer-social-info {
-    padding-right: 15px; }
-    .footer-area .footer-social-info a {
-      display: inline-block;
-      color: #b6b6b6;
-      font-size: 13px;
-      margin-right: 30px; }
-      .footer-area .footer-social-info a:last-child {
-        margin-right: 0; }
-      .footer-area .footer-social-info a:hover, .footer-area .footer-social-info a:focus {
-        color: #40ba37; }
-  .footer-area p {
-    color: #4b4b4b;
-    font-weight: 600;
-    margin-bottom: 0;
-    padding-left: 15px; }
-    @media only screen and (max-width: 767px) {
-      .footer-area p {
-        padding-left: 0; } }
-    .footer-area p a {
-      color: #4b4b4b;
-      font-weight: 600; }
-      .footer-area p a:hover, .footer-area p a:focus {
-        color: #40ba37; }
-  @media only screen and (max-width: 767px) {
-    .footer-area .footer-logo {
-      max-width: 90px; } }
+.outer{
+  width: 1000px;
 
-.follow-us-instagram {
-  position: relative;
-  z-index: 1;
-  border-top: 1px solid #dcdcdc; }
-  .follow-us-instagram h5 {
-    font-size: 18px;
-    padding: 35px 0;
-    margin-bottom: 0; }
-  .follow-us-instagram .insta-feeds {
-    position: relative;
-    z-index: 1; }
-    .follow-us-instagram .insta-feeds .single-insta-feeds {
-      position: relative;
-      z-index: 1;
-      -webkit-box-flex: 0;
-      -ms-flex: 0 0 14.2857%;
-      flex: 0 0 14.2857%;
-      max-width: 14.2857%;
-      width: 14.2857%;
-      -webkit-transition-duration: 500ms;
-      transition-duration: 500ms;
-      overflow: hidden; }
-      @media only screen and (max-width: 767px) {
-        .follow-us-instagram .insta-feeds .single-insta-feeds {
-          -webkit-box-flex: 0;
-          -ms-flex: 0 0 25%;
-          flex: 0 0 25%;
-          max-width: 25%;
-          width: 25%; } }
-      @media only screen and (min-width: 576px) and (max-width: 767px) {
-        .follow-us-instagram .insta-feeds .single-insta-feeds {
-          -webkit-box-flex: 0;
-          -ms-flex: 0 0 20%;
-          flex: 0 0 20%;
-          max-width: 20%;
-          width: 20%; } }
-      .follow-us-instagram .insta-feeds .single-insta-feeds img {
-        width: 100%;
-        -webkit-transition-duration: 500ms;
-        transition-duration: 500ms; }
-      .follow-us-instagram .insta-feeds .single-insta-feeds .insta-icon {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(64, 186, 55, 0.9);
-        top: 0;
-        left: 0;
-        z-index: 10;
-        cursor: pointer;
-        opacity: 0;
-        visibility: hidden;
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        -ms-grid-row-align: center;
-        align-items: center;
-        -webkit-box-pack: center;
-        -ms-flex-pack: center;
-        justify-content: center;
-        -webkit-transition-duration: 500ms;
-        transition-duration: 500ms; }
-        .follow-us-instagram .insta-feeds .single-insta-feeds .insta-icon a {
-          display: inline-block;
-          color: #ffffff;
-          font-size: 18px; }
-      .follow-us-instagram .insta-feeds .single-insta-feeds:hover img {
-        -webkit-transform: scale(1.2) rotate(2.5deg);
-        transform: scale(1.2) rotate(2.5deg); }
-      .follow-us-instagram .insta-feeds .single-insta-feeds:hover .insta-icon {
-        opacity: 1;
-        visibility: visible; }
-
-
-
-
-
+}
 
 
 .contact-form-area .form-control {
