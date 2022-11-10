@@ -1,6 +1,10 @@
 <template>
   <!-- CURRENTLY PICTURES ARE HARDCODED, NEED TO EDIT -->
-  <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
+  <div
+    id="carouselExampleCaptions"
+    class="carousel slide carousel-fade"
+    data-bs-ride="false"
+  >
     <div class="carousel-indicators">
       <button
         type="button"
@@ -22,11 +26,17 @@
         data-bs-slide-to="2"
         aria-label="Slide 3"
       ></button>
+      <button
+        type="button"
+        data-bs-target="#carouselExampleCaptions"
+        data-bs-slide-to="3"
+        aria-label="Slide 4"
+      ></button>
     </div>
     <div class="carousel-inner">
-      <div class="carousel-item active">
+      <div class="carousel-item active" data-bs-interval="2000">
         <img
-          src="../assets/img/bg-img/bg1.jpg"
+          src="../assets/img/banner-img/chicken-category.jpg"
           class="d-block w-100"
           alt="..."
           style="height: 90vh; object-fit: cover"
@@ -37,39 +47,99 @@
           <h2
             class="animate__animated animate__fadeInUp animate__delay-4 animate__slower"
           >
-            Delicious burger
+            Chicken
           </h2>
           <p
             class="animate__animated animate__fadeInUp animate__delay-5 animate__slower carousel-text"
           >
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate
-            et illum voluptatibus at blanditiis expedita. Ab, maiores nisi?
-            Pariatur explicabo porro modi velit mollitia magnam officiis error
-            recusandae optio beatae!
+            When it comes to both popularity and variety, there are few foods
+            that can compete with chicken. As a staple in the diet of billions
+            of people around the globe, chicken is enjoyed and revered primarily
+            because of the many ways it can be cooked. Whether it be grilled,
+            broiled, or fried, the possibilities are nearly endless when it
+            comes to creating a mouth-watering serving of chicken.
           </p>
           <button class="text-btn">See Recipe</button>
         </div>
       </div>
-      <div class="carousel-item">
+      <div class="carousel-item" data-bs-interval="2000">
         <img
-          src="../assets/img/bg-img/bg1.jpg"
+          src="../assets/img/banner-img/beef-category.jpg"
           class="d-block w-100"
           alt="..."
+          style="height: 90vh; object-fit: cover"
         />
-        <div class="carousel-caption d-none d-md-block">
-          <h5>Second slide label</h5>
-          <p>Some representative placeholder content for the second slide.</p>
+        <div
+          class="carousel-caption d-none d-md-block animate__animated animate__fadeInUp animate__delay-2 animate__slow carousel-label"
+        >
+          <h2
+            class="animate__animated animate__fadeInUp animate__delay-4 animate__slower"
+          >
+            Beef
+          </h2>
+          <p
+            class="animate__animated animate__fadeInUp animate__delay-5 animate__slower carousel-text"
+          >
+            When it comes to things you didn’t know about steak, one fun fact
+            about this red meat that might surprise you is how much of it your
+            average cattle can produce. If we assume that your beef animal
+            weighs about 1,200 pounds and is doesn’t hold any excess weight in
+            muscle, it should give you up to about 44% edible beef, or about 460
+            pounds of meat. That’s a lot of delicious steak dinners.
+          </p>
+          <button class="text-btn">See Recipe</button>
         </div>
       </div>
-      <div class="carousel-item">
+
+      <div class="carousel-item" data-bs-interval="2000">
         <img
-          src="../assets/img/bg-img/bg2.jpg"
+          src="../assets/img/banner-img/fish-category.jpg"
           class="d-block w-100"
           alt="..."
+          style="height: 90vh; object-fit: cover"
         />
-        <div class="carousel-caption d-none d-md-block">
-          <h5>Third slide label</h5>
-          <p>Some representative placeholder content for the third slide.</p>
+        <div
+          class="carousel-caption d-none d-md-block animate__animated animate__fadeInUp animate__delay-2 animate__slow carousel-label"
+        >
+          <h2
+            class="animate__animated animate__fadeInUp animate__delay-4 animate__slower"
+          >
+            Fish
+          </h2>
+          <p
+            class="animate__animated animate__fadeInUp animate__delay-5 animate__slower carousel-text"
+          >
+            Fish are full of Omega-3 fatty acids. Salmon, tuna, trout and
+            herring are all fish with high levels of Omega-3. This is considered
+            the good fat and can actually be very healthy to your heart.
+          </p>
+          <button class="text-btn">See Recipe</button>
+        </div>
+      </div>
+      <div class="carousel-item" data-bs-interval="2000">
+        <img
+          src="../assets/img/banner-img/desert-category.jpg"
+          class="d-block w-100"
+          alt="..."
+          style="height: 90vh; object-fit: cover"
+        />
+        <div
+          class="carousel-caption d-none d-md-block animate__animated animate__fadeInUp animate__delay-2 animate__slow carousel-label"
+        >
+          <h2
+            class="animate__animated animate__fadeInUp animate__delay-4 animate__slower"
+          >
+            Desserts
+          </h2>
+          <p
+            class="animate__animated animate__fadeInUp animate__delay-5 animate__slower carousel-text"
+          >
+            Dessert is a course that concludes an evening meal. The course
+            usually consists of sweet foods and beverages, but may include
+            coffee, cheeses, nuts, or other savory items. In some parts of the
+            world there is no tradition of dessert to conclude a meal.
+          </p>
+          <button class="text-btn">See Recipe</button>
         </div>
       </div>
     </div>
