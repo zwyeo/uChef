@@ -44,56 +44,24 @@
               </td>
             </tr>
             <tr>
-              <td><label for="newRecipeDescription">Description</label></td>
+              <td><label for="newRecipeCategory">Category</label></td>
               <td>
-                <textarea
-                  name="newRecipeDescription"
-                  id="newRecipeDescription"
-                  cols="30"
-                  rows="10"
+                <select
+                  id="newRecipeCategory"
                   class="form-control"
-                  placeholder="Description"
-                  v-model="newRecipeDescription"
-                ></textarea>
+                  v-model="newRecipeCategory"
+                >
+                  <option v-for="category in $store.state.foodCategories" :value="category">{{ category }}</option>
+                </select>
               </td>
             </tr>
             <tr>
-              <td>Preparation Time (mins)</td>
+              <td><label for="newRecipeInstructions">Instructions (Steps)</label></td>
               <td>
-                <input
-                  type="number"
-                  name="newRecipePrepTime"
-                  id="newRecipePrepTime"
-                  class="form-control"
-                  placeholder="Prep Time"
-                  v-model="newRecipePrepTime"
-                />
-              </td>
-            </tr>
-            <tr>
-              <td>Cooking Time (mins)</td>
-              <td>
-                <input
-                  type="number"
-                  name="newRecipeCookTime"
-                  id="newRecipeCookTime"
-                  class="form-control"
-                  placeholder="Cook Time"
-                  v-model="newRecipeCookTime"
-                />
-              </td>
-            </tr>
-            <tr>
-              <td>Yields</td>
-              <td>
-                <input
-                  type="number"
-                  name="newRecipeYields"
-                  id="newRecipeYields"
-                  class="form-control"
-                  placeholder="Yields"
-                  v-model="newRecipeYields"
-                />
+                <div id="newRecipeInstructions">
+                  <input v-for="i in noOfSteps" class="form-control steps" type="text" :id="i" :placeholder="i">
+                  <button class="btn btn-small btn-primary" @click="this.noOfSteps++">Add Step</button>
+                </div>
               </td>
             </tr>
             <tr>
@@ -152,7 +120,9 @@ export default {
   data() {
     return {
       newRecipeName: "",
-      newRecipeDescription: "",
+      newRecipeCategory: "Beef",
+      noOfSteps: 1,
+      newRecipeInstructions: [],
       newRecipePrepTime: 0,
       newRecipeCookTime: 0,
       newRecipeYields: 0,
@@ -173,7 +143,7 @@ export default {
 
       // Get storage from firebase and create reference child (naming needs work)
       const storage = getStorage();
-      const storageRef = ref(storage, "user/" + this.newRecipeImage.name);
+      const storageRef = ref(storage, `${this.$store.state.userId}/${this.newRecipeImage.name}`);
 
       // Upload function for uploading image into firebase cloud storage
       // Note: anything that requires the data from inside this function needs to be written inside, as this is an async request
@@ -185,7 +155,7 @@ export default {
 
           // this posts the below data to the firebase realtime database
           axios.post(
-            "https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/{user}/myrecipe.json",
+            `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/community/${this.$store.state.userId}/recipes.json`,
             {
               name: this.newRecipeName,
               description: this.newRecipeDescription,
