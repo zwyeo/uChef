@@ -170,7 +170,7 @@ export default {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log(user);
+          // console.log(user);
           this.$store.commit("set_userId", user.uid);
           this.$router.push("/");
           // console.log(this.$store.state.userId);

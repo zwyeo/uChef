@@ -1,20 +1,41 @@
 <template>
   <nav-bar></nav-bar>
   <banner></banner>
-  <div class="container-fluid px-5">
+  <div id="popular-recipe" class="container-fluid px-5">
+    <!-- POPULAR RECIPE SECTION -->
     <h2 class="text-center p-5">The Most Popular Recipes</h2>
     <div class="row recipe-card-style">
       <div
-        v-for="recipe in $store.state.recipes"
-        :key="recipe.idMeal"
+        v-for="recipe in $store.state.popularRecipe"
+        :key="recipe.id"
         class="col-xl-4 col-lg-6"
       >
         <router-link
-          :to="{ name: 'recipe-details', params: { id: recipe.idMeal } }"
+          :to="{ name: 'recipe-details', params: { id: recipe.id } }"
         >
           <recipe-card
-            :title="recipe.strMeal"
-            :img="recipe.strMealThumb"
+            :title="recipe.title"
+            :img="recipe.img"
+            class="mb-5"
+          ></recipe-card>
+        </router-link>
+      </div>
+    </div>
+
+    <!-- COMMUNITY RECIPE SECTION -->
+    <h2 class="text-center p-5">Our Community Recipes</h2>
+    <div class="row recipe-card-style">
+      <div
+        v-for="recipe in $store.state.communityRecipe"
+        :key="recipe.id"
+        class="col-xl-4 col-lg-6"
+      >
+        <router-link
+          :to="{ name: 'recipe-details', params: { id: recipe.id } }"
+        >
+          <recipe-card
+            :title="recipe.title"
+            :img="recipe.img"
             class="mb-5"
           ></recipe-card>
         </router-link>
@@ -27,7 +48,6 @@
 import NavBar from "../components/NavBar.vue";
 import RecipeCard from "@/components/RecipeCard.vue";
 import Banner from "@/components/Banner.vue";
-import axios from "axios";
 
 export default {
   name: "Home",
@@ -40,28 +60,20 @@ export default {
     return {};
   },
   created() {
-    // for(let i =0; i<10; i++){
-    //   axios.get("https://themealdb.com/api/json/v1/1/random.php")
-    // .then(response=>{
-    //   console.log(response.data)
-    //   let obj = response.data.meals[0];
-    //   let id = obj.idMeal
-    //   let title = obj.strMeal;
-    //   let img = obj.strMealThumb
-    //   console.log(obj.idMeal)
-    //   axios.post(
-    //         "https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/community/.json",
-    //         {
-    //          id: id,
-    //          img: img,
-    //          title: title,
-    //         }
-    //       );
-    // })
-    // }
+    // This will refresh the popular and community recipe list from DB
+    this.populatePopularRecipe();
+    this.populateCommunityRecipe();
+  },
+  methods: {
+    populatePopularRecipe() {
+      this.$store.dispatch("setPopularRecipe");
+    },
+    populateCommunityRecipe() {
+      this.$store.dispatch("setCommunityRecipe");
+      // console.log(this.$store.state.communityRecipe);
+    },
   },
 };
-// 52929
 </script>
 <style scoped>
 /* remove the underline in recipe card */
@@ -75,28 +87,7 @@ a {
 }
 
 /* Start */
-.bg-img {
-  background-position: center center;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-.hero-area {
-  position: relative;
-  z-index: 1;
-  margin-left: 4%;
-  margin-right: 4%;
-}
 
-.hero-slides {
-  position: relative;
-  z-index: 1;
-}
-.hero-slides .single-hero-slide {
-  width: 100%;
-  height: 820px;
-  position: relative;
-  z-index: 1;
-}
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
   .hero-slides .single-hero-slide {
     height: 650px;
@@ -139,61 +130,6 @@ a {
   font-size: 16px;
   margin-bottom: 50px;
   color: #ffffff;
-}
-.hero-slides .owl-prev,
-.hero-slides .owl-next {
-  background-color: transparent;
-  width: 40px;
-  height: 40px;
-  line-height: 40px;
-  color: #ffffff;
-  top: 50%;
-  margin-top: -20px;
-  left: 4%;
-  position: absolute;
-  z-index: 10;
-  text-align: center;
-  font-size: 16px;
-  font-weight: 600;
-  opacity: 0;
-  visibility: hidden;
-  -webkit-transition-duration: 500ms;
-  transition-duration: 500ms;
-  border-bottom: 3px solid #1c8314;
-}
-@media only screen and (max-width: 767px) {
-  .hero-slides .owl-prev,
-  .hero-slides .owl-next {
-    font-size: 13px;
-  }
-}
-.hero-slides .owl-next {
-  left: auto;
-  right: 4%;
-}
-.hero-slides:hover .owl-prev,
-.hero-slides:hover .owl-next {
-  opacity: 1;
-  visibility: visible;
-}
-.hero-slides .owl-dots {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  position: absolute;
-  bottom: 50px;
-  z-index: 10;
-  width: 80%;
-  left: 17%;
-}
-.hero-slides .owl-dots .owl-dot {
-  font-size: 16px;
-  font-weight: 600;
-  color: #ffffff;
-  margin-right: 10px;
-}
-.hero-slides .owl-dots .owl-dot.active {
-  color: #1c8314;
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {

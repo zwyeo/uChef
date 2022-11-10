@@ -34,15 +34,17 @@
               ></path>
             </svg>
           </div>
-          <input
-            type="text"
-            :placeholder="$store.state.searchDesc"
-            class="text-light w-5 form-control rounded-pill input border-0"
-            v-model="searchQuery"
-            style="background-color: #40ba37"
-            @keyup.enter="$store.dispatch('getRecipes')"
-            @change="$store.dispatch('showPreviews')"
-          />
+          <router-link :to="{ name: 'home', hash: '#popular-recipe' }">
+            <input
+              type="text"
+              :placeholder="$store.state.searchDesc"
+              class="text-light w-5 form-control rounded-pill input border-0"
+              v-model="searchQuery"
+              style="background-color: #40ba37"
+              @keyup.enter="onSearch"
+              @change="$store.dispatch('showPreviews'), closeSearchBox"
+            />
+          </router-link>
         </div>
       </div>
     </div>
@@ -103,6 +105,23 @@
                   <i class="fa fa-user" aria-hidden="true"></i>
                 </div>
               </div>
+              <div class="dropdown">
+                <button
+                  class="btn btn-secondary dropdown-toggle"
+                  type="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Dropdown button
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                  </li>
+                </ul>
+              </div>
 
               <!-- Nav End -->
             </div>
@@ -114,6 +133,8 @@
 </template>
 
 <script>
+import { getAuth, signOut } from "firebase/auth";
+
 export default {
   name: "NavBar",
   components: {},
@@ -145,9 +166,19 @@ export default {
       this.isSearchExpand = false;
     },
     logOut() {
-      this.$store.state.userId = "";
-      this.$router.push("/");
-      alert("You have logged out!");
+      // this.$store.state.userId = "";
+      const auth = getAuth();
+      signOut(auth)
+        .then(() => {
+          this.$store.state.userId = null;
+          alert("You have logged out!");
+          this.$router.push("/");
+        })
+        .catch((err) => console.log(err));
+    },
+    onSearch() {
+      this.$store.dispatch("getRecipes");
+      this.closeSearchBox();
     },
   },
 };

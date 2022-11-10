@@ -4,6 +4,7 @@ import axios from "axios";
 export default createStore({
   state: {
     recipes: {},
+    foodCategories: ["Beef","Breakfast","Chicken","Dessert","Goat","Lamb","Miscellaneous","Pasta","Pork","Seafood","Side","Starter","Vegan","Vegetarian"],
     queryParam: "",
     previews: {},
     searchDesc: "Search food recipe",
@@ -16,8 +17,13 @@ export default createStore({
     ingredientSearch: {},
     sortBy: "",
 
+    // This will store all the popular recipe from DB
+    popularRecipe: {},
+    // This will store all the community recipe from db
+    communityRecipe: {},
+
     // To track user session
-    userId: "",
+    userId: "asd",
   },
   mutations: {
     getRecipes(state, payload) {
@@ -44,6 +50,14 @@ export default createStore({
     },
     setMaxTime(state, setMaxTime) {
       state.maxtime = setMaxTime;
+    },
+    // To populate popularRecipe
+    setPopularRecipe(state, setPopularRecipe) {
+      state.popularRecipe = setPopularRecipe;
+    },
+    // To populate communityRecipe
+    setCommunityRecipe(state, setCommunityRecipe) {
+      state.communityRecipe = setCommunityRecipe;
     },
 
     // For user authetication
@@ -163,6 +177,21 @@ export default createStore({
       commit("setMaxTime", setMaxTime);
     },
 
+    setPopularRecipe({ commit }) {
+      const url = `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/popularRecipe.json`;
+      axios.get(url).then((res) => {
+        const data = res.data;
+        commit("setPopularRecipe", data);
+      });
+    },
+    setCommunityRecipe({ commit }) {
+      const url = `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/community.json`;
+      axios.get(url).then((res) => {
+        const data = res.data;
+        commit("setCommunityRecipe", data);
+      });
+    },
+
     /// sdadasdadadada
     async fetchUser(context, user) {
       context.commit("SET_LOGGED_IN", user !== null);
@@ -176,9 +205,13 @@ export default createStore({
       }
     },
   },
+
   getters: {
     user(state) {
       return state.user;
+    },
+    commuityRecipe(state) {
+      return state.commuityRecipe;
     },
   },
   modules: {},
