@@ -1,5 +1,5 @@
 <template>
-  <div class="card card-style" style="width: 20rem">
+  <div class="card card-style">
     <img :src="img" class="img-style" :alt="title" />
     <div class="card-body">
       <div class="receipe-content">

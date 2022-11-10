@@ -3,6 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import { initializeApp } from "firebase/app";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import "animate.css";
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -19,6 +20,16 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+initializeApp(firebaseConfig);
 
-createApp(App).use(store).use(router).mount("#app");
+const auth = getAuth();
+
+let app;
+
+onAuthStateChanged(auth, (user) => {
+  // console.log("user", user);
+  if (!app) {
+    app = createApp(App).use(store).use(router).mount("#app");
+    store.state.userId = user.uid;
+  }
+});
