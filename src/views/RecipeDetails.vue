@@ -7,7 +7,7 @@
           <div class="row">
               <div class="col-12">
                   <div class="outer">
-                  <img :src="image" class="img-fluid" alt="">
+                  <img :src="image" class="img-fluid" >
                   </div>
               </div>
           </div>
@@ -207,8 +207,9 @@ export default {
       let obj = response.data.meals[0];
       this.title = obj.strMeal;
       this.image = obj.strMealThumb;
-      let instruction = obj.strInstructions.split(".");
-      this.instructions = instruction.slice(0,-1)
+      let instruction = obj.strInstructions.split("\r\n");
+      console.log(instruction)
+      this.instructions = instruction
       this.video = obj.strYoutube
     })
 }}
