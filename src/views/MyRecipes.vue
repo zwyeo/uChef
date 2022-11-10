@@ -1,62 +1,24 @@
 <template>
-  <div class="">
+  <div class="container-fluid px-5">
     <nav-bar></nav-bar>
-    <nav>
-        <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <button class="nav-link active" id="nav-bookmarks-tab" data-bs-toggle="tab" data-bs-target="#nav-bookmarks" type="button" role="tab" aria-controls="nav-bookmarks" aria-selected="true">Bookmarks</button>
-            <button class="nav-link" id="nav-my-recipes-tab" data-bs-toggle="tab" data-bs-target="#nav-my-recipes" type="button" role="tab" aria-controls="nav-my-recipes" aria-selected="false">My Recipes</button>
-        </div>
-    </nav>
-    <div class="tab-content" id="nav-tabContent">
-      <div class="tab-pane fade show active" id="nav-bookmarks" role="tabpanel" aria-labelledby="nav-bookmarks-tab">
-        <div class="container">
-          <div class="mx-5 row mt-3">
-            <!-- Need to change v-for condition after firebase is set up -->
-            <!-- Bug: cards overlap at certain breakpoints-->
-            <div class="col-xl-3 col-lg-4 col-md-6 col-12 my-2" v-for="recipe in $store.state.recipes" :key="recipe.id">
-              <router-link
-                :to="{ name: 'recipe-details', params: { id: recipe.id } }"
-              >
-                <recipe-card
-                  class="mx-2"
-                  :key="recipe.id"
-                  :title="recipe.title"
-                  :img="recipe.image"
-                ></recipe-card>
-              </router-link>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="tab-pane fade" id="nav-my-recipes" role="tabpanel" aria-labelledby="nav-my-recipes-tab">
-        <div class="container">
-          <div class="mx-5 row mt-3">
-            <!-- Need to change v-for condition after firebase is set up -->
-            <div class="col-xl-3 col-lg-4 col-md-6 col-12 my-2" v-for="recipe in $store.state.recipes" :key="recipe.id">
-              <router-link
-                :to="{ name: 'recipe-details', params: { id: recipe.id } }"
-              >
-                <recipe-card
-                  class="mx-2"
-                  :key="recipe.id"
-                  :title="recipe.title"
-                  :img="recipe.image"
-                ></recipe-card>
-              </router-link>
-            </div>
-          </div>
-        </div>
-        <!-- Bug(?): Button currently might overlap with stuff -->
-        <add-new-recipe></add-new-recipe>
+    <h2 class="text-center p-5">My Recipes</h2>
+    <div v-if="getRecipes == 0" class="row recipe-card-style">
+      <button class="btn btn-primary" v-on:click="getRecipes">Click me</button>
+      <!-- Bug(?): Button currently might overlap with stuff -->
+    </div>
+    <div v-else class="row">
+      <div class="col d-flex justify-content-center">
+        <img style="width: 500px; height: 500px;" src="../assets/img/core-img/noRecipes.png" alt="">
+        <button class="btn btn-primary" v-on:click="getRecipes">Click me</button>
       </div>
     </div>
-    <h4 class="mt-5 mx-5"></h4>
-
+    <add-new-recipe></add-new-recipe>
   </div>
+  <h4 class="mt-5 mx-5"></h4>
 </template>
 
 <script>
+import axios from "axios";
 import NavBar from "../components/NavBar.vue";
 import RecipeCard from "../components/RecipeCard.vue";
 import AddNewRecipe from "../components/AddNewRecipe.vue";
@@ -72,6 +34,20 @@ export default {
     return {}
   },
   methods: {
+    getRecipes() {
+      let userId = this.$store.state.userId;
+      let recipeCount = 1;
+      axios.get(`https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/community/${userId}`)
+      .then(response => {
+        console.log(response.data)
+      })
+      .catch(error => {
+        console.log(error.message)
+        if (error.message == "Network Error") {
+          return 0;
+        }
+      })
+    },
     createNewRecipe() {
       
     }
