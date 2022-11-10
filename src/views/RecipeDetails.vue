@@ -3,12 +3,12 @@
         <nav-bar></nav-bar>
       </div>
       <!-- Receipe Slider -->
-      <div class="container mb-1">
+      <div class="container">
           <div class="row">
-              <div class="col-12">
-                  <div class="outer">
-                  <img :src="image" class="img-fluid" >
-                  </div>
+              <div class="col-12 outer">
+                  
+                  <img :src="image">
+                  
               </div>
           </div>
       </div>
@@ -21,18 +21,41 @@
                   <div class="col-12 col-md-8">
                       <div class="receipe-headline my-5">
                           <h2>{{title}}</h2>
-                          <a :href="video" class="btn video-btn  delicious-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/></svg> Watch Video</a>
+                          <a  class="btn video-btn  delicious-btn" data-bs-toggle="modal" :data-src="video" data-bs-target="#myModal" @click="open()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/></svg> Watch Video</a>
+
+                          <!-- Modal -->
+                      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+
+                            
+                            <div class="modal-body">
+                            <button type="button" class="btn-close" @click="close()" data-bs-dismiss="modal" aria-label="Close">
+                              </button>        
+                              <!-- 16:9 aspect ratio -->
+                      <div class="ratio ratio-16x9">
+                        <iframe class="embed-responsive-item" :src="video2"  allowscriptaccess="always" allow="autoplay"></iframe>
+                      </div>
+                              
+                              
+                            </div>
+
+                          </div>
+                        </div>
+                      </div> 
+  
 
                           <!-- <div class="receipe-duration">
                               <h6>Prep: 15 mins</h6>
                               <h6>Cook: 30 mins</h6>
                               <h6>Yields: 8 Servings</h6>
                           </div> -->
+                         
                       </div>
                   </div>
 
                   <div class="col-12 col-md-4">
-                      <div class="receipe-ratings  my-5 ">
+                      <div class="receipe-ratings my-5 ">
                           <div class="ratings">
                               <i class="fa fa-star" aria-hidden="true"></i>
                               <i class="fa fa-star" aria-hidden="true"></i>
@@ -40,7 +63,10 @@
                               <i class="fa fa-star" aria-hidden="true"></i>
                               <i class="fa fa-star-o" aria-hidden="true"></i>
                           </div>
-                          <a href="#" class="btn delicious-btn">Bookmark</a>
+
+                          <a v-if="!bookmarked" href="#" class="btn delicious-btn" @click="bookmark()">Bookmark</a>
+                          <a v-else href="#" class="btn delicious-btn" @click="unbookmark()">Bookmarked!</a>
+
                       </div>
                   </div>
               </div>
@@ -49,7 +75,8 @@
                   <div class="col-12 col-lg-8">
                       <!-- Single Preparation Step -->
                       <div v-for="(item, index) in instructions" :key="item" class="single-preparation-step d-flex">
-                          <h4>0{{index+1}}</h4>
+                          <h4 v-if="index<9">0{{index+1}}</h4>
+                          <h4 v-else>{{index+1}}</h4>
                           <p>{{item}} </p>
                       </div>
                   </div>
@@ -57,55 +84,14 @@
                   <!-- Ingredients -->
                   <div class="col-12 col-lg-4">
                       <div class="ingredients">
-                          <h4>Ingredients</h4>
+                          <h4 class="">Ingredients</h4>
 
                           <!-- Custom Checkbox -->
-                          <div class="custom-control custom-checkbox">
-                              <input type="checkbox" class="custom-control-input" id="customCheck1">
-                              <label class="custom-control-label" for="customCheck1">4 Tbsp (57 gr) butter</label>
+                          <div v-for="(item, index) in ingredient_list" :key="index" class="custom-control custom-checkbox" :id="index">
+                              <input type="checkbox" class="custom-control-input" :id="index">
+                              <label class="custom-control-label" :for="index">{{item}}</label>
                           </div>
 
-                          <!-- Custom Checkbox -->
-                          <div class="custom-control custom-checkbox">
-                              <input type="checkbox" class="custom-control-input" id="customCheck2">
-                              <label class="custom-control-label" for="customCheck2">2 large eggs</label>
-                          </div>
-
-                          <!-- Custom Checkbox -->
-                          <div class="custom-control custom-checkbox">
-                              <input type="checkbox" class="custom-control-input" id="customCheck3">
-                              <label class="custom-control-label" for="customCheck3">2 yogurt containers granulated sugar</label>
-                          </div>
-
-                          <!-- Custom Checkbox -->
-                          <div class="custom-control custom-checkbox">
-                              <input type="checkbox" class="custom-control-input" id="customCheck4">
-                              <label class="custom-control-label" for="customCheck4">1 vanilla or plain yogurt, 170g container</label>
-                          </div>
-
-                          <!-- Custom Checkbox -->
-                          <div class="custom-control custom-checkbox">
-                              <input type="checkbox" class="custom-control-input" id="customCheck5">
-                              <label class="custom-control-label" for="customCheck5">2 yogurt containers unbleached white flour</label>
-                          </div>
-
-                          <!-- Custom Checkbox -->
-                          <div class="custom-control custom-checkbox">
-                              <input type="checkbox" class="custom-control-input" id="customCheck6">
-                              <label class="custom-control-label" for="customCheck6">1.5 yogurt containers milk</label>
-                          </div>
-
-                          <!-- Custom Checkbox -->
-                          <div class="custom-control custom-checkbox">
-                              <input type="checkbox" class="custom-control-input" id="customCheck7">
-                              <label class="custom-control-label" for="customCheck7">1/4 tsp cinnamon</label>
-                          </div>
-
-                          <!-- Custom Checkbox -->
-                          <div class="custom-control custom-checkbox">
-                              <input type="checkbox" class="custom-control-input" id="customCheck8">
-                              <label class="custom-control-label" for="customCheck8">1 cup fresh blueberries </label>
-                          </div>
                       </div>
                   </div>
               </div>
@@ -172,7 +158,6 @@
             </div>
         </div>
     </footer> -->
-    "Heat the olive oil in a large frying pan and cook the onion for 1-2 mins just until softened. Add the chicken and fry for 7-10 mins until cooked through and the onions have turned golden. Grate over the ginger, stir through the harissa to coat everything and cook for 1 min more.\r\n\r\nTip in the apricots, chickpeas and couscous, then pour over the stock and stir once. Cover with a lid or tightly cover the pan with foil and leave for about 5 mins until the couscous has soaked up all the stock and is soft. Fluff up the couscous with a fork and scatter over the coriander to serve. Serve with extra harissa, if you like."
 
 </template>
 
@@ -191,11 +176,14 @@ export default {
       title: null,
       image: null,
       video: null,
+      video2: null,
       instructions: [],
       ingredient_list: [],
+      bookmarked: false
     };
   },
   created() {
+    //filling up the recipe details
     let url = "https://themealdb.com/api/json/v1/1/lookup.php"
     axios.get(url,{
       params:{
@@ -207,80 +195,77 @@ export default {
       let obj = response.data.meals[0];
       this.title = obj.strMeal;
       this.image = obj.strMealThumb;
+      this.video =  obj.strYoutube.replace("watch?v=", "embed/");
+      // this.video2 = this.video + "?autoplay=1&amp;modestbranding=1&amp;showinfo=0"
+
+
+
       let instruction = obj.strInstructions.split("\r\n");
-      console.log(instruction)
       this.instructions = instruction
-      this.video = obj.strYoutube
+     
+      // formatting ingredients and the measurements
+      for(let i =1; i<21; i++){
+        let str_i = "strIngredient" + i
+        let str_m = "strMeasure" + i
+        if(obj[str_i] == "" || obj[str_i] == null) break;
+        else{
+          let final = obj[str_m] + " " + obj[str_i]
+          this.ingredient_list.push(final)
+        } 
+      }
+      console.log(this.ingredient_list)
     })
-}}
+
+    //Bookmark button
+    axios.get(
+            `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${this.$store.state.userId}/bookmarks.json`)
+            .then(response=>{
+              console.log(response.data)
+              for(let [key,value] of Object.entries(response.data)){
+                if(value.id == this.id){
+                  this.bookmarked = true;
+                }
+              }
+            })
+            .catch(error=>{
+              console.log(error)
+            })
+            
+
+ },
+ methods:{
+  bookmark(){
+    console.log(this.$store.state.userId)
+    let userId = this.$store.state.userId;
     
-    // api for title, image, minutes to make, summary,analysed instructions and servings
-//     let url = "https://api.spoonacular.com/recipes/" + this.id + "/information";
-//     axios(url, {
-//       params: {
-//         apiKey: process.env.VUE_APP_SPOONACULAR_API,
-//       },
-//     }).then((response) => {
-//       // console.log(response.data);
-//       this.title = response.data.title;
-//       this.image = response.data.image;
-//       this.minutes = response.data.readyInMinutes;
-//       this.summary = response.data.summary;
-//       this.servings = response.data.servings;
+        
+    axios.post(
+            `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${userId}/bookmarks.json`,
+            {
+              id: this.id,
+              title: this.title,
+              image: this.image,
+            }
+          );
+    this.bookmarked = true;
+  },
 
-//       // retrieving analysed instructions and formatting it
-//       let stepsarray = response.data.analyzedInstructions[0].steps;
-//       console.log(stepsarray);
-//       for (let s of stepsarray) {
-//         this.instructions.push(s.step);
-//       }
-//     });
+  open(){
+    console.log("it works");
+    this.video2 = this.video.replace("watch?v=", "embed/");
+  },
+  close(){
+    console.log("close");
+    this.video2 = null;
+  }
 
-//     // api for calories
-//     let url2 =
-//       "https://api.spoonacular.com/recipes/" +
-//       this.id +
-//       "/nutritionWidget.json";
-//     axios(url2, {
-//       params: {
-//         apiKey: process.env.VUE_APP_SPOONACULAR_API,
-//       },
-//     }).then((response) => {
-//       //   console.log(response);
-//       this.calories = response.data.calories.slice(0, -1);
-//     });
-
-//     // api for ingredients
-//     let url3 =
-//       "https://api.spoonacular.com/recipes/" +
-//       this.id +
-//       "/ingredientWidget.json";
-//     axios(url3, {
-//       params: {
-//         apiKey: process.env.VUE_APP_SPOONACULAR_API,
-//       },
-//     }).then((response) => {
-//       let ingredients = response.data.ingredients;
-//       let desc = "";
-//       for (let i of ingredients) {
-//         let name = i.name;
-//         let value = i.amount.metric.value;
-//         let unit = i.amount.metric.unit;
-//         if (unit == "" || unit == "g") {
-//           desc = value + unit + " " + name;
-//         } else {
-//           desc = value + " " + unit + " " + name;
-//         }
-//         this.ingredient_list.push(desc);
-//       }
-//       // console.log(this.ingredient_list);
-//     });
-//   },
-//   computed: {
-//     numOfIngredients() {
-//       return this.ingredient_list.length;
-//     },
-//   },
+  // unbookmark(){
+  //   axios.get()
+  // }
+ }
+}
+    
+    
 
 </script>
 <!-- CSS files
@@ -352,70 +337,8 @@ ol {
   .section-heading.white h3 {
     color: #ffffff; }
 
-/* Preloader */
-#preloader {
-  background-color: #ffffff;
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 5000; }
-  #preloader img {
-    width: 30px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    z-index: 10; }
-  #preloader .circle-preloader {
-    display: block;
-    width: 60px;
-    height: 60px;
-    border: 2px solid #ccc;
-    border-bottom-color: #1c8314;
-    border-radius: 50%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-    animation: spin 2s infinite linear; }
-@-webkit-keyframes spin {
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg); } }
-@keyframes spin {
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg); } }
-/* Miscellaneous */
 
 
-/* ScrollUp */
-#scrollUp {
-  background-color: #40ba37;
-  border-radius: 0;
-  bottom: 60px;
-  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.3);
-  color: #ffffff;
-  font-size: 24px;
-  height: 40px;
-  line-height: 38px;
-  right: 60px;
-  text-align: center;
-  width: 40px;
-  -webkit-transition-duration: 500ms;
-  transition-duration: 500ms; }
-  #scrollUp:hover {
-    background-color: #141414; }
-  @media only screen and (max-width: 767px) {
-    #scrollUp {
-      bottom: 30px;
-      right: 30px; } }
 
 /* Button */
 .delicious-btn {
@@ -581,14 +504,14 @@ svg{
   .ingredients {
     margin-bottom: 80px; } }
 .ingredients h4 {
-  color: #474747;
+  color: #7e2e2e;
   margin-bottom: 30px; }
 .ingredients .custom-checkbox .custom-control-label::before {
   border-radius: 0; }
 .ingredients .custom-control-label::before {
   width: 30px;
   height: 30px;
-  background-color: #f3f5f8; }
+   }
 .ingredients .custom-control {
   padding-left: 2.5rem;
   margin-bottom: 30px;
@@ -604,14 +527,34 @@ svg{
   left: 5px;
   width: 20px;
   height: 20px; }
+
+
 .ingredients .custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
   background-color: #40ba37; }
 
+img{
+  width:100%;
+  height:auto;
+  aspect-ratio: 2/1.4;
+}
 .outer{
-  width: 1000px;
-
+  width: 750px;
 }
 
+.modal-dialog {
+      max-width: 800px;
+      margin: 30px auto;
+  }
+
+.modal-body {
+  position:relative;
+  padding:0px;
+}
+.btn-close {
+  position:absolute;
+  right:-30px;
+  top:0;
+}
 
 .contact-form-area .form-control {
   height: 52px;
