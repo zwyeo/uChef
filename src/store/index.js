@@ -36,6 +36,8 @@ export default createStore({
     // To track user session
     userId: "",
     userName: "",
+    // To get the current route name
+    routeName: "",
   },
   mutations: {
     getRecipes(state, payload) {
@@ -64,6 +66,9 @@ export default createStore({
     },
     setReviews(state, data) {
       state.reviewlist = data;
+    },
+    setRouteName(state, data) {
+      state.routeName = data;
     },
   },
   actions: {

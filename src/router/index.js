@@ -6,7 +6,7 @@ import RecipeDetails from "../views/RecipeDetails.vue";
 import SearchRecipeResults from "../views/SearchRecipeResults.vue";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
-import CreateStore from "../store";
+import store from "@/store";
 
 import * as firebase from "firebase/app";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -69,6 +69,13 @@ router.beforeEach((to, from, next) => {
   } else {
     next();
   }
+});
+
+router.afterEach((to, from, next) => {
+  // console.log(to.name);
+  // console.log(store.state.routeName);
+  store.state.routeName = to.name;
+  console.log(store.state.routeName);
 });
 
 export default router;

@@ -8,11 +8,9 @@
         :key="recipe"
         class="col-xl-4 col-lg-6"
       >
-        <router-link
-          :to="{ name: 'recipe-details', params: { id: id } }"
-        >
-        
-          <recipe-card v-for="elements in recipe"
+        <router-link :to="{ name: 'recipe-details', params: { id: id } }">
+          <recipe-card
+            v-for="elements in recipe"
             :title="elements.title"
             :img="elements.image"
             class="mb-5"
@@ -23,7 +21,11 @@
     </div>
     <div v-else class="row">
       <div class="col d-flex justify-content-center">
-        <img style="width: 500px; height: 500px;" src="../assets/img/core-img/noBookmarks.png" alt="">
+        <img
+          style="width: 500px; height: 500px"
+          src="../assets/img/core-img/noBookmarks.png"
+          alt=""
+        />
       </div>
     </div>
   </div>
@@ -38,12 +40,12 @@ export default {
   name: "MyBookmark",
   data() {
     return {
-      bookmarks: []
-    }
+      bookmarks: [],
+    };
   },
   components: {
     NavBar,
-    RecipeCard
+    RecipeCard,
   },
   methods: {
     getBookmarks() {
@@ -51,7 +53,7 @@ export default {
       const db = getDatabase();
       // console.log(db);
       const usersRef = ref(db, `users/${userId}/bookmarks`);
-      
+
       onValue(usersRef, (snapshot) => {
         if (snapshot.exists()) {
           const data = snapshot.val();
@@ -60,13 +62,12 @@ export default {
         } else {
           console.log("no data exists");
         }
-      })
-    }
+      });
+    },
   },
   mounted() {
-    console.log("mounted");
     this.getBookmarks();
-  }
+  },
 };
 </script>
 

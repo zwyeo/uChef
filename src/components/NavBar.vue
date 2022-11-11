@@ -104,12 +104,34 @@
 
                   <!-- Nav Start -->
                   <div class="classynav">
+                    <!-- HOME NAVBAR -->
                     <ul>
-                      <li class="active">
+                      <li
+                        v-if="this.$store.state.routeName == 'home'"
+                        class="active"
+                      >
+                        <router-link to="/"> Home </router-link>
+                      </li>
+                      <li v-else>
                         <router-link to="/"> Home </router-link>
                       </li>
 
-                      <li v-if="this.$store.state.userId">
+                      <!-- MY-RECIPE NAVBAR -->
+                      <li
+                        v-if="
+                          this.$store.state.userId &&
+                          this.$store.state.routeName == 'my-recipes'
+                        "
+                        class="active"
+                      >
+                        <router-link to="/my-recipes">My Recipes</router-link>
+                      </li>
+                      <li
+                        v-if="
+                          this.$store.state.userId &&
+                          this.$store.state.routeName != 'my-recipes'
+                        "
+                      >
                         <router-link to="/my-recipes">My Recipes</router-link>
                       </li>
                       <!-- TRIGGER LOGIN MODAL IF USER NOT LOGGED IN -->
@@ -120,7 +142,24 @@
                       >
                         <router-link to="/my-recipes">My Recipes</router-link>
                       </li>
-                      <li v-if="this.$store.state.userId">
+                      <!-- MY-BOOKMARKS NAVBAR -->
+                      <li
+                        v-if="
+                          this.$store.state.userId &&
+                          this.$store.state.routeName == 'my-bookmarks'
+                        "
+                        class="active"
+                      >
+                        <router-link to="/my-bookmarks"
+                          >My Bookmarks</router-link
+                        >
+                      </li>
+                      <li
+                        v-if="
+                          this.$store.state.userId &&
+                          this.$store.state.routeName != 'my-bookmarks'
+                        "
+                      >
                         <router-link to="/my-bookmarks"
                           >My Bookmarks</router-link
                         >
@@ -131,7 +170,13 @@
                         data-bs-toggle="modal"
                         data-bs-target="#loginModal"
                       >
-                        <router-link to="/my-bookmarks"
+                        <router-link
+                          to="/my-bookmarks"
+                          :class="
+                            (this.$store.state.routeName == 'my-bookmarks' ||
+                              this.$store.state.routeName == '') ??
+                            active
+                          "
                           >My Bookmarks</router-link
                         >
                       </li>
