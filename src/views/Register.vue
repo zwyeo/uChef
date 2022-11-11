@@ -164,8 +164,10 @@ export default {
           console.log(user);
           updateProfile(user, { displayName: this.name });
 
-          this.$store.commit("set_userName", user.displayName),
-            this.$store.commit("set_userId", user.uid);
+          this.$store.commit("set_userName", user.displayName);
+          this.$store.commit("set_userId", user.uid);
+          alert("Sign up successfully!");
+          this.$router.push("/");
 
           // reset the values
           this.email = "";
