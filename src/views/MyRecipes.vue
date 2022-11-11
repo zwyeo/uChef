@@ -2,14 +2,27 @@
   <div class="container-fluid px-5">
     <nav-bar></nav-bar>
     <h2 class="text-center p-5">My Recipes</h2>
-    <div v-if="getRecipes == 0" class="row recipe-card-style">
-      <button class="btn btn-primary" v-on:click="getRecipes">Click me</button>
-      <!-- Bug(?): Button currently might overlap with stuff -->
+    <div v-if="recipes.length != 0" class="row recipe-card-style">
+      <div
+        v-for="recipe in bookmarks"
+        :key="recipe.id"
+        class="col-xl-4 col-lg-6"
+      >
+        <router-link
+          :to="{ name: 'recipe-details', params: { id: recipe.id } }"
+        >
+          <recipe-card
+            :title="recipe.title"
+            :img="recipe.image"
+            class="mb-5"
+          ></recipe-card>
+        </router-link>
+      </div>
+      <!-- <button class="btn btn-primary" v-on:click="getBookmarks">Click me</button> -->
     </div>
     <div v-else class="row">
       <div class="col d-flex justify-content-center">
         <img style="width: 500px; height: 500px;" src="../assets/img/core-img/noRecipes.png" alt="">
-        <button class="btn btn-primary" v-on:click="getRecipes">Click me</button>
       </div>
     </div>
     <add-new-recipe></add-new-recipe>
@@ -18,40 +31,46 @@
 </template>
 
 <script>
-import axios from "axios";
 import NavBar from "../components/NavBar.vue";
 import RecipeCard from "../components/RecipeCard.vue";
 import AddNewRecipe from "../components/AddNewRecipe.vue";
+import { getDatabase, ref, onValue } from "firebase/database";
 
 export default {
   name: "MyRecipes",
+  data() {
+    return {
+      recipes: []
+    }
+  },
   components: {
     NavBar,
     RecipeCard,
     AddNewRecipe
   },
-  data() {
-    return {}
-  },
   methods: {
     getRecipes() {
       let userId = this.$store.state.userId;
-      let recipeCount = 1;
-      axios.get(`https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/community/${userId}`)
-      .then(response => {
-        console.log(response.data)
-      })
-      .catch(error => {
-        console.log(error.message)
-        if (error.message == "Network Error") {
-          return 0;
+      const db = getDatabase();
+      // console.log(db);
+      const usersRef = ref(db, `users/${userId}/recipes`);
+
+      onValue(usersRef, (snapshot) => {
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          this.recipes = data;
+          console.log(this.recipes);
+        } else {
+          console.log("no data exists");
         }
       })
-    },
-    createNewRecipe() {
-      
     }
+  },
+  mounted() {
+    console.log("mounted");
+    this.getRecipes();
   }
+
 };
 </script>
 
