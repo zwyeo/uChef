@@ -116,7 +116,6 @@
       ></div>
     </div>
   </div>
-  <!-- Pills content -->
 </template>
 
 <script>
@@ -146,7 +145,6 @@ export default {
           console.log(this.$store.state.userName);
           this.$store.commit("set_userName", user.displayName);
           this.$store.commit("set_userId", user.uid);
-          alert("Login successfully!");
           this.$router.push("/");
           // console.log(this.$store.state.userId);
         })
