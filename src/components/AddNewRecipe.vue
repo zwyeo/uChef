@@ -51,16 +51,34 @@
                   class="form-control"
                   v-model="newRecipeCategory"
                 >
-                  <option v-for="category in $store.state.foodCategories" :value="category">{{ category }}</option>
+                  <option
+                    v-for="category in $store.state.foodCategories"
+                    :value="category"
+                  >
+                    {{ category }}
+                  </option>
                 </select>
               </td>
             </tr>
             <tr>
-              <td><label for="newRecipeInstructions">Instructions (Steps)</label></td>
+              <td>
+                <label for="newRecipeInstructions">Instructions (Steps)</label>
+              </td>
               <td>
                 <div id="newRecipeInstructions">
-                  <input v-for="i in noOfSteps" class="form-control steps" type="text" :id="i" :placeholder="i">
-                  <button class="btn btn-small btn-primary" @click="this.noOfSteps++">Add Step</button>
+                  <input
+                    v-for="i in noOfSteps"
+                    class="form-control steps"
+                    type="text"
+                    :id="i"
+                    :placeholder="i"
+                  />
+                  <button
+                    class="btn btn-small btn-primary"
+                    @click="this.noOfSteps++"
+                  >
+                    Add Step
+                  </button>
                 </div>
               </td>
             </tr>
@@ -69,10 +87,19 @@
               <td>Upload Image</td>
               <td>
                 <div v-if="newRecipeImagePreview != null">
-                    Preview:
-                    <img :src="newRecipeImagePreview" height="268" width="356" alt="">
+                  Preview:
+                  <img
+                    :src="newRecipeImagePreview"
+                    height="268"
+                    width="356"
+                    alt=""
+                  />
                 </div>
-                <input type="file" class="form-control" @change="previewImage">
+                <input
+                  type="file"
+                  class="form-control"
+                  @change="previewImage"
+                />
               </td>
             </tr>
           </table>
@@ -129,29 +156,31 @@ export default {
 
       newRecipeImage: null,
       newRecipeImagePreview: null,
-      newRecipeImagePath: null
+      newRecipeImagePath: null,
     };
   },
   methods: {
     previewImage(event) {
-      this.newRecipeImage = event.target.files[0]
-      console.log(this.newRecipeImage)
-      this.newRecipeImagePreview = URL.createObjectURL(this.newRecipeImage)
+      this.newRecipeImage = event.target.files[0];
+      console.log(this.newRecipeImage);
+      this.newRecipeImagePreview = URL.createObjectURL(this.newRecipeImage);
     },
 
     createNewRecipe() {
-
       // Get storage from firebase and create reference child (naming needs work)
       const storage = getStorage();
-      const storageRef = ref(storage, `${this.$store.state.userId}/${this.newRecipeImage.name}`);
+      const storageRef = ref(
+        storage,
+        `${this.$store.state.userId}/${this.newRecipeImage.name}`
+      );
 
       // Upload function for uploading image into firebase cloud storage
       // Note: anything that requires the data from inside this function needs to be written inside, as this is an async request
       uploadBytes(storageRef, this.newRecipeImage).then((snapshot) => {
-        console.log('Uploaded image successfully!');
-        getDownloadURL(storageRef).then(downloadURL => {
-          this.newRecipeImagePath = downloadURL
-          console.log("Download URL:" + this.newRecipeImagePath)
+        console.log("Uploaded image successfully!");
+        getDownloadURL(storageRef).then((downloadURL) => {
+          this.newRecipeImagePath = downloadURL;
+          console.log("Download URL:" + this.newRecipeImagePath);
 
           // this posts the below data to the firebase realtime database
           axios.post(
@@ -162,7 +191,7 @@ export default {
               prepTime: this.newRecipePrepTime,
               cookTime: this.newRecipeCookTime,
               yields: this.newRecipeYields,
-              imgPath: this.newRecipeImagePath
+              imgPath: this.newRecipeImagePath,
             }
           );
 

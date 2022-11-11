@@ -31,7 +31,10 @@
         class="col-xl-4 col-lg-6"
       >
         <router-link
-          :to="{ name: 'recipe-details', params: { id: recipe.id } }"
+          :to="{
+            name: 'recipe-details',
+            params: { id: recipe.id },
+          }"
         >
           <recipe-card
             :title="recipe.title"

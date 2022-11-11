@@ -32,4 +32,20 @@ nav a {
 nav a.router-link-exact-active {
   color: #42b983;
 }
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:visited {
+  background-color: #42b983 !important;
+  border: #42b983 !important;
+}
+
+a .nav-link.active {
+  background-color: #42b983 !important;
+}
+
+a .nav-link {
+  color: #42b983;
+  font-weight: bold;
+}
 </style>
