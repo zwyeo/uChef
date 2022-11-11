@@ -214,14 +214,9 @@ export default {
 </script>
 
 <style scoped>
-@import url(../css/bootstrap.min.css);
-@import url(../css/owl.carousel.min.css);
-@import url(../css/animate.css);
-@import url(../css/magnific-popup.css);
 @import url(../css/font-awesome.min.css);
-@import url(../css/custom-icon.css);
 @import url(../css/classy-nav.min.css);
-@import url(../css/nice-select.min.css);
+
 a {
   text-decoration: none;
 }
