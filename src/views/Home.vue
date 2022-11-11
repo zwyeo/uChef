@@ -42,12 +42,14 @@
       </div>
     </div>
   </div>
+  <not-logged-in></not-logged-in>
 </template>
 
 <script>
 import NavBar from "../components/NavBar.vue";
 import RecipeCard from "@/components/RecipeCard.vue";
 import Banner from "@/components/Banner.vue";
+import NotLoggedIn from "../components/NotLoggedIn.vue";
 
 export default {
   name: "Home",
@@ -55,6 +57,7 @@ export default {
     NavBar,
     RecipeCard,
     Banner,
+    NotLoggedIn
   },
   data() {
     return {};
