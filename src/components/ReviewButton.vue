@@ -34,7 +34,15 @@
   >
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-header"><h2>Leave a Review</h2></div>
+        <div class="modal-header">
+          <h2>Leave a Review</h2>
+          <!-- <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button> -->
+        </div>
         <div class="modal-body">
           <review-form></review-form>
         </div>

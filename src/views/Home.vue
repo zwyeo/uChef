@@ -71,6 +71,7 @@ export default {
     this.populateCommunityRecipe();
     console.log(this.$store.state.userId);
     console.log(this.$store.state.userName);
+    console.log(this.$store.state.userName);
   },
   methods: {
     populatePopularRecipe() {
