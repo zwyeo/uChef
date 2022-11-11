@@ -88,35 +88,12 @@
             </div>
           </div>
 
-          <div class="row mb-4">
-            <div class="col-md-6 d-flex justify-content-center">
-              <!-- Checkbox -->
-              <div class="form-check mb-3 mb-md-0">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  value=""
-                  id="loginCheck"
-                  checked
-                />
-                <label class="form-check-label" for="loginCheck">
-                  Remember me
-                </label>
-              </div>
-            </div>
-
-            <div class="col-md-6 d-flex justify-content-center">
-              <!-- Simple link -->
-              <a href="#!">Forgot password?</a>
-            </div>
-          </div>
-
           <!-- Submit button -->
           <button
             v-if="!isLoading"
             @click="authethicate()"
             type="submit"
-            class="btn btn-primary btn-block mb-4"
+            class="btn btn-primary btn-block mb-4 w-100"
           >
             Sign in
           </button>
@@ -124,16 +101,11 @@
             v-if="isLoading"
             @click="authethicate()"
             type="submit"
-            class="btn btn-primary btn-block mb-4"
+            class="btn btn-primary btn-block mb-4 w-100"
           >
             <span class="spinner-border spinner-border-sm btn-spin"></span>
             Authethicating...
           </button>
-
-          <!-- Register buttons -->
-          <div class="text-center">
-            <p>Not a member? <a href="#!">Register</a></p>
-          </div>
         </form>
       </div>
       <div
@@ -170,7 +142,7 @@ export default {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          // console.log(user);
+          console.log(user);
           this.$store.commit("set_userId", user.uid);
           this.$router.push("/");
           // console.log(this.$store.state.userId);
@@ -181,15 +153,19 @@ export default {
           switch (errorCode) {
             case "auth/invalid-email":
               this.errorMsg = "Invalid email!";
+              this.isLoading = false;
               break;
             case "auth/user-not-found":
               this.errorMsg = "No account with that email was found!";
+              this.isLoading = false;
               break;
             case "auth/wrong-password":
               this.errorMsg = "Incorrect password!";
+              this.isLoading = false;
               break;
             default:
               this.errorMsg = "Email or password was incorrect";
+              this.isLoading = false;
               break;
           }
         });

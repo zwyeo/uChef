@@ -58,19 +58,6 @@ const router = createRouter({
 });
 
 // NAVIGATION GAURDS
-// router.beforeEach((to, from, next) => {
-//   let authenticatedUser = null;
-//   const user = CreateStore.state.userId;
-//   if (user) authenticatedUser = user;
-//   // const user = this.$store.state.user_id;
-//   const requriesAuth = to.matched.some((record) => record.meta.requriesAuth);
-//   // will re-directs user if access non-user page
-//   if (requriesAuth && !authenticatedUser) {
-//     alert("Sign in first beeeech! \n (WILL CHANGE THIS TO A MODEL NEXT TIME)");
-//     next("login");
-//   } else next();
-// });
-
 router.beforeEach((to, from, next) => {
   const requriesAuth = to.matched.some((record) => record.meta.requriesAuth);
 
@@ -82,16 +69,5 @@ router.beforeEach((to, from, next) => {
     next();
   }
 });
-
-// router.beforeEach((to, from, next) => {
-//   if (to.matched.some((record) => record.meta.requriesAuth)) {
-//     if (getAuth().currentUser) {
-//       next();
-//     } else {
-//       alert("you dont have access");
-//       next("/");
-//     }
-//   }
-// });
 
 export default router;

@@ -131,8 +131,8 @@
           </div>
         </div>
       </div>
-      <review-form></review-form>
-      <!-- <div class="row">
+
+      <div class="row">
         <div class="col-12">
           <div class="section-heading text-left">
             <h3>Leave a comment</h3>
@@ -188,7 +188,7 @@
             </form>
           </div>
         </div>
-      </div> -->
+      </div>
     </div>
   </div>
 
@@ -220,7 +220,6 @@
 
 <script>
 import NavBar from "../components/NavBar.vue";
-import ReviewForm from "../components/ReviewForm.vue";
 import axios from "axios";
 
 export default {
