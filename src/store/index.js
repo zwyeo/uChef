@@ -35,6 +35,7 @@ export default createStore({
 
     // To track user session
     userId: "",
+    userName: "",
   },
   mutations: {
     getRecipes(state, payload) {
@@ -57,6 +58,9 @@ export default createStore({
     // For user authetication
     set_userId(state, data) {
       state.userId = data;
+    },
+    set_userName(state, data) {
+      state.userName = data;
     },
   },
   actions: {
@@ -144,19 +148,6 @@ export default createStore({
         const data = res.data;
         commit("setCommunityRecipe", data);
       });
-    },
-
-    /// sdadasdadadada
-    async fetchUser(context, user) {
-      context.commit("SET_LOGGED_IN", user !== null);
-      if (user) {
-        context.commit("SET_USER", {
-          displayName: user.displayName,
-          email: user.email,
-        });
-      } else {
-        context.commit("SET_USER", null);
-      }
     },
   },
 

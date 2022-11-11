@@ -60,7 +60,7 @@ export default {
     NavBar,
     RecipeCard,
     Banner,
-    NotLoggedIn
+    NotLoggedIn,
   },
   data() {
     return {};

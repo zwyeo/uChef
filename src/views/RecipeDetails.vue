@@ -6,7 +6,7 @@
   <div class="container">
     <div class="row">
       <div class="col-12 outer">
-        <img :src="image" />
+        <img class="display-img" :src="image" />
       </div>
     </div>
   </div>
@@ -116,18 +116,37 @@
           <div class="ingredients">
             <h4 class="">Ingredients</h4>
 
-            <!-- Custom Checkbox -->
+            <!-- Ingredient list -->
             <div
               v-for="(item, index) in ingredient_list"
               :key="index"
-              class="custom-control custom-checkbox"
               :id="index"
             >
-              <input type="checkbox" class="custom-control-input" :id="index" />
-              <label class="custom-control-label" :for="index">{{
-                item
-              }}</label>
+              <ul class="list-group text-white">
+                <li
+                  class="list-group-item d-flex justify-content-between align-content-center"
+                >
+                  <h6 class="mb-0">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 512 512"
+                    >
+                      <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                      <path
+                        d="M512 64c0 113.6-84.6 207.5-194.2 222c-7.1-53.4-30.6-101.6-65.3-139.3C290.8 78.3 364 32 448 32h32c17.7 0 32 14.3 32 32zM0 128c0-17.7 14.3-32 32-32H64c123.7 0 224 100.3 224 224v32 96c0 17.7-14.3 32-32 32s-32-14.3-32-32V352C100.3 352 0 251.7 0 128z"
+                      />
+                    </svg>
+                    &nbsp;{{ item }}
+                  </h6>
+
+                  <div class="check">
+                    <input type="checkbox" name="a" />
+                  </div>
+                </li>
+              </ul>
             </div>
+
+            <!-- End of ingredient list -->
           </div>
         </div>
       </div>
@@ -193,29 +212,6 @@
 
   <review-btn></review-btn>
   <!-- ##### Follow Us Instagram Area End ##### -->
-
-  <!-- ##### Footer Area Start ##### -->
-  <!-- <footer class="footer-area">
-        <div class="container h-100">
-            <div class="row h-100">
-                <div class="col-12 h-100 d-flex flex-wrap align-items-center justify-content-between">
-                    Footer Social Info
-                    <div class="footer-social-info text-right">
-                        <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
-                        <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                        <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                        <a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a>
-                        <a href="#"><i class="fa fa-behance" aria-hidden="true"></i></a>
-                        <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-                    </div>
-                    Footer Logo
-                    <div class="footer-logo">
-                        <a href="index.html"><img src="img/core-img/logo.png" alt=""></a>
-                    </div>
-                  </div>
-            </div>
-        </div>
-    </footer> -->
 </template>
 
 <script>
@@ -255,8 +251,6 @@ export default {
         this.title = obj.strMeal;
         this.image = obj.strMealThumb;
         this.video = obj.strYoutube.replace("watch?v=", "embed/");
-        // this.video2 = this.video + "?autoplay=1&amp;modestbranding=1&amp;showinfo=0"
-
         let instruction = obj.strInstructions.split("\r\n");
         this.instructions = instruction;
 
@@ -273,7 +267,8 @@ export default {
         console.log(this.ingredient_list);
       });
 
-    //Bookmark button
+    //Dictate the state of the bookmark button
+
     axios
       .get(
         `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${this.$store.state.userId}/bookmarks.json`
@@ -369,6 +364,7 @@ ul,
 ol {
   margin: 0;
 }
+
 ul li,
 ol li {
   list-style: none;
@@ -387,13 +383,16 @@ ol li {
   margin-bottom: 80px;
   text-align: center;
 }
+
 .section-heading h3 {
   font-size: 30px;
   margin-bottom: 0;
 }
+
 .section-heading.text-left {
   text-align: left !important;
 }
+
 .section-heading.white h3 {
   color: #ffffff;
 }
@@ -416,6 +415,7 @@ ol li {
   text-transform: capitalize;
   background-color: #40ba37;
 }
+
 .delicious-btn.active,
 .delicious-btn:hover,
 .delicious-btn:focus {
@@ -425,38 +425,45 @@ ol li {
   background-color: #1c8314;
   border-color: #40ba37;
 }
+
 .delicious-btn.btn-2 {
   background-color: #1c8314;
   border-color: #40ba37;
 }
+
 .delicious-btn.btn-2.active,
 .delicious-btn.btn-2:hover,
 .delicious-btn.btn-2:focus {
   background-color: #40ba37;
   border-color: #1c8314;
 }
+
 .delicious-btn.btn-3 {
   background-color: #474747;
   border-color: #1c8314;
 }
+
 .delicious-btn.btn-3.active,
 .delicious-btn.btn-3:hover,
 .delicious-btn.btn-3:focus {
   background-color: #40ba37;
   border-color: #1c8314;
 }
+
 .delicious-btn.btn-4 {
   background-color: transparent;
   border: 3px solid #40ba37;
   line-height: 53px;
   color: #40ba37;
 }
+
 @media only screen and (max-width: 767px) {
   .delicious-btn.btn-4 {
     height: 40px;
     line-height: 33px;
   }
 }
+
 .delicious-btn.btn-4.active,
 .delicious-btn.btn-4:hover,
 .delicious-btn.btn-4:focus {
@@ -464,6 +471,7 @@ ol li {
   color: #ffffff;
   background-color: #40ba37;
 }
+
 @media only screen and (max-width: 767px) {
   .delicious-btn.btn-4.active,
   .delicious-btn.btn-4:hover,
@@ -472,6 +480,7 @@ ol li {
     line-height: 33px;
   }
 }
+
 @media only screen and (max-width: 767px) {
   .delicious-btn {
     height: 40px;
@@ -494,6 +503,7 @@ ol li {
     margin-bottom: 30px;
   }
 }
+
 @media only screen and (max-width: 767px) {
   .receipe-post-search .col-12 {
     margin-bottom: 15px;
@@ -501,7 +511,7 @@ ol li {
 }
 
 svg {
-  width: 50px;
+  width: 35px;
 }
 
 .receipe-headline span {
@@ -510,24 +520,29 @@ svg {
   color: #a4a4a4;
   margin-bottom: 0;
 }
+
 .receipe-headline h2 {
   font-size: 36px;
   color: #474747;
   margin-bottom: 30px;
 }
+
 @media only screen and (max-width: 767px) {
   .receipe-headline h2 {
     font-size: 24px;
   }
 }
+
 .receipe-headline .receipe-duration {
   border-left: 3px solid #40ba37;
   padding: 15px;
 }
+
 .receipe-headline .receipe-duration h6 {
   font-size: 15px;
   margin-bottom: 5px;
 }
+
 .receipe-headline .receipe-duration h6:last-child {
   margin-bottom: 0;
 }
@@ -535,6 +550,7 @@ svg {
 .receipe-ratings .ratings {
   margin-bottom: 30px;
 }
+
 .receipe-ratings i {
   font-size: 18px;
   color: #fbb710;
@@ -546,6 +562,7 @@ svg {
   z-index: 1;
   margin-bottom: 50px;
 }
+
 .single-preparation-step h4 {
   color: #474747;
   -webkit-box-flex: 0;
@@ -561,27 +578,33 @@ svg {
     margin-bottom: 80px;
   }
 }
+
 @media only screen and (max-width: 767px) {
   .ingredients {
     margin-bottom: 80px;
   }
 }
+
 .ingredients h4 {
   color: #7e2e2e;
   margin-bottom: 30px;
 }
+
 .ingredients .custom-checkbox .custom-control-label::before {
   border-radius: 0;
 }
+
 .ingredients .custom-control-label::before {
   width: 30px;
   height: 30px;
 }
+
 .ingredients .custom-control {
   padding-left: 2.5rem;
   margin-bottom: 30px;
   min-height: 35px;
 }
+
 .ingredients .custom-control-label {
   margin-bottom: 0;
   padding-top: 5px;
@@ -589,6 +612,7 @@ svg {
   font-weight: 600;
   color: #2f2f2f;
 }
+
 .ingredients .custom-control-label::after {
   top: 10px;
   left: 5px;
@@ -603,11 +627,12 @@ svg {
   background-color: #40ba37;
 }
 
-img {
+.display-img {
   width: 100%;
   height: auto;
   aspect-ratio: 2/1.4;
 }
+
 .outer {
   width: 750px;
 }
@@ -621,6 +646,7 @@ img {
   position: relative;
   padding: 0px;
 }
+
 .btn-close {
   position: absolute;
   right: -30px;
@@ -641,13 +667,83 @@ img {
   -webkit-transition-duration: 500ms;
   transition-duration: 500ms;
 }
+
 .contact-form-area .form-control:focus {
   border-left: 3px solid #40ba37;
   box-shadow: none;
 }
+
 .contact-form-area textarea.form-control {
   height: 200px;
   -webkit-transition-duration: 500ms;
   transition-duration: 500ms;
+}
+
+/* test */
+.list-group {
+  width: 300px !important;
+}
+
+.list-group-item {
+  margin-top: 10px;
+  border-radius: none;
+  background: #40ba37;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.list-group-item:hover {
+  transform: scaleX(1.1);
+}
+
+.check {
+  opacity: 0;
+  transition: all 0.6s ease-in-out;
+}
+
+.list-group-item:hover .check {
+  opacity: 1;
+}
+
+.about span {
+  font-size: 12px;
+  margin-right: 10px;
+}
+
+input[type="checkbox"] {
+  position: relative;
+  cursor: pointer;
+}
+
+input[type="checkbox"]:before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 0px;
+  left: 0;
+  border: 1px solid #10a3f9;
+  border-radius: 3px;
+  background-color: white;
+}
+
+input[type="checkbox"]:checked:after {
+  content: "";
+  display: block;
+  width: 7px;
+  height: 12px;
+  border: solid #007bff;
+  border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+  position: absolute;
+  top: 2px;
+  left: 6px;
+}
+
+input[type="checkbox"]:checked + .check {
+  opacity: 1;
 }
 </style>
