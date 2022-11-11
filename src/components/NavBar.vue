@@ -57,6 +57,18 @@
       </div>
 
       <div class="container">
+        <!-- filter buttons -->
+
+        <select
+          class="form-select w-25 float-end"
+          aria-label="Default select example"
+          id="filter"
+          v-model="$store.state.selectedCategory"
+          @change="$store.dispatch('filterCategory')"
+        >
+          <option v-for="cat of $store.state.foodCategories">{{ cat }}</option>
+        </select>
+        <label for="filter" class="float-end pe-2 pt-2">Filter By:</label>
         <div
           class="d-flex text-center rounded-pill w-50 pe-2 border border-secondary px-2 mt-2 bg-white"
         >
@@ -198,7 +210,7 @@
 
 <script>
 import { getAuth, signOut } from "firebase/auth";
-
+import axios from "axios";
 export default {
   name: "NavBar",
   components: {},
@@ -208,6 +220,7 @@ export default {
       isSearchExpand: false,
     };
   },
+
   computed: {
     // searchQuery is different from the usual computed because it required getter and setter
     searchQuery: {
