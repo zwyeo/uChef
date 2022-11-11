@@ -1,216 +1,196 @@
 <template>
-  <!-- Bootstrap Navbar Start -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-      <router-link to="/"
-        ><a class="nav-brand"
-        ><img src="../assets/logo.png" style="height: 10%; width:10%;" alt="uChef" /></a
-      ></router-link>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Dropdown
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-          </li>
-        </ul>
-        <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
-      </div>
-    </div>
-  </nav>
+  <div class="d-flex justify-content-center align-items-center">
+    <div>
+      <!-- Bootstrap Navbar Start -->
 
-  <!-- ##### Header Area Start ##### -->
-  <header class="header-area">
-    <!-- Top Header Area -->
+      <!-- ##### Header Area Start ##### -->
+      <header class="header-area">
+        <!-- Top Header Area -->
 
-    <!-- Navbar Toggler -->
-    <div class="classy-navbar-toggler">
-      <span class="navbarToggler"><span></span><span></span><span></span></span>
-    </div>
+        <!-- Navbar Toggler -->
+        <div class="classy-navbar-toggler">
+          <span class="navbarToggler"
+            ><span></span><span></span><span></span
+          ></span>
+        </div>
 
-    <!-- Search Wrapper -->
-    <div class="search-wrapper" :class="{ on: isSearchExpand }">
-      <!-- Close Btn -->
-      <div class="close-btn" @click="closeSearchBox">
-        <i class="fa fa-times" aria-hidden="true"></i>
-      </div>
-
-      <div class="container">
-        <!-- filter buttons -->
-
-        <select
-          class="form-select w-25 float-end"
-          aria-label="Default select example"
-          id="filter"
-          v-model="$store.state.selectedCategory"
-          @change="$store.dispatch('filterCategory')"
-        >
-          <option v-for="cat of $store.state.foodCategories">{{ cat }}</option>
-        </select>
-        <label for="filter" class="float-end pe-2 pt-2">Filter By:</label>
-        <div
-          class="d-flex text-center rounded-pill w-50 pe-2 border border-secondary px-2 mt-2 bg-white"
-        >
-          <div class="pt-2 icon">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-search mb-1"
-              viewBox="0 0 16 16"
-              @click="$store.dispatch('getRecipes')"
-            >
-              <path
-                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
-              ></path>
-            </svg>
+        <!-- Search Wrapper -->
+        <div class="search-wrapper" :class="{ on: isSearchExpand }">
+          <!-- Close Btn -->
+          <div class="close-btn" @click="closeSearchBox">
+            <i class="fa fa-times" aria-hidden="true"></i>
           </div>
-          <router-link :to="{ name: 'home', hash: '#popular-recipe' }">
-            <input
-              type="text"
-              :placeholder="$store.state.searchDesc"
-              class="text-light w-5 form-control rounded-pill input border-0 bg-white"
-              v-model="searchQuery"
-              style="background-color: #40ba37"
-              @keyup.enter="onSearch"
-              @change="$store.dispatch('showPreviews'), closeSearchBox"
-            />
-          </router-link>
+
+          <div class="container">
+            <!-- filter buttons -->
+
+            <select
+              class="form-select w-25 float-end"
+              aria-label="Default select example"
+              id="filter"
+              v-model="$store.state.selectedCategory"
+              @change="$store.dispatch('filterCategory')"
+            >
+              <option
+                v-for="(cat, idx) of $store.state.foodCategories"
+                :key="idx"
+              >
+                {{ cat }}
+              </option>
+            </select>
+            <label for="filter" class="float-end pe-2 pt-2">Filter By:</label>
+            <div
+              class="d-flex text-center rounded-pill w-50 pe-2 border border-secondary px-2 mt-2 bg-white"
+            >
+              <div class="pt-2 icon">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-search mb-1"
+                  viewBox="0 0 16 16"
+                  @click="$store.dispatch('getRecipes')"
+                >
+                  <path
+                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+                  ></path>
+                </svg>
+              </div>
+              <router-link :to="{ name: 'home', hash: '#popular-recipe' }">
+                <input
+                  type="text"
+                  :placeholder="$store.state.searchDesc"
+                  class="text-light w-5 form-control rounded-pill input border-0 bg-white"
+                  v-model="searchQuery"
+                  style="background-color: #40ba37"
+                  @keyup.enter="onSearch"
+                  @change="$store.dispatch('showPreviews'), closeSearchBox"
+                />
+              </router-link>
+            </div>
+          </div>
+        </div>
+
+        <!-- Navbar Area -->
+        <div class="delicious-main-menu mt-5">
+          <div class="classy-nav-container breakpoint-off">
+            <div class="container">
+              <!-- Menu -->
+              <nav
+                class="classy-navbar justify-content-between"
+                id="deliciousNav"
+              >
+                <!-- Logo -->
+                <router-link to="/"
+                  ><a class="nav-brand"
+                    ><img src="../assets/logo.png" alt="uChef" /></a
+                ></router-link>
+
+                <!-- Navbar Toggler -->
+                <div class="classy-navbar-toggler">
+                  <span class="navbarToggler"
+                    ><span></span><span></span><span></span
+                  ></span>
+                </div>
+
+                <!-- Menu -->
+                <div class="classy-menu">
+                  <!-- close btn -->
+                  <div class="classycloseIcon">
+                    <div class="cross-wrap">
+                      <span class="top"></span><span class="bottom"></span>
+                    </div>
+                  </div>
+
+                  <!-- Nav Start -->
+                  <div class="classynav">
+                    <ul>
+                      <li class="active">
+                        <router-link to="/"> Home </router-link>
+                      </li>
+
+                      <li>
+                        <router-link to="/my-recipes">My Recipes</router-link>
+                      </li>
+                      <li>
+                        <router-link to="/my-bookmarks"
+                          >My Bookmarks</router-link
+                        >
+                      </li>
+                      <li style="cursor: pointer" @click="logOut">
+                        LOG OUT (FOR TESTING)
+                      </li>
+                    </ul>
+                  </div>
+                  <!-- Nav End -->
+                </div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </header>
+      <div class="modal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Modal title</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <p>Modal body text goes here.</p>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="button" class="btn btn-primary">
+                Save changes
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-
-    <!-- Navbar Area -->
-    <div class="delicious-main-menu mt-5">
-      <div class="classy-nav-container breakpoint-off">
-        <div class="container">
-          <!-- Menu -->
-          <nav class="classy-navbar justify-content-between" id="deliciousNav">
-            <!-- Logo -->
-            <router-link to="/"
-              ><a class="nav-brand"
-                ><img src="../assets/logo.png" alt="uChef" /></a
-            ></router-link>
-
-            <!-- Navbar Toggler -->
-            <div class="classy-navbar-toggler">
-              <span class="navbarToggler"
-                ><span></span><span></span><span></span
-              ></span>
-            </div>
-
-            <!-- Menu -->
-            <div class="classy-menu">
-              <!-- close btn -->
-              <div class="classycloseIcon">
-                <div class="cross-wrap">
-                  <span class="top"></span><span class="bottom"></span>
-                </div>
-              </div>
-
-              <!-- Nav Start -->
-              <div class="classynav">
-                <ul>
-                  <li class="active">
-                    <router-link to="/"> Home </router-link>
-                  </li>
-
-                  <li>
-                    <router-link to="/my-recipes">My Recipes</router-link>
-                  </li>
-                  <li>
-                    <router-link to="/my-bookmarks">My Bookmarks</router-link>
-                  </li>
-                  <li style="cursor: pointer" @click="logOut">
-                    LOG OUT (FOR TESTING)
-                  </li>
-                </ul>
-
-                <!-- Newsletter Form -->
-                <div class="search-btn" @click="openSearchBox">
-                  <i class="fa fa-search" aria-hidden="true"></i>
-                </div>
-
-                <!-- Profile -->
-                <div class="dropdown">
-                  <button
-                    class="btn btn-secondary dropdown-toggle"
-                    type="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                    id="dropdownMenuButton1"
-                  ><img src="../assets/img/core-img/hamburger2.png" alt=""></button>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li>
-                      <a class="dropdown-item" href="#">Something else here</a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <!-- Nav End -->
-            </div>
-          </nav>
-        </div>
-      </div>
+    <!-- Search Icon -->
+    <div class="search-btn pt-3 ps-5" @click="openSearchBox">
+      <i class="fa fa-search" aria-hidden="true"></i>
     </div>
-  </header>
-  <div class="modal" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Modal title</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <p>Modal body text goes here.</p>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
-            Close
-          </button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
+    <!-- Profile -->
+    <div class="dropdown">
+      <button
+        class="btn btn-secondary dropdown-toggle"
+        type="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+        id="dropdownMenuButton1"
+      >
+        <img src="../assets/img/core-img/hamburger2.png" alt="" />
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        <li><a class="dropdown-item" href="#">Action</a></li>
+        <li>
+          <a class="dropdown-item" href="#">Another action</a>
+        </li>
+        <li>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
 
 <script>
 import { getAuth, signOut } from "firebase/auth";
-import axios from "axios";
 export default {
   name: "NavBar",
   components: {},
@@ -248,6 +228,7 @@ export default {
       signOut(auth)
         .then(() => {
           this.$store.state.userId = null;
+          this.$store.state.userName = null;
           alert("You have logged out!");
           this.$router.push("/");
         })
