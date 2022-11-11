@@ -75,7 +75,6 @@ router.afterEach((to, from, next) => {
   // console.log(to.name);
   // console.log(store.state.routeName);
   store.state.routeName = to.name;
-  console.log(store.state.routeName);
 });
 
 export default router;
