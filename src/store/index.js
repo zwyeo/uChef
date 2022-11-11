@@ -91,15 +91,35 @@ export default createStore({
         this.state.starrating,
         this.state.reviewsubject,
         this.state.reviewcomments,
-        this.state.userId
+        this.state.userName
       );
+      let date = new Date();
+      const month = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+      let wordmonth = month[date.getMonth()];
+      let year = date.getFullYear();
+      let day = date.getDate();
+      let formatdate = `${day} ${wordmonth} ${year}`;
       axios.post(
         `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/recipes/${this.state.activerecipeid}/reviews.json`,
         {
-          user: this.state.userId,
+          user: this.state.userName,
           rating: this.state.starrating,
           subject: this.state.reviewsubject,
           message: this.state.reviewcomments,
+          date: formatdate,
         }
       );
       this.state.reviewsubject = "";

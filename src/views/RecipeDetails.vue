@@ -133,6 +133,7 @@
       </div>
 
       <div class="row">
+        <review-card></review-card>
         <div class="col-12">
           <div class="section-heading text-left">
             <h3>Leave a comment</h3>
@@ -221,9 +222,10 @@
 import NavBar from "../components/NavBar.vue";
 import axios from "axios";
 import ReviewBtn from "../components/ReviewButton.vue";
+import ReviewCard from "../components/ReviewCard.vue";
 
 export default {
-  components: { NavBar, ReviewBtn },
+  components: { NavBar, ReviewBtn, ReviewCard },
   props: ["id"],
   data() {
     return {
