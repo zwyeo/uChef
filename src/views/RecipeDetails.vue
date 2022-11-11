@@ -156,7 +156,7 @@
           <h3>Reviews</h3>
           <p>See what others have to say</p>
         </div>
-        <div v-if="review_list.length > 0">
+        <div v-if="review_list.length > 0" id="reviewsSection">
           <review-card
             v-for="(review, index) of review_list"
             :key="index"
@@ -257,6 +257,7 @@ export default {
   created() {
     //to link active id to store
     this.$store.state.activerecipeid = this.id;
+
     //filling up the recipe details
     let url = "https://themealdb.com/api/json/v1/1/lookup.php";
     axios
