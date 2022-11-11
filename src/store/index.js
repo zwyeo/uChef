@@ -4,6 +4,7 @@ import axios from "axios";
 export default createStore({
   state: {
     recipes: {},
+    foodCategories: ["Beef","Breakfast","Chicken","Dessert","Goat","Lamb","Miscellaneous","Pasta","Pork","Seafood","Side","Starter","Vegan","Vegetarian"],
     queryParam: "",
     previews: {},
     searchDesc: "Search food recipe",
