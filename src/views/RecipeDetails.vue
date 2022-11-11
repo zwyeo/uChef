@@ -109,9 +109,28 @@
         </div>
       </div>
 
-      <div class="row">
-        <review-card :id="id"></review-card>
-        <div class="col-12">
+      <div class="row mt-5">
+        <div class="section-heading text-left m-0">
+          <h3>Reviews</h3>
+          <p>See what others have to say</p>
+        </div>
+        <div v-if="review_list.length > 0" id="reviewsSection">
+          <review-card
+            v-for="(review, index) of review_list"
+            :key="index"
+            :id="id"
+            :user="review.user"
+            :date="review.date"
+            :rating="review.rating"
+            :subject="review.subject"
+            :message="review.message"
+          ></review-card>
+        </div>
+        <div v-else>
+          <p class="text-center pt-5 pb-5">No reviews yet.</p>
+        </div>
+
+        <!-- <div class="col-12">
           <div class="section-heading text-left">
             <h3>Leave a comment</h3>
           </div>
@@ -174,6 +193,7 @@ export default {
   created() {
     //to link active id to store
     this.$store.state.activerecipeid = this.id;
+
     //filling up the recipe details
     console.log(this.id);
     let url = "https://themealdb.com/api/json/v1/1/lookup.php";

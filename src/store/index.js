@@ -32,7 +32,7 @@ export default createStore({
     activerecipeid: "",
     reviewsubject: "",
     reviewcomments: "",
-
+    reviewlist: [],
     // To track user session
     userId: "",
     userName: "",
@@ -61,6 +61,9 @@ export default createStore({
     },
     set_userName(state, data) {
       state.userName = data;
+    },
+    setReviews(state, data) {
+      state.reviewlist = data;
     },
   },
   actions: {
@@ -129,8 +132,26 @@ export default createStore({
       this.state.reviewsubject = "";
       this.state.reviewcomments = "";
       this.state.starrating = "0";
+      // this.state.dispatch("getReviews");
+      // console.log(this.state.reviewlist);
+      // location.reload(); //to reload page
+      // window.scrollTo(0, document.querySelector("#reviewSection").scrollHeight);
     },
-
+    getReviews({ commit }) {
+      //trying to use axios call to refresh page
+      //review card population
+      let review_list = [];
+      let rurl = `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/recipes/${this.id}/reviews.json`;
+      axios.get(rurl).then((response) => {
+        // console.log(response.data);
+        let reviewsObj = response.data;
+        for (let review in reviewsObj) {
+          review_list.push(reviewsObj[review]);
+        }
+        review_list = review_list.reverse();
+        commit("setReviews", review_list);
+      });
+    },
     // This fn receive user input from searchbar and pass payload to mutation
     setQueryParam({ commit }, newValue) {
       commit("setQueryParam", newValue);
