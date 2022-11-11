@@ -4,16 +4,17 @@
     <h2 class="text-center p-5">My Bookmarks</h2>
     <div v-if="bookmarks.length != 0" class="row recipe-card-style">
       <div
-        v-for="recipe in bookmarks"
-        :key="recipe.id"
+        v-for="(recipe, id) in bookmarks"
+        :key="recipe"
         class="col-xl-4 col-lg-6"
       >
         <router-link
-          :to="{ name: 'recipe-details', params: { id: recipe.id } }"
+          :to="{ name: 'recipe-details', params: { id: id } }"
         >
-          <recipe-card
-            :title="recipe.title"
-            :img="recipe.image"
+        
+          <recipe-card v-for="elements in recipe"
+            :title="elements.title"
+            :img="elements.image"
             class="mb-5"
           ></recipe-card>
         </router-link>
@@ -55,7 +56,7 @@ export default {
         if (snapshot.exists()) {
           const data = snapshot.val();
           this.bookmarks = data;
-          console.log(this.bookmarks);
+          // console.log(this.bookmarks);
         } else {
           console.log("no data exists");
         }
