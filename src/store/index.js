@@ -38,6 +38,7 @@ export default createStore({
     userName: "",
     // To get the current route name
     routeName: "",
+    prevRouteName: "", // To bypass the signup/name bug
   },
   mutations: {
     getRecipes(state, payload) {

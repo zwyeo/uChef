@@ -69,9 +69,10 @@ export default {
     // This will refresh the popular and community recipe list from DB
     this.populatePopularRecipe();
     this.populateCommunityRecipe();
-    // console.log(this.$store.state.userId);
-    // console.log(this.$store.state.userName);
-    // console.log(this.$store.state.routeName);
+    if (this.$store.state.prevRouteName == "register") {
+      this.$store.state.prevRouteName = "";
+      location.reload();
+    }
   },
   methods: {
     populatePopularRecipe() {

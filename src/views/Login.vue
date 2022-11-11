@@ -83,7 +83,7 @@
               placeholder="Password"
               v-model="password"
             />
-            <div class="text-center text-danger" v-if="errorMsg">
+            <div class="text-center text-danger mt-1" v-if="errorMsg">
               {{ errorMsg }}
             </div>
           </div>

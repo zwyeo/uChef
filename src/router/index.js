@@ -63,7 +63,7 @@ const router = createRouter({
 // NAVIGATION GAURDS
 router.beforeEach((to, from, next) => {
   const requriesAuth = to.matched.some((record) => record.meta.requriesAuth);
-
+  console.log(to, from);
   const isAuthenthicated = getAuth().currentUser;
   if (requriesAuth && !isAuthenthicated) {
   } else {

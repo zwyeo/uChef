@@ -96,7 +96,7 @@
               v-model="password"
             />
 
-            <div class="text-center text-danger" v-if="errorMsg">
+            <div class="text-center text-danger mt-1" v-if="errorMsg">
               {{ errorMsg }}
             </div>
           </div>
@@ -166,7 +166,7 @@ export default {
 
           this.$store.commit("set_userName", user.displayName);
           this.$store.commit("set_userId", user.uid);
-          alert("Sign up successfully!");
+          this.$store.state.prevRouteName = "register";
           this.$router.push("/");
 
           // reset the values
@@ -177,20 +177,21 @@ export default {
           const errorCode = error.code;
           // const errorMessage = error.message;
           switch (errorCode) {
+            case "auth/email-already-in-use":
+              this.errorMsg = "Email is already in used!";
+              this.isLoading = false;
+              break;
             case "auth/invalid-email":
-              this.errorMsg = "Invalid email!";
+              this.errorMsg = "Email is invalid!";
               this.isLoading = false;
               break;
-            case "auth/user-not-found":
-              this.errorMsg = "No account with that email was found!";
-              this.isLoading = false;
-              break;
-            case "auth/wrong-password":
-              this.errorMsg = "Incorrect password!";
+            case "auth/operation-not-allowed":
+              this.errorMsg = "This email is is not enabled!";
               this.isLoading = false;
               break;
             default:
-              this.errorMsg = "Email or password was incorrect";
+              this.errorMsg =
+                "Your password is weak! Please try a different one!";
               this.isLoading = false;
               break;
           }
