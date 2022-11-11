@@ -180,9 +180,7 @@
                   ></textarea>
                 </div>
                 <div class="col-12">
-                  <button class="btn delicious-btn mt-30" type="submit">
-                    Post Comments
-                  </button>
+                  <button class="btn delicious-btn mt-30">Post Comments</button>
                 </div>
               </div>
             </form>
@@ -191,7 +189,8 @@
       </div>
     </div>
   </div>
-  <review-form></review-form>
+
+  <review-btn></review-btn>
   <!-- ##### Follow Us Instagram Area End ##### -->
 
   <!-- ##### Footer Area Start ##### -->
@@ -221,10 +220,10 @@
 <script>
 import NavBar from "../components/NavBar.vue";
 import axios from "axios";
-import ReviewForm from "@/components/ReviewForm.vue";
+import ReviewBtn from "../components/ReviewButton.vue";
 
 export default {
-  components: { NavBar, ReviewForm },
+  components: { NavBar, ReviewBtn },
   props: ["id"],
   data() {
     return {
@@ -238,6 +237,8 @@ export default {
     };
   },
   created() {
+    //to link active id to store
+    this.$store.state.activerecipeid = this.id;
     //filling up the recipe details
     let url = "https://themealdb.com/api/json/v1/1/lookup.php";
     axios

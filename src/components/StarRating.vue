@@ -8,7 +8,6 @@
             id="star-5"
             type="radio"
             name="star"
-            v-model="$store.state.starrating"
             value="5"
             @click="checkRating"
           />
@@ -20,7 +19,6 @@
             id="star-4"
             type="radio"
             name="star"
-            v-model="$store.state.starrating"
             value="4"
             @click="checkRating"
           />
@@ -32,7 +30,6 @@
             id="star-3"
             type="radio"
             name="star"
-            v-model="$store.state.starrating"
             value="3"
             @click="checkRating"
           />
@@ -44,7 +41,6 @@
             id="star-2"
             type="radio"
             name="star"
-            v-model="$store.state.starrating"
             value="2"
             @click="checkRating"
           />
@@ -56,7 +52,6 @@
             id="star-1"
             type="radio"
             name="star"
-            v-model="$store.state.starrating"
             value="1"
             @click="checkRating"
           />
@@ -77,7 +72,6 @@ export default {
   methods: {
     checkRating() {
       this.$store.state.starrating = event.target.value;
-      console.log(this.$store.state.starrating);
     },
   },
 };
