@@ -147,9 +147,9 @@
               </div>
               <!-- Nav End -->
             </div>
-          </nav>
         </div>
       </div>
+    </div>
     </div>
   </header>
   <div class="modal" tabindex="-1">
@@ -175,7 +175,6 @@
 
 <script>
 import { getAuth, signOut } from "firebase/auth";
-import axios from "axios";
 export default {
   name: "NavBar",
   components: {},
@@ -207,12 +206,16 @@ export default {
     closeSearchBox() {
       this.isSearchExpand = false;
     },
+    goToLoginPage() {
+      this.$router.push("/login");
+    },
     logOut() {
       // this.$store.state.userId = "";
       const auth = getAuth();
       signOut(auth)
         .then(() => {
           this.$store.state.userId = null;
+          this.$store.state.userName = null;
           alert("You have logged out!");
           this.$router.push("/");
         })
@@ -233,6 +236,15 @@ export default {
 
 a {
   text-decoration: none;
+}
+
+input:focus {
+  color: #ff0000;
+}
+
+.login-style :hover {
+  color: #40ba37;
+  font-weight: bold;
 }
 
 .logoSize {
@@ -427,7 +439,7 @@ a {
 
 .header-area .delicious-main-menu .classynav .search-btn {
   color: #b6b6b6;
-  margin-left: 150px;
+  /* margin-left: 150px; */
   cursor: pointer;
   -webkit-transition-duration: 500ms;
   transition-duration: 500ms;

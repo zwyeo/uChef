@@ -62,6 +62,18 @@
 
           <p class="text-center">or:</p> -->
 
+          <!-- Name input -->
+          <div class="form-outline mb-4">
+            <input
+              type="text"
+              id="name"
+              class="form-control"
+              placeholder="Name"
+              v-model="name"
+            />
+            <!-- <label class="form-label" for="loginName">Email or username</label> -->
+          </div>
+
           <!-- Email input -->
           <div class="form-outline mb-4">
             <input
@@ -122,11 +134,16 @@
 </template>
 
 <script>
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
 
 export default {
   data() {
     return {
+      name: "",
       email: "",
       password: "",
       isLoading: false,
@@ -145,8 +162,12 @@ export default {
           // Signed in
           const user = userCredential.user;
           console.log(user);
+          updateProfile(user, { displayName: this.name });
 
+          this.$store.commit("set_userName", user.displayName);
           this.$store.commit("set_userId", user.uid);
+          alert("Sign up successfully!");
+          this.$router.push("/");
 
           // reset the values
           this.email = "";

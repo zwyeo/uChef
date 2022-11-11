@@ -27,10 +27,15 @@ export default createStore({
     popularRecipe: {},
     // This will store all the community recipe from db
     communityRecipe: {},
+    //for reviews posting
     starrating: "",
+    activerecipeid: "",
+    reviewsubject: "",
+    reviewcomments: "",
 
     // To track user session
-    userId: "asd",
+    userId: "",
+    userName: "",
   },
   mutations: {
     getRecipes(state, payload) {
@@ -53,6 +58,9 @@ export default createStore({
     // For user authetication
     set_userId(state, data) {
       state.userId = data;
+    },
+    set_userName(state, data) {
+      state.userName = data;
     },
   },
   actions: {
@@ -81,6 +89,46 @@ export default createStore({
         commit("getRecipes", data); // This will pass data into getRecipe mutation as payload
       });
     },
+    postReview({ commit }) {
+      console.log(
+        this.state.activerecipeid,
+        this.state.starrating,
+        this.state.reviewsubject,
+        this.state.reviewcomments,
+        this.state.userName
+      );
+      let date = new Date();
+      const month = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+      let wordmonth = month[date.getMonth()];
+      let year = date.getFullYear();
+      let day = date.getDate();
+      let formatdate = `${day} ${wordmonth} ${year}`;
+      axios.post(
+        `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/recipes/${this.state.activerecipeid}/reviews.json`,
+        {
+          user: this.state.userName,
+          rating: this.state.starrating,
+          subject: this.state.reviewsubject,
+          message: this.state.reviewcomments,
+          date: formatdate,
+        }
+      );
+      this.state.reviewsubject = "";
+      this.state.reviewcomments = "";
+    },
 
     // This fn receive user input from searchbar and pass payload to mutation
     setQueryParam({ commit }, newValue) {
@@ -100,19 +148,6 @@ export default createStore({
         const data = res.data;
         commit("setCommunityRecipe", data);
       });
-    },
-
-    /// sdadasdadadada
-    async fetchUser(context, user) {
-      context.commit("SET_LOGGED_IN", user !== null);
-      if (user) {
-        context.commit("SET_USER", {
-          displayName: user.displayName,
-          email: user.email,
-        });
-      } else {
-        context.commit("SET_USER", null);
-      }
     },
   },
 

@@ -1,18 +1,17 @@
 <template>
-  <div class="row">
+  <!-- <div class="row">
     <div class="col-12">
       <div class="section-heading text-left">
         <h3>Leave a Review</h3>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <div class="row">
     <div class="col-12">
       <div class="contact-form-area">
-        <form action="#" method="post">
-          <div class="row">
-            <!-- <div class="col-12 col-lg-6">
+        <div class="row">
+          <!-- <div class="col-12 col-lg-6">
               <input
                 type="text"
                 class="form-control"
@@ -28,33 +27,39 @@
                 placeholder="E-mail"
               />
             </div> -->
-            <div class="col-12">
-              <input
-                type="text"
-                class="form-control"
-                id="subject"
-                placeholder="Subject"
-              />
-            </div>
-            <div class="col-12">
-              <textarea
-                name="message"
-                class="form-control"
-                id="message"
-                cols="30"
-                rows="10"
-                placeholder="Message"
-              ></textarea>
-            </div>
-            <div class="col-12">
-              <button class="btn delicious-btn mt-30">Post Review</button>
-              <span
-                ><!-- starreview -->
-                <star-rating class="float-end mt-3"></star-rating
-              ></span>
-            </div>
+          <div class="col-12">
+            <input
+              type="text"
+              class="form-control"
+              id="subject"
+              placeholder="Subject"
+              v-model="$store.state.reviewsubject"
+            />
           </div>
-        </form>
+          <div class="col-12">
+            <textarea
+              name="message"
+              class="form-control"
+              id="message"
+              cols="30"
+              rows="10"
+              placeholder="Message"
+              v-model="$store.state.reviewcomments"
+            ></textarea>
+          </div>
+          <div class="col-12">
+            <button
+              class="btn delicious-btn mt-30"
+              @click="$store.dispatch('postReview')"
+            >
+              Post Review
+            </button>
+            <span
+              ><!-- starreview -->
+              <star-rating class="float-end mt-3"></star-rating
+            ></span>
+          </div>
+        </div>
       </div>
     </div>
   </div>

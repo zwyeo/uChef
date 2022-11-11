@@ -143,7 +143,10 @@ export default {
           // Signed in
           const user = userCredential.user;
           console.log(user);
+          console.log(this.$store.state.userName);
+          this.$store.commit("set_userName", user.displayName);
           this.$store.commit("set_userId", user.uid);
+          alert("Login successfully!");
           this.$router.push("/");
           // console.log(this.$store.state.userId);
         })

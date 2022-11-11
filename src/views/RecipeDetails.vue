@@ -96,24 +96,19 @@
                   </h6>
 
                   <div class="check">
-
-                    <input type="checkbox" name="a">
+                    <input type="checkbox" name="a" />
                   </div>
-
                 </li>
               </ul>
             </div>
 
-
-
             <!-- End of ingredient list -->
-
-
           </div>
         </div>
       </div>
 
       <div class="row">
+        <review-card :id="id"></review-card>
         <div class="col-12">
           <div class="section-heading text-left">
             <h3>Leave a comment</h3>
@@ -140,9 +135,7 @@
                     placeholder="Message"></textarea>
                 </div>
                 <div class="col-12">
-                  <button class="btn delicious-btn mt-30" type="submit">
-                    Post Comments
-                  </button>
+                  <button class="btn delicious-btn mt-30">Post Comments</button>
                 </div>
               </div>
             </form>
@@ -152,15 +145,18 @@
     </div>
   </div>
 
+  <review-btn></review-btn>
+  <!-- ##### Follow Us Instagram Area End ##### -->
 </template>
 
 <script>
 import NavBar from "../components/NavBar.vue";
 import axios from "axios";
-import ReviewForm from "@/components/ReviewForm.vue";
+import ReviewBtn from "../components/ReviewButton.vue";
+import ReviewCard from "../components/ReviewCard.vue";
 
 export default {
-  components: { NavBar, ReviewForm },
+  components: { NavBar, ReviewBtn, ReviewCard },
   props: ["id"],
   data() {
     return {
@@ -174,6 +170,8 @@ export default {
     };
   },
   created() {
+    //to link active id to store
+    this.$store.state.activerecipeid = this.id;
     //filling up the recipe details
     console.log(this.id)
     let url = "https://themealdb.com/api/json/v1/1/lookup.php";
@@ -210,8 +208,6 @@ export default {
         }
         console.log(this.ingredient_list);
       });
-
-
 
     //Dictate the state of the bookmark button
 
@@ -583,7 +579,6 @@ svg {
 /* Ingredient list */
 .list-group {
   width: 300px !important;
-
 }
 
 .list-group-item {
@@ -595,11 +590,9 @@ svg {
   transition: all 0.3s ease-in-out;
 }
 
-
 .list-group-item:hover {
   transform: scaleX(1.1);
 }
-
 
 .check {
   opacity: 0;
@@ -608,19 +601,18 @@ svg {
 
 .list-group-item:hover .check {
   opacity: 1;
-
 }
 
 .ingredient-img {
   width: 50px;
 }
 
-input[type=checkbox] {
+input[type="checkbox"] {
   position: relative;
   cursor: pointer;
 }
 
-input[type=checkbox]:before {
+input[type="checkbox"]:before {
   content: "";
   display: block;
   position: absolute;
@@ -631,10 +623,9 @@ input[type=checkbox]:before {
   border: 1px solid #10a3f9;
   border-radius: 3px;
   background-color: white;
-
 }
 
-input[type=checkbox]:checked:after {
+input[type="checkbox"]:checked:after {
   content: "";
   display: block;
   width: 7px;
