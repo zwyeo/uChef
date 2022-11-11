@@ -1,9 +1,11 @@
 <template>
-  <div class="container-fluid px-1 py-5 mx-auto">
+  <div class="container-fluid mx-auto">
     <div class="card">
       <div class="row d-flex">
         <div class="d-flex flex-column">
-          <h3 class="mt-2 mb-0">{{ user }}</h3>
+          <h3 class="mt-2 mb-0">
+            {{ user }}<span class="fs-6 text-muted float-end">{{ date }}</span>
+          </h3>
           <div>
             <p class="text-left">
               <span class="text-muted">{{ rating }}.0</span>
@@ -45,9 +47,6 @@
             </p>
           </div>
         </div>
-        <div class="ml-auto">
-          <p class="text-muted pt-5 pt-sm-3">{{ date }}</p>
-        </div>
       </div>
       <div class="row text-left">
         <h4 class="blue-text mt-3">"{{ subject }}"</h4>
@@ -63,16 +62,9 @@
 import axios from "axios";
 export default {
   name: "ReviewCard",
-  props: ["id"],
+  props: ["id", "user", "rating", "date", "subject", "message"],
   data() {
     return {};
-  },
-  created() {
-    let url = `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/recipes/${this.id}/reviews.json`;
-    axios.get(url).then((response) => {
-      console.log(response.data);
-    });
-    console.log("testing");
   },
 };
 </script>

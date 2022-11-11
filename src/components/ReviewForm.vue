@@ -34,6 +34,7 @@
               id="subject"
               placeholder="Subject"
               v-model="$store.state.reviewsubject"
+              @change="validateForm"
             />
           </div>
           <div class="col-12">
@@ -45,18 +46,34 @@
               rows="10"
               placeholder="Message"
               v-model="$store.state.reviewcomments"
+              @change="validateForm"
             ></textarea>
           </div>
           <div class="col-12">
-            <button
-              class="btn delicious-btn mt-30"
-              @click="$store.dispatch('postReview')"
+            <span v-if="!isValid"
+              ><button
+                class="btn delicious-btn mt-30"
+                @click="$store.dispatch('postReview')"
+                disabled
+              >
+                Post Review
+              </button></span
             >
-              Post Review
-            </button>
+            <span v-else>
+              <button
+                class="btn delicious-btn mt-30"
+                @click="$store.dispatch('postReview')"
+                data-bs-dismiss="modal"
+              >
+                Post Review
+              </button>
+            </span>
+
             <span
-              ><!-- starreview -->
-              <star-rating class="float-end mt-3"></star-rating
+              ><star-rating
+                class="float-end mt-3"
+                @change="validateForm"
+              ></star-rating
             ></span>
           </div>
         </div>
@@ -71,7 +88,23 @@ export default {
   name: "ReviewForm",
   components: { StarRating },
   data() {
-    return {};
+    return {
+      isValid: false,
+    };
+  },
+  methods: {
+    validateForm() {
+      if (
+        this.$store.state.reviewsubject.length != 0 &&
+        this.$store.state.reviewcomments.length != 0 &&
+        this.$store.state.starrating != "0"
+      ) {
+        this.isValid = true;
+      } else {
+        this.isValid = false;
+      }
+    },
+    closeModal() {},
   },
 };
 </script>

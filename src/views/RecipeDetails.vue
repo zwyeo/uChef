@@ -151,9 +151,28 @@
         </div>
       </div>
 
-      <div class="row">
-        <review-card :id="id"></review-card>
-        <div class="col-12">
+      <div class="row mt-5">
+        <div class="section-heading text-left m-0">
+          <h3>Reviews</h3>
+          <p>See what others have to say</p>
+        </div>
+        <div v-if="review_list.length > 0">
+          <review-card
+            v-for="(review, index) of review_list"
+            :key="index"
+            :id="id"
+            :user="review.user"
+            :date="review.date"
+            :rating="review.rating"
+            :subject="review.subject"
+            :message="review.message"
+          ></review-card>
+        </div>
+        <div v-else>
+          <p class="text-center pt-5 pb-5">No reviews yet.</p>
+        </div>
+
+        <!-- <div class="col-12">
           <div class="section-heading text-left">
             <h3>Leave a comment</h3>
           </div>
@@ -205,7 +224,7 @@
               </div>
             </form>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -232,6 +251,7 @@ export default {
       instructions: [],
       ingredient_list: [],
       bookmarked: false,
+      review_list: [],
     };
   },
   created() {
@@ -284,6 +304,17 @@ export default {
       .catch((error) => {
         console.log(error);
       });
+    //review card population
+    let rurl = `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/recipes/${this.id}/reviews.json`;
+    axios.get(rurl).then((response) => {
+      // console.log(response.data);
+      let reviewsObj = response.data;
+      for (let review in reviewsObj) {
+        this.review_list.push(reviewsObj[review]);
+      }
+      console.log(this.review_list);
+      this.review_list = this.review_list.reverse();
+    });
   },
   methods: {
     bookmark() {

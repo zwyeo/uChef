@@ -69,6 +69,7 @@ export default {
     // This will refresh the popular and community recipe list from DB
     this.populatePopularRecipe();
     this.populateCommunityRecipe();
+    console.log(this.$store.state.userName);
   },
   methods: {
     populatePopularRecipe() {

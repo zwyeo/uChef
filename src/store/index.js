@@ -28,7 +28,7 @@ export default createStore({
     // This will store all the community recipe from db
     communityRecipe: {},
     //for reviews posting
-    starrating: "",
+    starrating: "0",
     activerecipeid: "",
     reviewsubject: "",
     reviewcomments: "",
@@ -128,6 +128,7 @@ export default createStore({
       );
       this.state.reviewsubject = "";
       this.state.reviewcomments = "";
+      this.state.starrating = "0";
     },
 
     // This fn receive user input from searchbar and pass payload to mutation
