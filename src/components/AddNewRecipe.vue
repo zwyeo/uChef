@@ -83,7 +83,6 @@
                     </tr>
                   </table>
                   <button class="btn btn-small btn-primary" @click="this.noOfIngredients++">Add Ingredient</button>
-                  <button @click="getRecipeIngredients">ShowIngredients</button>
                 </div>
               </td>
             </tr>
@@ -319,7 +318,8 @@ export default {
         })
       } else {
         this.error = "Please upload an image!";
-        console.log(this.error)
+        console.log(this.error);
+        alert(this.error);
       }
     }
   }
