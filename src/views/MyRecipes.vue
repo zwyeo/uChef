@@ -4,10 +4,9 @@
     <h2 class="text-center p-5">My Recipes</h2>
     <div v-if="recipes.length != 0" class="row recipe-card-style">
       <div
-        v-for="recipe in bookmarks"
+        v-for="recipe in recipes"
         :key="recipe.id"
-        class="col-xl-4 col-lg-6"
-      >
+        class="col-xl-4 col-lg-6">
         <router-link
           :to="{ name: 'recipe-details', params: { id: recipe.id } }"
         >
@@ -34,6 +33,7 @@
 import NavBar from "../components/NavBar.vue";
 import RecipeCard from "../components/RecipeCard.vue";
 import AddNewRecipe from "../components/AddNewRecipe.vue";
+import RemoveRecipe from "../components/RemoveRecipe.vue";
 import { getDatabase, ref, onValue } from "firebase/database";
 
 export default {
