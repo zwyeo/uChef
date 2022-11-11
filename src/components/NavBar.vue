@@ -1,173 +1,213 @@
 <template>
-  <!-- Bootstrap Navbar Start -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-      <router-link to="/"><a class="nav-brand"><img src="../assets/logo.png" style="height: 10%; width:10%;"
-            alt="uChef" /></a></router-link>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-              aria-expanded="false">
-              Dropdown
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li>
-                <hr class="dropdown-divider">
-              </li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-          </li>
-        </ul>
-        <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
-      </div>
-    </div>
-  </nav>
+  <div class="d-flex justify-content-center align-items-center">
+    <div>
+      <!-- Bootstrap Navbar Start -->
 
-  <!-- ##### Header Area Start ##### -->
-  <header class="header-area">
-    <!-- Top Header Area -->
+      <!-- ##### Header Area Start ##### -->
+      <header class="header-area">
+        <!-- Top Header Area -->
 
-    <!-- Navbar Toggler -->
-    <div class="classy-navbar-toggler">
-      <span class="navbarToggler"><span></span><span></span><span></span></span>
-    </div>
+        <!-- Navbar Toggler -->
+        <div class="classy-navbar-toggler">
+          <span class="navbarToggler"
+            ><span></span><span></span><span></span
+          ></span>
+        </div>
 
-    <!-- Search Wrapper -->
-    <div class="search-wrapper" :class="{ on: isSearchExpand }">
-      <!-- Close Btn -->
-      <div class="close-btn" @click="closeSearchBox">
-        <i class="fa fa-times" aria-hidden="true"></i>
-      </div>
-
-      <div class="container">
-        <!-- filter buttons -->
-
-        <select class="form-select w-25 float-end" aria-label="Default select example" id="filter"
-          v-model="$store.state.selectedCategory" @change="$store.dispatch('filterCategory')">
-          <option v-for="cat of $store.state.foodCategories">{{ cat }}</option>
-        </select>
-        <label for="filter" class="float-end pe-2 pt-2">Filter By:</label>
-        <div class="d-flex text-center rounded-pill w-50 pe-2 border border-secondary px-2 mt-2 bg-white">
-          <div class="pt-2 icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search mb-1"
-              viewBox="0 0 16 16" @click="$store.dispatch('getRecipes')">
-              <path
-                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z">
-              </path>
-            </svg>
+        <!-- Search Wrapper -->
+        <div class="search-wrapper" :class="{ on: isSearchExpand }">
+          <!-- Close Btn -->
+          <div class="close-btn" @click="closeSearchBox">
+            <i class="fa fa-times" aria-hidden="true"></i>
           </div>
-          <router-link :to="{ name: 'home', hash: '#popular-recipe' }">
-            <input type="text" :placeholder="$store.state.searchDesc"
-              class="text-light w-5 form-control rounded-pill input border-0 bg-white" v-model="searchQuery"
-              style="background-color: #40ba37" @keyup.enter="onSearch"
-              @change="$store.dispatch('showPreviews'), closeSearchBox" />
-          </router-link>
-        </div>
-      </div>
-    </div>
 
-    <!-- Navbar Area -->
-    <div class="delicious-main-menu mt-5">
-      <div class="classy-nav-container breakpoint-off">
-        <div class="container">
-          <!-- Menu -->
-          <nav class="classy-navbar justify-content-between" id="deliciousNav">
-            <!-- Logo -->
-            <router-link to="/"><a class="nav-brand"><img src="../assets/logo.png" alt="uChef" /></a></router-link>
+          <div class="container">
+            <!-- filter buttons -->
 
-            <!-- Navbar Toggler -->
-            <div class="classy-navbar-toggler">
-              <span class="navbarToggler"><span></span><span></span><span></span></span>
-            </div>
-
-            <!-- Menu -->
-            <div class="classy-menu">
-              <!-- close btn -->
-              <div class="classycloseIcon">
-                <div class="cross-wrap">
-                  <span class="top"></span><span class="bottom"></span>
-                </div>
+            <select
+              class="form-select w-25 float-end"
+              aria-label="Default select example"
+              id="filter"
+              v-model="$store.state.selectedCategory"
+              @change="$store.dispatch('filterCategory')"
+            >
+              <option
+                v-for="(cat, idx) of $store.state.foodCategories"
+                :key="idx"
+              >
+                {{ cat }}
+              </option>
+            </select>
+            <label for="filter" class="float-end pe-2 pt-2">Filter By:</label>
+            <div
+              class="d-flex text-center rounded-pill w-50 pe-2 border border-secondary px-2 mt-2 bg-white"
+            >
+              <div class="pt-2 icon">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-search mb-1"
+                  viewBox="0 0 16 16"
+                  @click="$store.dispatch('getRecipes')"
+                >
+                  <path
+                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+                  ></path>
+                </svg>
               </div>
-
-              <!-- Nav Start -->
-              <div class="classynav">
-                <ul>
-                  <li class="active">
-                    <router-link to="/"> Home </router-link>
-                  </li>
-
-                  <li>
-                    <router-link to="/my-recipes">My Recipes</router-link>
-                  </li>
-                  <li>
-                    <router-link to="/my-bookmarks">My Bookmarks</router-link>
-                  </li>
-                  <li style="cursor: pointer" @click="logOut">
-                    LOG OUT (FOR TESTING)
-                  </li>
-                </ul>
-
-                <!-- Newsletter Form -->
-                <div class="search-btn" @click="openSearchBox">
-                  <i class="fa fa-search" aria-hidden="true"></i>
-                </div>
-
-                <!-- Profile -->
-                <div class="dropdown">
-                  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                    aria-expanded="false" id="dropdownMenuButton1"><img src="../assets/img/core-img/hamburger2.png"
-                      alt=""></button>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li>
-                      <a class="dropdown-item" href="#">Something else here</a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-
-              <!-- Nav End -->
+              <router-link :to="{ name: 'home', hash: '#popular-recipe' }">
+                <input
+                  type="text"
+                  :placeholder="$store.state.searchDesc"
+                  class="text-dark w-5 form-control rounded-pill input border-0 bg-white"
+                  v-model="searchQuery"
+                  style="background-color: #40ba37"
+                  @keyup.enter="onSearch"
+                />
+              </router-link>
             </div>
-          </nav>
+          </div>
         </div>
-      </div>
-    </div>
-  </header>
-  <div class="modal" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Modal title</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+        <!-- Navbar Area -->
+        <div class="delicious-main-menu mt-5">
+          <div class="classy-nav-container breakpoint-off">
+            <div class="container">
+              <!-- Menu -->
+              <nav
+                class="classy-navbar justify-content-between"
+                id="deliciousNav"
+              >
+                <!-- Logo -->
+                <router-link to="/"
+                  ><a class="nav-brand"
+                    ><img src="../assets/logo.png" alt="uChef" /></a
+                ></router-link>
+
+                <!-- Navbar Toggler -->
+                <div class="classy-navbar-toggler">
+                  <span class="navbarToggler"
+                    ><span></span><span></span><span></span
+                  ></span>
+                </div>
+
+                <!-- Menu -->
+                <div class="classy-menu">
+                  <!-- close btn -->
+                  <div class="classycloseIcon">
+                    <div class="cross-wrap">
+                      <span class="top"></span><span class="bottom"></span>
+                    </div>
+                  </div>
+
+                  <!-- Nav Start -->
+                  <div class="classynav">
+                    <ul>
+                      <li class="active">
+                        <router-link to="/"> Home </router-link>
+                      </li>
+
+                      <li>
+                        <router-link to="/my-recipes">My Recipes</router-link>
+                      </li>
+                      <li>
+                        <router-link to="/my-bookmarks"
+                          >My Bookmarks</router-link
+                        >
+                      </li>
+                    </ul>
+                    <!-- Search Icon -->
+                    <div
+                      class="search-btn pb-3"
+                      style="padding-left: 400px"
+                      @click="openSearchBox"
+                    >
+                      <i class="fa fa-search" aria-hidden="true"></i>
+                    </div>
+
+                    <!-- LOGIN IF GUEST -->
+                    <!-- Login Icon -->
+                    <div
+                      v-if="!this.$store.state.userId"
+                      @click="goToLoginPage"
+                      class="search-btn login-style ps-5 pb-3"
+                      style="color: #b6b6b6"
+                    >
+                      <i class="fa fa-user-plus"></i>
+                      <span> LOGIN</span>
+                    </div>
+
+                    <!-- PROFILE IF GUEST -->
+                    <!-- Search Icon -->
+                    <div
+                      v-if="!this.$store.state.userId"
+                      class="ps-5 pb-3"
+                      style="color: #b6b6b6"
+                    >
+                      <i class="fa fa-user"></i>
+                      GUEST
+                    </div>
+
+                    <!-- LOGOUT USER IS AUTHENTICATED -->
+                    <!-- LOGOUT Icon -->
+                    <div
+                      v-if="this.$store.state.userId"
+                      @click="logOut"
+                      class="search-btn login-style ps-5 pb-3"
+                      style="color: #b6b6b6"
+                    >
+                      <i class="fa fa-rotate-right"></i>
+                      <span> LOGOUT</span>
+                    </div>
+
+                    <!-- PROFILE IF AUTHENTICATED -->
+                    <!-- USER Icon -->
+                    <div
+                      v-if="this.$store.state.userId"
+                      class="ps-5 pb-3 text-success"
+                      style="color: #b6b6b6; font-weight: bolder"
+                    >
+                      <i class="fa fa-user"></i>
+                      {{ this.$store.state.userName }}
+                    </div>
+                  </div>
+                  <!-- Nav End -->
+                </div>
+              </nav>
+            </div>
+          </div>
         </div>
-        <div class="modal-body">
-          <p>Modal body text goes here.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-            Close
-          </button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+      </header>
+      <div class="modal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Modal title</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <p>Modal body text goes here.</p>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="button" class="btn btn-primary">
+                Save changes
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -185,7 +225,6 @@ export default {
       isSearchExpand: false,
     };
   },
-
   computed: {
     // searchQuery is different from the usual computed because it required getter and setter
     searchQuery: {
@@ -227,56 +266,46 @@ export default {
       this.closeSearchBox();
     },
   },
-  created() { },
+  created() {},
 };
 </script>
 
 <style scoped>
 @import url(../css/font-awesome.min.css);
 @import url(../css/classy-nav.min.css);
-
 a {
   text-decoration: none;
 }
-
 input:focus {
   color: #ff0000;
 }
-
 .login-style :hover {
   color: #40ba37;
   font-weight: bold;
 }
-
 .logoSize {
   width: 50px;
   height: 50px;
 }
-
 .navbar {
   position: sticky;
   z-index: 50;
 }
-
 .pill {
   border: 1px solid gray;
   width: 75px;
   height: 25px;
 }
-
 .cookbook {
   cursor: pointer;
 }
-
 .menu-dropdown {
   cursor: pointer;
 }
-
 .input:focus {
   box-shadow: none;
   text-decoration: none;
 }
-
 /* Start */
 .search-wrapper {
   width: 100%;
@@ -289,12 +318,10 @@ input:focus {
   -webkit-transition-duration: 700ms;
   transition-duration: 700ms;
 }
-
 .search-wrapper form {
   position: relative;
   z-index: 1;
 }
-
 .search-wrapper form input {
   width: 90%;
   height: 40px;
@@ -304,13 +331,11 @@ input:focus {
   padding: 0 20px;
   margin: 15px 0;
 }
-
 @media only screen and (max-width: 767px) {
   .search-wrapper form input {
     width: 80%;
   }
 }
-
 .search-wrapper form button {
   position: absolute;
   width: 60px;
@@ -322,13 +347,11 @@ input:focus {
   cursor: pointer;
   outline: none;
 }
-
 @media only screen and (max-width: 767px) {
   .search-wrapper form button {
     right: 20%;
   }
 }
-
 .search-wrapper .close-btn {
   position: absolute;
   width: 70px;
@@ -344,68 +367,56 @@ input:focus {
   top: 0;
   z-index: 100;
 }
-
 .search-wrapper.on {
   top: 0;
 }
-
 .header-area {
   position: relative;
   z-index: 100;
   width: 100%;
 }
-
 .header-area .top-header-area {
   width: 100%;
   height: 50px;
   background-color: #ffffff;
   border-bottom: 1px solid #dddee9;
 }
-
 @media only screen and (max-width: 767px) {
   .header-area .top-header-area {
     height: 70px;
   }
 }
-
 .header-area .delicious-main-menu {
   position: relative;
   width: 100%;
   z-index: 100;
   height: 145px;
 }
-
 @media only screen and (max-width: 767px) {
   .header-area .delicious-main-menu {
     height: 80px;
   }
 }
-
 .header-area .delicious-main-menu .classy-nav-container {
   background-color: transparent;
 }
-
 .header-area .delicious-main-menu .classy-navbar {
   height: 145px;
   padding: 0;
 }
-
 @media only screen and (max-width: 767px) {
   .header-area .delicious-main-menu .classy-navbar {
     height: 80px;
   }
 }
-
 .header-area .delicious-main-menu .classy-navbar .classynav ul li a {
   font-weight: 600;
 }
-
 .header-area .delicious-main-menu .classy-navbar .classynav ul li a:hover,
 .header-area .delicious-main-menu .classy-navbar .classynav ul li a:focus {
   font-weight: 600;
 }
-
-.header-area .delicious-main-menu .classy-navbar .classynav>ul>li>a {
+.header-area .delicious-main-menu .classy-navbar .classynav > ul > li > a {
   text-transform: uppercase;
   padding: 12px 18px 11px;
   background-color: transparent;
@@ -414,30 +425,55 @@ input:focus {
   color: #474747;
   font-weight: 600;
 }
-
-.header-area .delicious-main-menu .classy-navbar .classynav>ul>li>a:hover,
-.header-area .delicious-main-menu .classy-navbar .classynav>ul>li>a:focus {
+.header-area .delicious-main-menu .classy-navbar .classynav > ul > li > a:hover,
+.header-area
+  .delicious-main-menu
+  .classy-navbar
+  .classynav
+  > ul
+  > li
+  > a:focus {
   font-size: 14px;
   color: #ffffff;
   background-color: #40ba37;
   border-bottom: 3px solid #1c8314;
 }
-
-.header-area .delicious-main-menu .classy-navbar .classynav>ul>li>a:hover::after,
-.header-area .delicious-main-menu .classy-navbar .classynav>ul>li>a:focus::after {
+.header-area
+  .delicious-main-menu
+  .classy-navbar
+  .classynav
+  > ul
+  > li
+  > a:hover::after,
+.header-area
+  .delicious-main-menu
+  .classy-navbar
+  .classynav
+  > ul
+  > li
+  > a:focus::after {
   color: #ffffff;
 }
-
-.header-area .delicious-main-menu .classy-navbar .classynav>ul>li.active>a {
+.header-area
+  .delicious-main-menu
+  .classy-navbar
+  .classynav
+  > ul
+  > li.active
+  > a {
   color: #ffffff;
   background-color: #40ba37;
   border-bottom: 3px solid #1c8314;
 }
-
-.header-area .delicious-main-menu .classy-navbar .classynav>ul>li.active>a::after {
+.header-area
+  .delicious-main-menu
+  .classy-navbar
+  .classynav
+  > ul
+  > li.active
+  > a::after {
   color: #ffffff;
 }
-
 .header-area .delicious-main-menu .classynav .search-btn {
   color: #b6b6b6;
   /* margin-left: 150px; */
@@ -445,44 +481,37 @@ input:focus {
   -webkit-transition-duration: 500ms;
   transition-duration: 500ms;
 }
-
 .header-area .delicious-main-menu .classynav .search-btn i {
   -webkit-transition-duration: 500ms;
   transition-duration: 500ms;
 }
-
 .header-area .delicious-main-menu .classynav .search-btn:hover i,
 .header-area .delicious-main-menu .classynav .search-btn:focus i {
   color: #40ba37;
 }
-
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
   .header-area .delicious-main-menu .classynav .search-btn {
     margin-left: 50px;
     margin-bottom: 20px;
   }
 }
-
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .header-area .delicious-main-menu .classynav .search-btn {
     margin-left: 30px;
     margin-top: px;
   }
 }
-
 @media only screen and (max-width: 767px) {
   .header-area .delicious-main-menu .classynav .search-btn {
     margin-left: 30px;
     margin-top: 30px;
   }
 }
-
 @media only screen and (max-width: 767px) {
   .header-area .nav-brand img {
     max-width: 90px;
   }
 }
-
 .nav-brand {
   width: 90px;
 }

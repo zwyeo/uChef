@@ -22,25 +22,48 @@
             <h2>{{ title }}</h2>
 
             <!-- video button -->
-            <button class="btn video-btn" data-bs-toggle="modal" :data-src="video" data-bs-target="#myModal"
-              @click="open()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+            <button
+              class="btn video-btn"
+              data-bs-toggle="modal"
+              :data-src="video"
+              data-bs-target="#myModal"
+              @click="open()"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
                 <path
-                  d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z" />
+                  d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"
+                />
               </svg>
-              Watch Video</button>
+              Watch Video
+            </button>
 
             <!-- Modal -->
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-              aria-hidden="true">
+            <div
+              class="modal fade"
+              id="myModal"
+              tabindex="-1"
+              role="dialog"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-body">
-                    <button type="button" class="btn-close" @click="close()" data-bs-dismiss="modal"
-                      aria-label="Close"></button>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      @click="close()"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
                     <!-- 16:9 aspect ratio -->
                     <div class="ratio ratio-16x9">
-                      <iframe class="embed-responsive-item" :src="video2" allowscriptaccess="always"
-                        allow="autoplay"></iframe>
+                      <iframe
+                        class="embed-responsive-item"
+                        :src="video2"
+                        allowscriptaccess="always"
+                        allow="autoplay"
+                      ></iframe>
                     </div>
                   </div>
                 </div>
@@ -65,8 +88,16 @@
               <i class="fa fa-star-o" aria-hidden="true"></i>
             </div>
 
-            <a v-if="!bookmarked" href="#" class="btn delicious-btn" @click="bookmark()">Bookmark</a>
-            <a v-else href="#" class="btn delicious-btn" @click="unbookmark()">Bookmarked!</a>
+            <a
+              v-if="!bookmarked"
+              href="#"
+              class="btn delicious-btn"
+              @click="bookmark()"
+              >Bookmark</a
+            >
+            <a v-else href="#" class="btn delicious-btn" @click="unbookmark()"
+              >Bookmarked!</a
+            >
           </div>
         </div>
       </div>
@@ -74,7 +105,11 @@
       <div class="row">
         <div class="col-12 col-lg-8">
           <!-- Single Preparation Step -->
-          <div v-for="(item, index) in instructions" :key="item" class="single-preparation-step d-flex">
+          <div
+            v-for="(item, index) in instructions"
+            :key="item"
+            class="single-preparation-step d-flex"
+          >
             <h4 v-if="index < 9">0{{ index + 1 }}</h4>
             <h4 v-else>{{ index + 1 }}</h4>
             <p>{{ item }}</p>
@@ -87,12 +122,25 @@
             <h4 class="">Ingredients</h4>
 
             <!-- Ingredient list -->
-            <div v-for="(item, index) in ingredient_list" :key="index" :id="index">
+            <div
+              v-for="(item, index) in ingredient_list"
+              :key="index"
+              :id="index"
+            >
               <ul class="list-group text-white">
-                <li class="list-group-item d-flex justify-content-between align-content-center">
-
-
-                  <h6 class="mb-0"><img src="../assets/img/core-img/salad.png" class="ingredient-img"> &nbsp;{{ item }}
+                <li
+                  class="list-group-item d-flex justify-content-between align-content-center"
+                >
+                  <h6 class="mb-0">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 512 512"
+                    >
+                      <path
+                        d="M512 64c0 113.6-84.6 207.5-194.2 222c-7.1-53.4-30.6-101.6-65.3-139.3C290.8 78.3 364 32 448 32h32c17.7 0 32 14.3 32 32zM0 128c0-17.7 14.3-32 32-32H64c123.7 0 224 100.3 224 224v32 96c0 17.7-14.3 32-32 32s-32-14.3-32-32V352C100.3 352 0 251.7 0 128z"
+                      />
+                    </svg>
+                    &nbsp;{{ item }}
                   </h6>
 
                   <div class="check">
@@ -122,17 +170,38 @@
             <form action="#" method="post">
               <div class="row">
                 <div class="col-12 col-lg-6">
-                  <input type="text" class="form-control" id="name" placeholder="Name" />
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="name"
+                    placeholder="Name"
+                  />
                 </div>
                 <div class="col-12 col-lg-6">
-                  <input type="email" class="form-control" id="email" placeholder="E-mail" />
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    placeholder="E-mail"
+                  />
                 </div>
                 <div class="col-12">
-                  <input type="text" class="form-control" id="subject" placeholder="Subject" />
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="subject"
+                    placeholder="Subject"
+                  />
                 </div>
                 <div class="col-12">
-                  <textarea name="message" class="form-control" id="message" cols="30" rows="10"
-                    placeholder="Message"></textarea>
+                  <textarea
+                    name="message"
+                    class="form-control"
+                    id="message"
+                    cols="30"
+                    rows="10"
+                    placeholder="Message"
+                  ></textarea>
                 </div>
                 <div class="col-12">
                   <button class="btn delicious-btn mt-30">Post Comments</button>
@@ -173,7 +242,7 @@ export default {
     //to link active id to store
     this.$store.state.activerecipeid = this.id;
     //filling up the recipe details
-    console.log(this.id)
+    console.log(this.id);
     let url = "https://themealdb.com/api/json/v1/1/lookup.php";
     axios
       .get(url, {
@@ -187,14 +256,13 @@ export default {
         this.title = obj.strMeal;
         this.image = obj.strMealThumb;
         this.video = obj.strYoutube.replace("watch?v=", "embed/");
-        console.log(obj.strInstructions)
+        console.log(obj.strInstructions);
         let instruction = obj.strInstructions.split("\r\n");
         for (let i of instruction) {
           if (!i == "") {
             this.instructions.push(i);
           }
         }
-
 
         // formatting ingredients and the measurements
         for (let i = 1; i < 21; i++) {
@@ -375,7 +443,7 @@ ol li {
   position: absolute;
   top: -2px;
   transform: translate(8px, 8px);
-  transition: transform .2s ease-out;
+  transition: transform 0.2s ease-out;
   z-index: -1;
 }
 
@@ -474,7 +542,6 @@ ol li {
 }
 
 @media only screen and (max-width: 767px) {
-
   .delicious-btn.btn-4.active,
   .delicious-btn.btn-4:hover,
   .delicious-btn.btn-4:focus {
@@ -575,7 +642,6 @@ svg {
   margin-bottom: 0;
 }
 
-
 /* Ingredient list */
 .list-group {
   width: 300px !important;
@@ -640,14 +706,15 @@ input[type="checkbox"]:checked:after {
   left: 6px;
 }
 
-input[type="checkbox"]:checked+.check {
+input[type="checkbox"]:checked + .check {
   opacity: 1;
 }
 
 /*food image  */
 .fancy-border {
-  border: 25px solid #B88846;
-  border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='75' height='75'%3E%3Cg fill='none' stroke='%23B88846' stroke-width='2'%3E%3Cpath d='M1 1h73v73H1z'/%3E%3Cpath d='M8 8h59v59H8z'/%3E%3Cpath d='M8 8h16v16H8zM51 8h16v16H51zM51 51h16v16H51zM8 51h16v16H8z'/%3E%3C/g%3E%3Cg fill='%23B88846'%3E%3Ccircle cx='16' cy='16' r='2'/%3E%3Ccircle cx='59' cy='16' r='2'/%3E%3Ccircle cx='59' cy='59' r='2'/%3E%3Ccircle cx='16' cy='59' r='2'/%3E%3C/g%3E%3C/svg%3E") 25;
+  border: 25px solid #b88846;
+  border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='75' height='75'%3E%3Cg fill='none' stroke='%23B88846' stroke-width='2'%3E%3Cpath d='M1 1h73v73H1z'/%3E%3Cpath d='M8 8h59v59H8z'/%3E%3Cpath d='M8 8h16v16H8zM51 8h16v16H51zM51 51h16v16H51zM8 51h16v16H8z'/%3E%3C/g%3E%3Cg fill='%23B88846'%3E%3Ccircle cx='16' cy='16' r='2'/%3E%3Ccircle cx='59' cy='16' r='2'/%3E%3Ccircle cx='59' cy='59' r='2'/%3E%3Ccircle cx='16' cy='59' r='2'/%3E%3C/g%3E%3C/svg%3E")
+    25;
 }
 
 .display-img {
@@ -655,7 +722,6 @@ input[type="checkbox"]:checked+.check {
   height: auto;
   aspect-ratio: 2/1.4;
 }
-
 
 .outer {
   width: 750px;
