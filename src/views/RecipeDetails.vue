@@ -191,7 +191,7 @@
       </div>
     </div>
   </div>
-
+  <review-form></review-form>
   <!-- ##### Follow Us Instagram Area End ##### -->
 
   <!-- ##### Footer Area Start ##### -->
@@ -221,6 +221,7 @@
 <script>
 import NavBar from "../components/NavBar.vue";
 import axios from "axios";
+import ReviewForm from "@/components/ReviewForm.vue";
 
 export default {
   components: { NavBar, ReviewForm },
