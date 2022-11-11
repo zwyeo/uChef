@@ -1,5 +1,4 @@
 <template>
-  <!-- CURRENTLY PICTURES ARE HARDCODED, NEED TO EDIT -->
   <div
     id="carouselExampleCaptions"
     class="carousel slide carousel-fade"
@@ -39,7 +38,7 @@
           src="../assets/img/banner-img/chicken-category.jpg"
           class="d-block w-100"
           alt="..."
-          style="height: 90vh; object-fit: cover"
+          style="height: 800px; object-fit: cover"
         />
         <div
           class="carousel-caption d-none d-md-block animate__animated animate__fadeInUp animate__delay-2 animate__slow carousel-label"
@@ -67,7 +66,7 @@
           src="../assets/img/banner-img/beef-category.jpg"
           class="d-block w-100"
           alt="..."
-          style="height: 90vh; object-fit: cover"
+          style="height: 800px; object-fit: cover"
         />
         <div
           class="carousel-caption d-none d-md-block animate__animated animate__fadeInUp animate__delay-2 animate__slow carousel-label"
@@ -121,7 +120,7 @@
           src="../assets/img/banner-img/desert-category.jpg"
           class="d-block w-100"
           alt="..."
-          style="height: 90vh; object-fit: cover"
+          style="height: 800px; object-fit: cover"
         />
         <div
           class="carousel-caption d-none d-md-block animate__animated animate__fadeInUp animate__delay-2 animate__slow carousel-label"
@@ -190,7 +189,7 @@ html {
   border-left: 3px solid #40ba37;
   background-color: rgba(24, 24, 24, 0.54);
   padding: 60px 10px;
-  margin-bottom: 10%;
+  margin-bottom: 5%;
   color: white;
   width: 40%;
   text-align: center;
