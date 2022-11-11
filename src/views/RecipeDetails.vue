@@ -12,7 +12,7 @@
   </div>
 
   <!-- Receipe Content Area -->
-  <div id="" class="receipe-content-area">
+  <div class="receipe-content-area">
     <div class="container">
       <div class="row">
         <div class="col-12 col-md-8">
@@ -191,7 +191,7 @@
       </div>
     </div>
   </div>
-
+  <review-form></review-form>
   <!-- ##### Follow Us Instagram Area End ##### -->
 
   <!-- ##### Footer Area Start ##### -->
@@ -221,17 +221,10 @@
 <script>
 import NavBar from "../components/NavBar.vue";
 import axios from "axios";
-import {
-  getDatabase,
-  ref,
-  child,
-  get,
-  onValue,
-  remove,
-} from "firebase/database";
+import ReviewForm from "@/components/ReviewForm.vue";
 
 export default {
-  components: { NavBar },
+  components: { NavBar, ReviewForm },
   props: ["id"],
   data() {
     return {
@@ -278,27 +271,14 @@ export default {
       });
 
     //Bookmark button
-
-    // const dbRef = ref(getDatabase());
-    // get(child(dbRef, `users`)).then((snapshot) => {
-    //   if (snapshot.exists()) {
-    //     console.log(snapshot.val());
-    //   } else {
-    //     console.log("No data available");
-    //   }
-    // }).catch((error) => {
-    //   console.log(error);
-    // });
-
     axios
       .get(
         `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${this.$store.state.userId}/bookmarks.json`
       )
       .then((response) => {
-        // console.log(response.data)
-        for (let bookmark in response.data) {
-          // console.log(bookmark);
-          if (bookmark == this.id) {
+        console.log(response.data);
+        for (let [key, value] of Object.entries(response.data)) {
+          if (value.id == this.id) {
             this.bookmarked = true;
           }
         }
@@ -308,14 +288,14 @@ export default {
       });
   },
   methods: {
-    //bookmarking functions
     bookmark() {
       console.log(this.$store.state.userId);
       let userId = this.$store.state.userId;
 
       axios.post(
-        `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${userId}/bookmarks/${this.id}.json`,
+        `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${userId}/bookmarks.json`,
         {
+          id: this.id,
           title: this.title,
           image: this.image,
         }
@@ -323,17 +303,6 @@ export default {
       this.bookmarked = true;
     },
 
-    unbookmark() {
-      const db = getDatabase();
-      var userId = this.$store.state.userId;
-      var bookmarkRef = ref(db, `users/${userId}/bookmarks/${this.id}`);
-      remove(bookmarkRef).then(() => {
-        this.bookmarked = false;
-        console.log("location removed");
-      });
-    },
-
-    //video modal functions
     open() {
       console.log("it works");
       this.video2 = this.video.replace("watch?v=", "embed/");
@@ -342,6 +311,10 @@ export default {
       console.log("close");
       this.video2 = null;
     },
+
+    // unbookmark(){
+    //   axios.get()
+    // }
   },
 };
 </script>
