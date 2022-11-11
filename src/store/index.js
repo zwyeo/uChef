@@ -27,6 +27,7 @@ export default createStore({
     popularRecipe: {},
     // This will store all the community recipe from db
     communityRecipe: {},
+    starrating: "",
 
     // To track user session
     userId: "asd",
