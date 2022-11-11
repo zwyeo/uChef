@@ -145,11 +145,12 @@
                   </ul>
                 </div>
               </div>
+
               <!-- Nav End -->
             </div>
+          </nav>
         </div>
       </div>
-    </div>
     </div>
   </header>
   <div class="modal" tabindex="-1">
