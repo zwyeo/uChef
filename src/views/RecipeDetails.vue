@@ -166,6 +166,9 @@
 <script>
 import NavBar from "../components/NavBar.vue"
 import axios from "axios";
+import { getDatabase, ref, child, get, onValue, remove} from "firebase/database";
+
+
 
 
 export default {
@@ -217,12 +220,28 @@ export default {
     })
 
     //Bookmark button
+   
+    
+    // const dbRef = ref(getDatabase());
+    // get(child(dbRef, `users`)).then((snapshot) => {
+    //   if (snapshot.exists()) {
+    //     console.log(snapshot.val());
+    //   } else {
+    //     console.log("No data available");
+    //   }
+    // }).catch((error) => {
+    //   console.log(error);
+    // });
+
+
+    
     axios.get(
             `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${this.$store.state.userId}/bookmarks.json`)
             .then(response=>{
-              console.log(response.data)
-              for(let [key,value] of Object.entries(response.data)){
-                if(value.id == this.id){
+              // console.log(response.data)
+              for( let bookmark in response.data){
+                // console.log(bookmark);
+                if(bookmark == this.id){
                   this.bookmarked = true;
                 }
               }
@@ -234,15 +253,15 @@ export default {
 
  },
  methods:{
+  //bookmarking functions
   bookmark(){
     console.log(this.$store.state.userId)
     let userId = this.$store.state.userId;
     
         
     axios.post(
-            `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${userId}/bookmarks.json`,
+            `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${userId}/bookmarks/${this.id}.json`,
             {
-              id: this.id,
               title: this.title,
               image: this.image,
             }
@@ -250,6 +269,20 @@ export default {
     this.bookmarked = true;
   },
 
+  unbookmark(){
+       const db = getDatabase();
+       var userId = this.$store.state.userId;
+       var bookmarkRef = ref(db, `users/${userId}/bookmarks/${this.id}`);
+       remove(bookmarkRef).then(() => {
+          this.bookmarked = false;
+          console.log("location removed");
+        });
+      
+    
+  },
+
+
+  //video modal functions
   open(){
     console.log("it works");
     this.video2 = this.video.replace("watch?v=", "embed/");
@@ -257,11 +290,9 @@ export default {
   close(){
     console.log("close");
     this.video2 = null;
-  }
+  },
 
-  // unbookmark(){
-  //   axios.get()
-  // }
+ 
  }
 }
     
