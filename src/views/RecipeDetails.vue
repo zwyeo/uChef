@@ -6,9 +6,7 @@
   <div class="container">
     <div class="row">
       <div class="col-12 outer">
-        <div class="fancy-border">
-          <img class="display-img" :src="image" style="border" />
-        </div>
+        <img class="display-img" :src="image" />
       </div>
     </div>
   </div>
@@ -20,16 +18,12 @@
         <div class="col-12 col-md-8">
           <div class="receipe-headline my-5">
             <h2>{{ title }}</h2>
-
-            <!-- video button -->
-            <button class="btn video-btn" data-bs-toggle="modal" :data-src="video" data-bs-target="#myModal"
-              @click="open()">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+            <a class="btn video-btn delicious-btn" data-bs-toggle="modal" :data-src="video" data-bs-target="#myModal"
+              @click="open()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
                 <path
                   d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z" />
               </svg>
-              Watch Video
-            </button>
+              Watch Video</a>
 
             <!-- Modal -->
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -85,33 +79,49 @@
 
         <!-- Ingredients -->
         <div class="col-12 col-lg-4">
+          <div class="ingredients">
+            <h4 class="">Ingredients</h4>
 
-          <h4 class="">Ingredients</h4>
+            <!-- Ingredient list -->
+            <div v-for="(item, index) in ingredient_list" :key="index" :id="index">
+              <ul class="list-group text-white">
+                <li class="list-group-item d-flex justify-content-between align-content-center">
+                  <h6 class="mb-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                      <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                      <path
+                        d="M512 64c0 113.6-84.6 207.5-194.2 222c-7.1-53.4-30.6-101.6-65.3-139.3C290.8 78.3 364 32 448 32h32c17.7 0 32 14.3 32 32zM0 128c0-17.7 14.3-32 32-32H64c123.7 0 224 100.3 224 224v32 96c0 17.7-14.3 32-32 32s-32-14.3-32-32V352C100.3 352 0 251.7 0 128z" />
+                    </svg>
+                    &nbsp;{{ item }}
+                  </h6>
 
-          <!-- Ingredient list -->
-          <div v-for="(item, index) in ingredient_list" :key="index" :id="index">
-            <ul class="list-group text-white">
-              <li class="list-group-item d-flex justify-content-between align-content-center">
-                <h6 class="mb-0">
-                  <img src="../assets/img/core-img/salad.png" class="ingredient-img">
-                  &nbsp;<span class="item">{{ item }}</span>
-                </h6>
-
-                <div class="check">
-                  <input type="checkbox" name="a" />
-                </div>
-              </li>
-            </ul>
-
+                  <div class="check">
+                    <input type="checkbox" name="a" />
+                  </div>
+                </li>
+              </ul>
+            </div>
 
             <!-- End of ingredient list -->
           </div>
         </div>
       </div>
 
-      <div class="row">
-        <review-card :id="id"></review-card>
-        <div class="col-12">
+      <div class="row mt-5">
+        <div class="section-heading text-left m-0">
+          <h3>Reviews</h3>
+          <p>See what others have to say</p>
+        </div>
+        <div v-if="review_list.length > 0" id="reviewsSection">
+          <review-card v-for="(review, index) of review_list" :key="index" :id="id" :user="review.user"
+            :date="review.date" :rating="review.rating" :subject="review.subject" :message="review.message">
+          </review-card>
+        </div>
+        <div v-else>
+          <p class="text-center pt-5 pb-5">No reviews yet.</p>
+        </div>
+
+        <!-- <div class="col-12">
           <div class="section-heading text-left">
             <h3>Leave a comment</h3>
           </div>
@@ -124,17 +134,38 @@
             <form action="#" method="post">
               <div class="row">
                 <div class="col-12 col-lg-6">
-                  <input type="text" class="form-control" id="name" placeholder="Name" />
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="name"
+                    placeholder="Name"
+                  />
                 </div>
                 <div class="col-12 col-lg-6">
-                  <input type="email" class="form-control" id="email" placeholder="E-mail" />
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    placeholder="E-mail"
+                  />
                 </div>
                 <div class="col-12">
-                  <input type="text" class="form-control" id="subject" placeholder="Subject" />
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="subject"
+                    placeholder="Subject"
+                  />
                 </div>
                 <div class="col-12">
-                  <textarea name="message" class="form-control" id="message" cols="30" rows="10"
-                    placeholder="Message"></textarea>
+                  <textarea
+                    name="message"
+                    class="form-control"
+                    id="message"
+                    cols="30"
+                    rows="10"
+                    placeholder="Message"
+                  ></textarea>
                 </div>
                 <div class="col-12">
                   <button class="btn delicious-btn mt-30">Post Comments</button>
@@ -142,7 +173,7 @@
               </div>
             </form>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -170,13 +201,14 @@ export default {
       instructions: [],
       ingredient_list: [],
       bookmarked: false,
+      review_list: [],
     };
   },
   created() {
     //to link active id to store
     this.$store.state.activerecipeid = this.id;
+
     //filling up the recipe details
-    console.log(this.id);
     let url = "https://themealdb.com/api/json/v1/1/lookup.php";
     axios
       .get(url, {
@@ -190,13 +222,8 @@ export default {
         this.title = obj.strMeal;
         this.image = obj.strMealThumb;
         this.video = obj.strYoutube.replace("watch?v=", "embed/");
-        console.log(obj.strInstructions);
         let instruction = obj.strInstructions.split("\r\n");
-        for (let i of instruction) {
-          if (!i == "") {
-            this.instructions.push(i);
-          }
-        }
+        this.instructions = instruction;
 
         // formatting ingredients and the measurements
         for (let i = 1; i < 21; i++) {
@@ -224,10 +251,20 @@ export default {
           }
         }
       })
-      .catch(error => {
-        console.log(error)
-      })
-
+      .catch((error) => {
+        console.log(error);
+      });
+    //review card population
+    let rurl = `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/recipes/${this.id}/reviews.json`;
+    axios.get(rurl).then((response) => {
+      // console.log(response.data);
+      let reviewsObj = response.data;
+      for (let review in reviewsObj) {
+        this.review_list.push(reviewsObj[review]);
+      }
+      console.log(this.review_list);
+      this.review_list = this.review_list.reverse();
+    });
   },
 
   methods: {
@@ -355,65 +392,6 @@ ol li {
   color: #ffffff;
 }
 
-/* Video button */
-.video-btn {
-  align-items: center;
-  background-color: #40ba37;
-  border: 2px solid #111;
-  border-radius: 8px;
-  box-sizing: border-box;
-  color: #111;
-  cursor: pointer;
-  display: flex;
-  font-family: Inter, sans-serif;
-  font-size: 16px;
-  height: 48px;
-  justify-content: center;
-  line-height: 24px;
-  max-width: 100%;
-  padding: 0 25px;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-}
-
-.video-btn:after {
-  background-color: grey;
-  border-radius: 8px;
-  content: "";
-  display: block;
-  height: 48px;
-  left: 0;
-  width: 100%;
-  position: absolute;
-  top: -2px;
-  transform: translate(8px, 8px);
-  transition: transform 0.2s ease-out;
-  z-index: -1;
-}
-
-.video-btn:hover:after {
-  transform: translate(0, 0);
-}
-
-.video-btn:active {
-  background-color: #ffdeda;
-  outline: 0;
-}
-
-.video-btn:hover {
-  outline: 0;
-}
-
-@media (min-width: 768px) {
-  .video-btn {
-    padding: 0 40px;
-  }
-}
-
 /* Button */
 .delicious-btn {
   display: inline-block;
@@ -517,13 +495,13 @@ ol li {
 /* :: 15.0 Receipe Area */
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
-  .col-12 {
+  .receipe-post-search .col-12 {
     margin-bottom: 30px;
   }
 }
 
 @media only screen and (max-width: 767px) {
-  .col-12 {
+  .receipe-post-search .col-12 {
     margin-bottom: 15px;
   }
 }
@@ -591,7 +569,110 @@ svg {
   margin-bottom: 0;
 }
 
-/* Ingredient list */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .ingredients {
+    margin-bottom: 80px;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .ingredients {
+    margin-bottom: 80px;
+  }
+}
+
+.ingredients h4 {
+  color: #7e2e2e;
+  margin-bottom: 30px;
+}
+
+.ingredients .custom-checkbox .custom-control-label::before {
+  border-radius: 0;
+}
+
+.ingredients .custom-control-label::before {
+  width: 30px;
+  height: 30px;
+}
+
+.ingredients .custom-control {
+  padding-left: 2.5rem;
+  margin-bottom: 30px;
+  min-height: 35px;
+}
+
+.ingredients .custom-control-label {
+  margin-bottom: 0;
+  padding-top: 5px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #2f2f2f;
+}
+
+.ingredients .custom-control-label::after {
+  top: 10px;
+  left: 5px;
+  width: 20px;
+  height: 20px;
+}
+
+.ingredients .custom-checkbox .custom-control-input:checked~.custom-control-label::before {
+  background-color: #40ba37;
+}
+
+.display-img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2/1.4;
+}
+
+.outer {
+  width: 750px;
+}
+
+.modal-dialog {
+  max-width: 800px;
+  margin: 30px auto;
+}
+
+.modal-body {
+  position: relative;
+  padding: 0px;
+}
+
+.btn-close {
+  position: absolute;
+  right: -30px;
+  top: 0;
+}
+
+.contact-form-area .form-control {
+  height: 52px;
+  width: 100%;
+  background-color: #f3f5f8;
+  font-size: 12px;
+  font-style: italic;
+  margin-bottom: 15px;
+  border: none;
+  border-left: 3px solid #f3f5f8;
+  border-radius: 0;
+  padding: 15px 30px;
+  -webkit-transition-duration: 500ms;
+  transition-duration: 500ms;
+}
+
+.contact-form-area .form-control:focus {
+  border-left: 3px solid #40ba37;
+  box-shadow: none;
+}
+
+.contact-form-area textarea.form-control {
+  height: 200px;
+  -webkit-transition-duration: 500ms;
+  transition-duration: 500ms;
+}
+
+/* test */
 .list-group {
   width: 300px !important;
 }
@@ -599,8 +680,7 @@ svg {
 .list-group-item {
   margin-top: 10px;
   border-radius: none;
-  border: none;
-  /* background: #40ba37; */
+  background: #40ba37;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 }
@@ -618,15 +698,9 @@ svg {
   opacity: 1;
 }
 
-.ingredient-img {
-  width: 50px;
-  position: relative;
-}
-
-.item {
-  position: absolute;
-  top: 20px;
-  left: 80px;
+.about span {
+  font-size: 12px;
+  margin-right: 10px;
 }
 
 input[type="checkbox"] {
@@ -664,65 +738,5 @@ input[type="checkbox"]:checked:after {
 
 input[type="checkbox"]:checked+.check {
   opacity: 1;
-}
-
-/*food image  */
-.fancy-border {
-  border: 25px solid #b88846;
-  border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='75' height='75'%3E%3Cg fill='none' stroke='%23B88846' stroke-width='2'%3E%3Cpath d='M1 1h73v73H1z'/%3E%3Cpath d='M8 8h59v59H8z'/%3E%3Cpath d='M8 8h16v16H8zM51 8h16v16H51zM51 51h16v16H51zM8 51h16v16H8z'/%3E%3C/g%3E%3Cg fill='%23B88846'%3E%3Ccircle cx='16' cy='16' r='2'/%3E%3Ccircle cx='59' cy='16' r='2'/%3E%3Ccircle cx='59' cy='59' r='2'/%3E%3Ccircle cx='16' cy='59' r='2'/%3E%3C/g%3E%3C/svg%3E") 25;
-}
-
-.display-img {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 2/1.4;
-}
-
-.outer {
-  width: 750px;
-}
-
-/* Video Modal */
-.modal-dialog {
-  max-width: 800px;
-  margin: 30px auto;
-}
-
-.modal-body {
-  position: relative;
-  padding: 0px;
-}
-
-.btn-close {
-  position: absolute;
-  right: -30px;
-  top: 0;
-}
-
-/* Comment form */
-.contact-form-area .form-control {
-  height: 52px;
-  width: 100%;
-  background-color: #f3f5f8;
-  font-size: 12px;
-  font-style: italic;
-  margin-bottom: 15px;
-  border: none;
-  border-left: 3px solid #f3f5f8;
-  border-radius: 0;
-  padding: 15px 30px;
-  -webkit-transition-duration: 500ms;
-  transition-duration: 500ms;
-}
-
-.contact-form-area .form-control:focus {
-  border-left: 3px solid #40ba37;
-  box-shadow: none;
-}
-
-.contact-form-area textarea.form-control {
-  height: 200px;
-  -webkit-transition-duration: 500ms;
-  transition-duration: 500ms;
 }
 </style>

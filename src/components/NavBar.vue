@@ -109,10 +109,28 @@
                         <router-link to="/"> Home </router-link>
                       </li>
 
-                      <li>
+                      <li v-if="this.$store.state.userId">
                         <router-link to="/my-recipes">My Recipes</router-link>
                       </li>
-                      <li>
+                      <!-- TRIGGER LOGIN MODAL IF USER NOT LOGGED IN -->
+                      <li
+                        v-if="!this.$store.state.userId"
+                        data-bs-toggle="modal"
+                        data-bs-target="#loginModal"
+                      >
+                        <router-link to="/my-recipes">My Recipes</router-link>
+                      </li>
+                      <li v-if="this.$store.state.userId">
+                        <router-link to="/my-bookmarks"
+                          >My Bookmarks</router-link
+                        >
+                      </li>
+                      <!-- TRIGGER LOGIN MODAL IF USER NOT LOGGED IN -->
+                      <li
+                        v-if="!this.$store.state.userId"
+                        data-bs-toggle="modal"
+                        data-bs-target="#loginModal"
+                      >
                         <router-link to="/my-bookmarks"
                           >My Bookmarks</router-link
                         >
@@ -154,7 +172,8 @@
                     <!-- LOGOUT Icon -->
                     <div
                       v-if="this.$store.state.userId"
-                      @click="logOut"
+                      data-bs-toggle="modal"
+                      data-bs-target="#logoutModal"
                       class="search-btn login-style ps-5 pb-3"
                       style="color: #b6b6b6"
                     >
@@ -180,11 +199,21 @@
           </div>
         </div>
       </header>
-      <div class="modal" tabindex="-1">
+
+      <!-- LOGIN Modal -->
+      <div
+        class="modal fade"
+        id="loginModal"
+        tabindex="-1"
+        aria-labelledby="ModalLabel"
+        aria-hidden="true"
+      >
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Modal title</h5>
+              <h1 class="modal-title fs-5" id="exampleModalLabel">
+                Authethication is required!
+              </h1>
               <button
                 type="button"
                 class="btn-close"
@@ -193,7 +222,8 @@
               ></button>
             </div>
             <div class="modal-body">
-              <p>Modal body text goes here.</p>
+              You need to login first so that we can save your unique recipes
+              and bookmarks.
             </div>
             <div class="modal-footer">
               <button
@@ -203,8 +233,57 @@
               >
                 Close
               </button>
-              <button type="button" class="btn btn-primary">
-                Save changes
+
+              <button
+                type="button"
+                class="btn btn-primary"
+                @click="goToLoginPage"
+                data-bs-dismiss="modal"
+              >
+                Login
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LOGOUT Modal -->
+      <div
+        class="modal fade"
+        id="logoutModal"
+        tabindex="-1"
+        aria-labelledby="ModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">
+                Pressed wrong?
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">Are you sure you want to log out?</div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                @click="logOut"
+                data-bs-dismiss="modal"
+              >
+                Yes
               </button>
             </div>
           </div>
@@ -256,7 +335,6 @@ export default {
         .then(() => {
           this.$store.state.userId = null;
           this.$store.state.userName = null;
-          alert("You have logged out!");
           this.$router.push("/");
         })
         .catch((err) => console.log(err));

@@ -66,8 +66,6 @@ router.beforeEach((to, from, next) => {
 
   const isAuthenthicated = getAuth().currentUser;
   if (requriesAuth && !isAuthenthicated) {
-    alert("Sign in first!");
-    next("/login");
   } else {
     next();
   }
