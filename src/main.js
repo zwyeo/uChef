@@ -31,5 +31,6 @@ onAuthStateChanged(auth, (user) => {
   if (!app) {
     app = createApp(App).use(store).use(router).mount("#app");
     store.state.userId = user.uid;
+    store.state.userName = user.displayName;
   }
 });
