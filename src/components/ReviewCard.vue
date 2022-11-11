@@ -60,11 +60,19 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "ReviewCard",
-  props: ["subject", "message", "rating", "user", "date"],
+  props: ["id"],
   data() {
     return {};
+  },
+  created() {
+    let url = `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/recipes/${this.id}/reviews.json`;
+    axios.get(url).then((response) => {
+      console.log(response.data);
+    });
+    console.log("testing");
   },
 };
 </script>

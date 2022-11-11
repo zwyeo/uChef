@@ -152,7 +152,7 @@
       </div>
 
       <div class="row">
-        <review-card></review-card>
+        <review-card :id="id"></review-card>
         <div class="col-12">
           <div class="section-heading text-left">
             <h3>Leave a comment</h3>
