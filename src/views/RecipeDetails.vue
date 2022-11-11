@@ -1,3 +1,4 @@
+
 <template>
   <div>
     <nav-bar></nav-bar>
@@ -6,7 +7,9 @@
   <div class="container">
     <div class="row">
       <div class="col-12 outer">
-        <img class="display-img" :src="image" />
+        <div class="fancy-border">
+          <img class="display-img" :src="image" style="border" />
+        </div>
       </div>
     </div>
   </div>
@@ -18,47 +21,29 @@
         <div class="col-12 col-md-8">
           <div class="receipe-headline my-5">
             <h2>{{ title }}</h2>
-            <a
-              class="btn video-btn delicious-btn"
-              data-bs-toggle="modal"
-              :data-src="video"
-              data-bs-target="#myModal"
-              @click="open()"
-              ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+
+            <!-- video button -->
+            <button class="btn video-btn" data-bs-toggle="modal" :data-src="video" data-bs-target="#myModal"
+              @click="open()">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
                 <path
-                  d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"
-                />
+                  d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z" />
               </svg>
-              Watch Video</a
-            >
+              Watch Video
+            </button>
 
             <!-- Modal -->
-            <div
-              class="modal fade"
-              id="myModal"
-              tabindex="-1"
-              role="dialog"
-              aria-labelledby="exampleModalLabel"
-              aria-hidden="true"
-            >
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-body">
-                    <button
-                      type="button"
-                      class="btn-close"
-                      @click="close()"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                    ></button>
+                    <button type="button" class="btn-close" @click="close()" data-bs-dismiss="modal"
+                      aria-label="Close"></button>
                     <!-- 16:9 aspect ratio -->
                     <div class="ratio ratio-16x9">
-                      <iframe
-                        class="embed-responsive-item"
-                        :src="video2"
-                        allowscriptaccess="always"
-                        allow="autoplay"
-                      ></iframe>
+                      <iframe class="embed-responsive-item" :src="video2" allowscriptaccess="always"
+                        allow="autoplay"></iframe>
                     </div>
                   </div>
                 </div>
@@ -83,16 +68,8 @@
               <i class="fa fa-star-o" aria-hidden="true"></i>
             </div>
 
-            <a
-              v-if="!bookmarked"
-              href="#"
-              class="btn delicious-btn"
-              @click="bookmark()"
-              >Bookmark</a
-            >
-            <a v-else href="#" class="btn delicious-btn" @click="unbookmark()"
-              >Bookmarked!</a
-            >
+            <a v-if="!bookmarked" href="#" class="btn delicious-btn" @click="bookmark()">Bookmark</a>
+            <a v-else href="#" class="btn delicious-btn" @click="unbookmark()">Bookmarked!</a>
           </div>
         </div>
       </div>
@@ -100,11 +77,7 @@
       <div class="row">
         <div class="col-12 col-lg-8">
           <!-- Single Preparation Step -->
-          <div
-            v-for="(item, index) in instructions"
-            :key="item"
-            class="single-preparation-step d-flex"
-          >
+          <div v-for="(item, index) in instructions" :key="item" class="single-preparation-step d-flex">
             <h4 v-if="index < 9">0{{ index + 1 }}</h4>
             <h4 v-else>{{ index + 1 }}</h4>
             <p>{{ item }}</p>
@@ -113,66 +86,33 @@
 
         <!-- Ingredients -->
         <div class="col-12 col-lg-4">
-          <div class="ingredients">
-            <h4 class="">Ingredients</h4>
 
-            <!-- Ingredient list -->
-            <div
-              v-for="(item, index) in ingredient_list"
-              :key="index"
-              :id="index"
-            >
-              <ul class="list-group text-white">
-                <li
-                  class="list-group-item d-flex justify-content-between align-content-center"
-                >
-                  <h6 class="mb-0">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 512 512"
-                    >
-                      <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
-                      <path
-                        d="M512 64c0 113.6-84.6 207.5-194.2 222c-7.1-53.4-30.6-101.6-65.3-139.3C290.8 78.3 364 32 448 32h32c17.7 0 32 14.3 32 32zM0 128c0-17.7 14.3-32 32-32H64c123.7 0 224 100.3 224 224v32 96c0 17.7-14.3 32-32 32s-32-14.3-32-32V352C100.3 352 0 251.7 0 128z"
-                      />
-                    </svg>
-                    &nbsp;{{ item }}
-                  </h6>
+          <h4 class="">Ingredients</h4>
 
-                  <div class="check">
-                    <input type="checkbox" name="a" />
-                  </div>
-                </li>
-              </ul>
-            </div>
+          <!-- Ingredient list -->
+          <div v-for="(item, index) in ingredient_list" :key="index" :id="index">
+            <ul class="list-group text-white">
+              <li class="list-group-item d-flex justify-content-between align-content-center">
+                <h6 class="mb-0">
+                  <img src="../assets/img/core-img/salad.png" class="ingredient-img">
+                  &nbsp;<span class="item">{{ item }}</span>
+                </h6>
+
+                <div class="check">
+                  <input type="checkbox" name="a" />
+                </div>
+              </li>
+            </ul>
+
 
             <!-- End of ingredient list -->
           </div>
         </div>
       </div>
 
-      <div class="row mt-5">
-        <div class="section-heading text-left m-0">
-          <h3>Reviews</h3>
-          <p>See what others have to say</p>
-        </div>
-        <div v-if="review_list.length > 0" id="reviewsSection">
-          <review-card
-            v-for="(review, index) of review_list"
-            :key="index"
-            :id="id"
-            :user="review.user"
-            :date="review.date"
-            :rating="review.rating"
-            :subject="review.subject"
-            :message="review.message"
-          ></review-card>
-        </div>
-        <div v-else>
-          <p class="text-center pt-5 pb-5">No reviews yet.</p>
-        </div>
-
-        <!-- <div class="col-12">
+      <div class="row">
+        <review-card :id="id"></review-card>
+        <div class="col-12">
           <div class="section-heading text-left">
             <h3>Leave a comment</h3>
           </div>
@@ -185,38 +125,17 @@
             <form action="#" method="post">
               <div class="row">
                 <div class="col-12 col-lg-6">
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="name"
-                    placeholder="Name"
-                  />
+                  <input type="text" class="form-control" id="name" placeholder="Name" />
                 </div>
                 <div class="col-12 col-lg-6">
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="email"
-                    placeholder="E-mail"
-                  />
+                  <input type="email" class="form-control" id="email" placeholder="E-mail" />
                 </div>
                 <div class="col-12">
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="subject"
-                    placeholder="Subject"
-                  />
+                  <input type="text" class="form-control" id="subject" placeholder="Subject" />
                 </div>
                 <div class="col-12">
-                  <textarea
-                    name="message"
-                    class="form-control"
-                    id="message"
-                    cols="30"
-                    rows="10"
-                    placeholder="Message"
-                  ></textarea>
+                  <textarea name="message" class="form-control" id="message" cols="30" rows="10"
+                    placeholder="Message"></textarea>
                 </div>
                 <div class="col-12">
                   <button class="btn delicious-btn mt-30">Post Comments</button>
@@ -224,7 +143,7 @@
               </div>
             </form>
           </div>
-        </div> -->
+        </div>
       </div>
     </div>
   </div>
@@ -236,9 +155,9 @@
 <script>
 import NavBar from "../components/NavBar.vue";
 import axios from "axios";
+import { getDatabase, ref, child, get, onValue, remove } from "firebase/database";
 import ReviewBtn from "../components/ReviewButton.vue";
 import ReviewCard from "../components/ReviewCard.vue";
-
 export default {
   components: { NavBar, ReviewBtn, ReviewCard },
   props: ["id"],
@@ -251,14 +170,13 @@ export default {
       instructions: [],
       ingredient_list: [],
       bookmarked: false,
-      review_list: [],
     };
   },
   created() {
     //to link active id to store
     this.$store.state.activerecipeid = this.id;
-
     //filling up the recipe details
+    console.log(this.id);
     let url = "https://themealdb.com/api/json/v1/1/lookup.php";
     axios
       .get(url, {
@@ -272,9 +190,13 @@ export default {
         this.title = obj.strMeal;
         this.image = obj.strMealThumb;
         this.video = obj.strYoutube.replace("watch?v=", "embed/");
+        console.log(obj.strInstructions);
         let instruction = obj.strInstructions.split("\r\n");
-        this.instructions = instruction;
-
+        for (let i of instruction) {
+          if (!i == "") {
+            this.instructions.push(i);
+          }
+        }
         // formatting ingredients and the measurements
         for (let i = 1; i < 21; i++) {
           let str_i = "strIngredient" + i;
@@ -287,52 +209,46 @@ export default {
         }
         console.log(this.ingredient_list);
       });
-
     //Dictate the state of the bookmark button
-
-    axios
-      .get(
-        `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${this.$store.state.userId}/bookmarks.json`
-      )
-      .then((response) => {
-        console.log(response.data);
-        for (let [key, value] of Object.entries(response.data)) {
-          if (value.id == this.id) {
+    axios.get(
+      `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${this.$store.state.userId}/bookmarks.json`)
+      .then(response => {
+        // console.log(response.data)
+        for (let bookmark in response.data) {
+          // console.log(bookmark);
+          if (bookmark == this.id) {
             this.bookmarked = true;
           }
         }
       })
-      .catch((error) => {
-        console.log(error);
-      });
-    //review card population
-    let rurl = `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/recipes/${this.id}/reviews.json`;
-    axios.get(rurl).then((response) => {
-      // console.log(response.data);
-      let reviewsObj = response.data;
-      for (let review in reviewsObj) {
-        this.review_list.push(reviewsObj[review]);
-      }
-      console.log(this.review_list);
-      this.review_list = this.review_list.reverse();
-    });
+      .catch(error => {
+        console.log(error)
+      })
   },
   methods: {
+    // bookmarking functions
     bookmark() {
-      console.log(this.$store.state.userId);
+      console.log(this.$store.state.userId)
       let userId = this.$store.state.userId;
-
       axios.post(
-        `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${userId}/bookmarks.json`,
+        `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${userId}/bookmarks/${this.id}.json`,
         {
-          id: this.id,
           title: this.title,
           image: this.image,
         }
       );
       this.bookmarked = true;
     },
-
+    unbookmark() {
+      const db = getDatabase();
+      var userId = this.$store.state.userId;
+      var bookmarkRef = ref(db, `users/${userId}/bookmarks/${this.id}`);
+      remove(bookmarkRef).then(() => {
+        this.bookmarked = false;
+        console.log("location removed");
+      });
+    },
+    //Video Modal Functions
     open() {
       console.log("it works");
       this.video2 = this.video.replace("watch?v=", "embed/");
@@ -341,10 +257,6 @@ export default {
       console.log("close");
       this.video2 = null;
     },
-
-    // unbookmark(){
-    //   axios.get()
-    // }
   },
 };
 </script>
@@ -403,7 +315,6 @@ ol li {
 }
 
 /* Spacing */
-
 .mt-30 {
   margin-top: 30px !important;
 }
@@ -427,6 +338,65 @@ ol li {
 
 .section-heading.white h3 {
   color: #ffffff;
+}
+
+/* Video button */
+.video-btn {
+  align-items: center;
+  background-color: #40ba37;
+  border: 2px solid #111;
+  border-radius: 8px;
+  box-sizing: border-box;
+  color: #111;
+  cursor: pointer;
+  display: flex;
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  height: 48px;
+  justify-content: center;
+  line-height: 24px;
+  max-width: 100%;
+  padding: 0 25px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.video-btn:after {
+  background-color: grey;
+  border-radius: 8px;
+  content: "";
+  display: block;
+  height: 48px;
+  left: 0;
+  width: 100%;
+  position: absolute;
+  top: -2px;
+  transform: translate(8px, 8px);
+  transition: transform 0.2s ease-out;
+  z-index: -1;
+}
+
+.video-btn:hover:after {
+  transform: translate(0, 0);
+}
+
+.video-btn:active {
+  background-color: #ffdeda;
+  outline: 0;
+}
+
+.video-btn:hover {
+  outline: 0;
+}
+
+@media (min-width: 768px) {
+  .video-btn {
+    padding: 0 40px;
+  }
 }
 
 /* Button */
@@ -505,6 +475,7 @@ ol li {
 }
 
 @media only screen and (max-width: 767px) {
+
   .delicious-btn.btn-4.active,
   .delicious-btn.btn-4:hover,
   .delicious-btn.btn-4:focus {
@@ -529,15 +500,14 @@ ol li {
 }
 
 /* :: 15.0 Receipe Area */
-
 @media only screen and (min-width: 768px) and (max-width: 991px) {
-  .receipe-post-search .col-12 {
+  .col-12 {
     margin-bottom: 30px;
   }
 }
 
 @media only screen and (max-width: 767px) {
-  .receipe-post-search .col-12 {
+  .col-12 {
     margin-bottom: 15px;
   }
 }
@@ -605,113 +575,7 @@ svg {
   margin-bottom: 0;
 }
 
-@media only screen and (min-width: 768px) and (max-width: 991px) {
-  .ingredients {
-    margin-bottom: 80px;
-  }
-}
-
-@media only screen and (max-width: 767px) {
-  .ingredients {
-    margin-bottom: 80px;
-  }
-}
-
-.ingredients h4 {
-  color: #7e2e2e;
-  margin-bottom: 30px;
-}
-
-.ingredients .custom-checkbox .custom-control-label::before {
-  border-radius: 0;
-}
-
-.ingredients .custom-control-label::before {
-  width: 30px;
-  height: 30px;
-}
-
-.ingredients .custom-control {
-  padding-left: 2.5rem;
-  margin-bottom: 30px;
-  min-height: 35px;
-}
-
-.ingredients .custom-control-label {
-  margin-bottom: 0;
-  padding-top: 5px;
-  font-size: 16px;
-  font-weight: 600;
-  color: #2f2f2f;
-}
-
-.ingredients .custom-control-label::after {
-  top: 10px;
-  left: 5px;
-  width: 20px;
-  height: 20px;
-}
-
-.ingredients
-  .custom-checkbox
-  .custom-control-input:checked
-  ~ .custom-control-label::before {
-  background-color: #40ba37;
-}
-
-.display-img {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 2/1.4;
-}
-
-.outer {
-  width: 750px;
-}
-
-.modal-dialog {
-  max-width: 800px;
-  margin: 30px auto;
-}
-
-.modal-body {
-  position: relative;
-  padding: 0px;
-}
-
-.btn-close {
-  position: absolute;
-  right: -30px;
-  top: 0;
-}
-
-.contact-form-area .form-control {
-  height: 52px;
-  width: 100%;
-  background-color: #f3f5f8;
-  font-size: 12px;
-  font-style: italic;
-  margin-bottom: 15px;
-  border: none;
-  border-left: 3px solid #f3f5f8;
-  border-radius: 0;
-  padding: 15px 30px;
-  -webkit-transition-duration: 500ms;
-  transition-duration: 500ms;
-}
-
-.contact-form-area .form-control:focus {
-  border-left: 3px solid #40ba37;
-  box-shadow: none;
-}
-
-.contact-form-area textarea.form-control {
-  height: 200px;
-  -webkit-transition-duration: 500ms;
-  transition-duration: 500ms;
-}
-
-/* test */
+/* Ingredient list */
 .list-group {
   width: 300px !important;
 }
@@ -719,7 +583,8 @@ svg {
 .list-group-item {
   margin-top: 10px;
   border-radius: none;
-  background: #40ba37;
+  border: none;
+  /* background: #40ba37; */
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 }
@@ -737,9 +602,15 @@ svg {
   opacity: 1;
 }
 
-.about span {
-  font-size: 12px;
-  margin-right: 10px;
+.ingredient-img {
+  width: 50px;
+  position: relative;
+}
+
+.item {
+  position: absolute;
+  top: 20px;
+  left: 80px;
 }
 
 input[type="checkbox"] {
@@ -775,7 +646,67 @@ input[type="checkbox"]:checked:after {
   left: 6px;
 }
 
-input[type="checkbox"]:checked + .check {
+input[type="checkbox"]:checked+.check {
   opacity: 1;
+}
+
+/*food image  */
+.fancy-border {
+  border: 25px solid #b88846;
+  border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='75' height='75'%3E%3Cg fill='none' stroke='%23B88846' stroke-width='2'%3E%3Cpath d='M1 1h73v73H1z'/%3E%3Cpath d='M8 8h59v59H8z'/%3E%3Cpath d='M8 8h16v16H8zM51 8h16v16H51zM51 51h16v16H51zM8 51h16v16H8z'/%3E%3C/g%3E%3Cg fill='%23B88846'%3E%3Ccircle cx='16' cy='16' r='2'/%3E%3Ccircle cx='59' cy='16' r='2'/%3E%3Ccircle cx='59' cy='59' r='2'/%3E%3Ccircle cx='16' cy='59' r='2'/%3E%3C/g%3E%3C/svg%3E") 25;
+}
+
+.display-img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2/1.4;
+}
+
+.outer {
+  width: 750px;
+}
+
+/* Video Modal */
+.modal-dialog {
+  max-width: 800px;
+  margin: 30px auto;
+}
+
+.modal-body {
+  position: relative;
+  padding: 0px;
+}
+
+.btn-close {
+  position: absolute;
+  right: -30px;
+  top: 0;
+}
+
+/* Comment form */
+.contact-form-area .form-control {
+  height: 52px;
+  width: 100%;
+  background-color: #f3f5f8;
+  font-size: 12px;
+  font-style: italic;
+  margin-bottom: 15px;
+  border: none;
+  border-left: 3px solid #f3f5f8;
+  border-radius: 0;
+  padding: 15px 30px;
+  -webkit-transition-duration: 500ms;
+  transition-duration: 500ms;
+}
+
+.contact-form-area .form-control:focus {
+  border-left: 3px solid #40ba37;
+  box-shadow: none;
+}
+
+.contact-form-area textarea.form-control {
+  height: 200px;
+  -webkit-transition-duration: 500ms;
+  transition-duration: 500ms;
 }
 </style>
