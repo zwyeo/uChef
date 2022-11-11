@@ -61,11 +61,10 @@
                 <input
                   type="text"
                   :placeholder="$store.state.searchDesc"
-                  class="text-light w-5 form-control rounded-pill input border-0 bg-white"
+                  class="text-dark w-5 form-control rounded-pill input border-0 bg-white"
                   v-model="searchQuery"
                   style="background-color: #40ba37"
                   @keyup.enter="onSearch"
-                  @change="$store.dispatch('showPreviews'), closeSearchBox"
                 />
               </router-link>
             </div>
@@ -118,10 +117,61 @@
                           >My Bookmarks</router-link
                         >
                       </li>
-                      <li style="cursor: pointer" @click="logOut">
-                        LOG OUT (FOR TESTING)
-                      </li>
                     </ul>
+                    <!-- Search Icon -->
+                    <div
+                      class="search-btn pb-3"
+                      style="padding-left: 400px"
+                      @click="openSearchBox"
+                    >
+                      <i class="fa fa-search" aria-hidden="true"></i>
+                    </div>
+
+                    <!-- LOGIN IF GUEST -->
+                    <!-- Login Icon -->
+                    <div
+                      v-if="!this.$store.state.userId"
+                      @click="goToLoginPage"
+                      class="search-btn login-style ps-5 pb-3"
+                      style="color: #b6b6b6"
+                    >
+                      <i class="fa fa-user-plus"></i>
+                      <span> LOGIN</span>
+                    </div>
+
+                    <!-- PROFILE IF GUEST -->
+                    <!-- Search Icon -->
+                    <div
+                      v-if="!this.$store.state.userId"
+                      class="ps-5 pb-3"
+                      style="color: #b6b6b6"
+                    >
+                      <i class="fa fa-user"></i>
+                      GUEST
+                    </div>
+
+                    <!-- LOGOUT USER IS AUTHENTICATED -->
+                    <!-- LOGOUT Icon -->
+                    <div
+                      v-if="this.$store.state.userId"
+                      @click="logOut"
+                      class="search-btn login-style ps-5 pb-3"
+                      style="color: #b6b6b6"
+                    >
+                      <i class="fa fa-rotate-right"></i>
+                      <span> LOGOUT</span>
+                    </div>
+
+                    <!-- PROFILE IF AUTHENTICATED -->
+                    <!-- USER Icon -->
+                    <div
+                      v-if="this.$store.state.userId"
+                      class="ps-5 pb-3 text-success"
+                      style="color: #b6b6b6; font-weight: bolder"
+                    >
+                      <i class="fa fa-user"></i>
+                      {{ this.$store.state.userName }}
+                    </div>
                   </div>
                   <!-- Nav End -->
                 </div>
@@ -161,43 +211,6 @@
         </div>
       </div>
     </div>
-    <!-- Search Icon -->
-    <div class="search-btn pt-3 ps-5" @click="openSearchBox">
-      <i class="fa fa-search" aria-hidden="true"></i>
-    </div>
-    <!-- Profile -->
-    <div class="dropdown dropdown-style">
-      <button
-        class="btn btn-secondary dropdown-toggle"
-        type="button"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
-        id="dropdownMenuButton1"
-      >
-        <!-- user icon -->
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          fill="currentColor"
-          class="bi bi-person"
-          viewBox="0 0 16 16"
-        >
-          <path
-            d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"
-          />
-        </svg>
-      </button>
-      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-        <li><a class="dropdown-item" href="#">Action</a></li>
-        <li>
-          <a class="dropdown-item" href="#">Another action</a>
-        </li>
-        <li>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </li>
-      </ul>
-    </div>
   </div>
 </template>
 
@@ -212,7 +225,6 @@ export default {
       isSearchExpand: false,
     };
   },
-
   computed: {
     // searchQuery is different from the usual computed because it required getter and setter
     searchQuery: {
@@ -233,6 +245,9 @@ export default {
     },
     closeSearchBox() {
       this.isSearchExpand = false;
+    },
+    goToLoginPage() {
+      this.$router.push("/login");
     },
     logOut() {
       // this.$store.state.userId = "";
@@ -258,14 +273,15 @@ export default {
 <style scoped>
 @import url(../css/font-awesome.min.css);
 @import url(../css/classy-nav.min.css);
-
 a {
   text-decoration: none;
 }
-
-.dropdown-style {
-  background-color: transparent !important;
-  border-color: white !important ;
+input:focus {
+  color: #ff0000;
+}
+.login-style :hover {
+  color: #40ba37;
+  font-weight: bold;
 }
 .logoSize {
   width: 50px;
@@ -275,21 +291,17 @@ a {
   position: sticky;
   z-index: 50;
 }
-
 .pill {
   border: 1px solid gray;
   width: 75px;
   height: 25px;
 }
-
 .cookbook {
   cursor: pointer;
 }
-
 .menu-dropdown {
   cursor: pointer;
 }
-
 .input:focus {
   box-shadow: none;
   text-decoration: none;
@@ -358,7 +370,6 @@ a {
 .search-wrapper.on {
   top: 0;
 }
-
 .header-area {
   position: relative;
   z-index: 100;
@@ -375,7 +386,6 @@ a {
     height: 70px;
   }
 }
-
 .header-area .delicious-main-menu {
   position: relative;
   width: 100%;
@@ -466,7 +476,7 @@ a {
 }
 .header-area .delicious-main-menu .classynav .search-btn {
   color: #b6b6b6;
-  margin-left: 150px;
+  /* margin-left: 150px; */
   cursor: pointer;
   -webkit-transition-duration: 500ms;
   transition-duration: 500ms;
