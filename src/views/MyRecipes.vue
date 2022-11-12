@@ -66,7 +66,7 @@ export default {
         if (snapshot.exists()) {
           const data = snapshot.val();
           this.recipes = data;
-          // console.log(this.recipes);
+          console.log(this.recipes);
         } else {
           console.log("no data exists");
         }
