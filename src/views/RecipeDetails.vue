@@ -163,53 +163,20 @@
             <h3>Reviews</h3>
             <p>See what others have to say</p>
           </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-12">
-          <div class="contact-form-area">
-            <form action="#" method="post">
-              <div class="row">
-                <div class="col-12 col-lg-6">
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="name"
-                    placeholder="Name"
-                  />
-                </div>
-                <div class="col-12 col-lg-6">
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="email"
-                    placeholder="E-mail"
-                  />
-                </div>
-                <div class="col-12">
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="subject"
-                    placeholder="Subject"
-                  />
-                </div>
-                <div class="col-12">
-                  <textarea
-                    name="message"
-                    class="form-control"
-                    id="message"
-                    cols="30"
-                    rows="10"
-                    placeholder="Message"
-                  ></textarea>
-                </div>
-                <div class="col-12">
-                  <button class="btn delicious-btn mt-30">Post Comments</button>
-                </div>
-              </div>
-            </form>
+          <div v-if="review_list.length > 0" id="reviewsSection">
+            <review-card
+              v-for="(review, index) of review_list"
+              :key="index"
+              :id="id"
+              :user="review.user"
+              :date="review.date"
+              :rating="review.rating"
+              :subject="review.subject"
+              :message="review.message"
+            ></review-card>
+          </div>
+          <div v-else>
+            <p class="text-center pt-5 pb-5">No reviews yet.</p>
           </div>
         </div>
       </div>
