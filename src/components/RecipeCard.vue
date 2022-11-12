@@ -59,8 +59,8 @@ export default {
 }
 .img-style {
   border-bottom: 3px solid #40ba37;
-  width: 450px;
-  height: 450px;
+  width: 500px;
+  height: 500px;
   object-fit: cover;
 }
 .receipe-content {
