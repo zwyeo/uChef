@@ -9,6 +9,8 @@
         <div class="fancy-border">
           <img class="display-img" :src="image" style="border" />
         </div>
+        <!-- BUTTON TEST -->
+        <button class="btn btn-primary" @click="increase()">INCREMENT</button>
       </div>
     </div>
   </div>
@@ -20,61 +22,38 @@
         <div class="col-12 col-md-8">
           <div class="receipe-headline my-5">
             <h2>{{ title }}</h2>
+            <!-- IF VIDEO EXISTS -->
+            <div v-if="videoExist == true">
+              <!-- video button -->
+              <button class="btn video-btn" data-bs-toggle="modal" :data-src="video" data-bs-target="#myModal"
+                @click="open()">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                  <path
+                    d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z" />
+                </svg>
+                Watch Video
+              </button>
 
-            <!-- video button -->
-            <button
-              class="btn video-btn"
-              data-bs-toggle="modal"
-              :data-src="video"
-              data-bs-target="#myModal"
-              @click="open()"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
-                <path
-                  d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"
-                />
-              </svg>
-              Watch Video
-            </button>
-
-            <!-- Modal -->
-            <div
-              class="modal fade"
-              id="myModal"
-              tabindex="-1"
-              role="dialog"
-              aria-labelledby="exampleModalLabel"
-              aria-hidden="true"
-            >
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-body">
-                    <button
-                      type="button"
-                      class="btn-close"
-                      @click="close()"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                    ></button>
-                    <!-- 16:9 aspect ratio -->
-                    <div class="ratio ratio-16x9">
-                      <iframe
-                        class="embed-responsive-item"
-                        :src="video2"
-                        allowscriptaccess="always"
-                        allow="autoplay"
-                      ></iframe>
+              <!-- Modal -->
+              <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-body">
+                      <button type="button" class="btn-close" @click="close()" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                      <!-- 16:9 aspect ratio -->
+                      <div class="ratio ratio-16x9">
+                        <iframe class="embed-responsive-item" :src="video2" allowscriptaccess="always"
+                          allow="autoplay"></iframe>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+            <!-- END of v-if-->
 
-            <!-- <div class="receipe-duration">
-                              <h6>Prep: 15 mins</h6>
-                              <h6>Cook: 30 mins</h6>
-                              <h6>Yields: 8 Servings</h6>
-                          </div> -->
           </div>
         </div>
 
@@ -88,24 +67,10 @@
               <i class="fa fa-star-o" aria-hidden="true"></i>
             </div>
 
-            <a
-              v-if="!bookmarked"
-              href="#"
-              class="btn delicious-btn"
-              @click="bookmark()"
-              data-bs-toggle="modal"
-              data-bs-target="#bookmarkModal"
-              >Bookmark</a
-            >
-            <a
-              v-else
-              href="#"
-              class="btn delicious-btn"
-              @click="unbookmark()"
-              data-bs-toggle="modal"
-              data-bs-target="#unbookmarkModal"
-              >Bookmarked!</a
-            >
+            <a v-if="!bookmarked" href="#" class="btn delicious-btn" @click="bookmark()" data-bs-toggle="modal"
+              data-bs-target="#bookmarkModal">Bookmark</a>
+            <a v-else href="#" class="btn delicious-btn" @click="unbookmark()" data-bs-toggle="modal"
+              data-bs-target="#unbookmarkModal">Bookmarked!</a>
           </div>
         </div>
       </div>
@@ -113,11 +78,7 @@
       <div class="row">
         <div class="col-12 col-lg-8">
           <!-- Single Preparation Step -->
-          <div
-            v-for="(item, index) in instructions"
-            :key="item"
-            class="single-preparation-step d-flex"
-          >
+          <div v-for="(item, index) in instructions" :key="item" class="single-preparation-step d-flex">
             <h4 v-if="index < 9">0{{ index + 1 }}</h4>
             <h4 v-else>{{ index + 1 }}</h4>
             <p>{{ item }}</p>
@@ -129,20 +90,11 @@
           <h4 class="">Ingredients</h4>
 
           <!-- Ingredient list -->
-          <div
-            v-for="(item, index) in ingredient_list"
-            :key="index"
-            :id="index"
-          >
+          <div v-for="(item, index) in ingredient_list" :key="index" :id="index">
             <ul class="list-group text-white">
-              <li
-                class="list-group-item d-flex justify-content-between align-content-center"
-              >
+              <li class="list-group-item d-flex justify-content-between align-content-center">
                 <h6 class="mb-0">
-                  <img
-                    src="../assets/img/core-img/salad.png"
-                    class="ingredient-img"
-                  />
+                  <img src="../assets/img/core-img/salad.png" class="ingredient-img" />
                   &nbsp;<span class="item">{{ item }}</span>
                 </h6>
 
@@ -164,16 +116,9 @@
             <p>See what others have to say</p>
           </div>
           <div v-if="review_list.length > 0" id="reviewsSection">
-            <review-card
-              v-for="(review, index) of review_list"
-              :key="index"
-              :id="id"
-              :user="review.user"
-              :date="review.date"
-              :rating="review.rating"
-              :subject="review.subject"
-              :message="review.message"
-            ></review-card>
+            <review-card v-for="(review, index) of review_list" :key="index" :id="id" :user="review.user"
+              :date="review.date" :rating="review.rating" :subject="review.subject" :message="review.message">
+            </review-card>
           </div>
           <div v-else>
             <p class="text-center pt-5 pb-5">No reviews yet.</p>
@@ -187,35 +132,20 @@
   <!-- ##### Follow Us Instagram Area End ##### -->
 
   <!-- Bookmark Modal -->
-  <div
-    class="modal fade"
-    id="bookmarkModal"
-    tabindex="-1"
-    aria-labelledby="ModalLabel"
-    aria-hidden="true"
-  >
+  <div class="modal fade" id="bookmarkModal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5 mx-auto" id="exampleModalLabel">
             Item bookmarked! 🥳
           </h1>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body m-3 mx-auto">
           Awesome! {{ title }} will be in your bookmark page!
         </div>
         <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-success mx-auto"
-            data-bs-dismiss="modal"
-          >
+          <button type="button" class="btn btn-success mx-auto" data-bs-dismiss="modal">
             Ok
           </button>
         </div>
@@ -224,35 +154,20 @@
   </div>
 
   <!-- Unbookmark Modal -->
-  <div
-    class="modal fade"
-    id="unbookmarkModal"
-    tabindex="-1"
-    aria-labelledby="ModalLabel"
-    aria-hidden="true"
-  >
+  <div class="modal fade" id="unbookmarkModal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5 mx-auto" id="exampleModalLabel">
             Awww 😥... Item unbookmarked!
           </h1>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body m-3 mx-auto">
           {{ title }} will be removed your bookmark page!
         </div>
         <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-success mx-auto"
-            data-bs-dismiss="modal"
-          >
+          <button type="button" class="btn btn-success mx-auto" data-bs-dismiss="modal">
             Ok
           </button>
         </div>
@@ -271,7 +186,10 @@ import {
   get,
   onValue,
   remove,
+  update,
+  updates,
 } from "firebase/database";
+import { ref as sRef } from 'firebase/storage';
 import ReviewBtn from "../components/ReviewButton.vue";
 import ReviewCard from "../components/ReviewCard.vue";
 export default {
@@ -281,12 +199,14 @@ export default {
     return {
       title: null,
       image: null,
+      videoExist: true,
       video: null,
       video2: null,
       instructions: [],
       ingredient_list: [],
       bookmarked: false,
       review_list: [],
+      foodcategory: null,
     };
   },
   created() {
@@ -295,37 +215,82 @@ export default {
     //filling up the recipe details
     console.log(this.id);
     let url = "https://themealdb.com/api/json/v1/1/lookup.php";
-    axios
-      .get(url, {
-        params: {
-          i: this.id,
-        },
-      })
-      .then((response) => {
-        console.log(response.data);
-        let obj = response.data.meals[0];
-        this.title = obj.strMeal;
-        this.image = obj.strMealThumb;
-        this.video = obj.strYoutube.replace("watch?v=", "embed/");
-        console.log(obj.strInstructions);
-        let instruction = obj.strInstructions.split("\r\n");
-        for (let i of instruction) {
-          if (!i == "") {
-            this.instructions.push(i);
+
+    if (isNaN(this.id)) {
+      axios
+        .get(
+          `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/community.json`
+        )
+        .then((response) => {
+          console.log(response.data)
+          for (let entry in response.data) {
+            // console.log(response.data[entry].id)
+            if (response.data[entry].id == this.id) {
+              var obj = response.data[entry]
+              this.videoExist = false;
+              this.title = obj.strMeal;
+              this.image = obj.image;
+              this.foodCategory = obj.strCategory;
+
+              //formatting instructions
+              let instruction = obj.instructions.split("\r\n");
+              for (let i of instruction) {
+                if (!i == "") {
+                  this.instructions.push(i);
+                }
+              }
+
+              // formatting ingredients and the measurements
+              for (let i = 1; i < 21; i++) {
+                let str_i = "strIngredient" + i;
+                let str_m = "strMeasure" + i;
+                if (obj[str_i] == "" || obj[str_i] == null) break;
+                else {
+                  let final = obj[str_m] + " " + obj[str_i];
+                  this.ingredient_list.push(final);
+                }
+              }
+            }
+
           }
-        }
-        // formatting ingredients and the measurements
-        for (let i = 1; i < 21; i++) {
-          let str_i = "strIngredient" + i;
-          let str_m = "strMeasure" + i;
-          if (obj[str_i] == "" || obj[str_i] == null) break;
-          else {
-            let final = obj[str_m] + " " + obj[str_i];
-            this.ingredient_list.push(final);
+        })
+    }
+    // 
+    else {
+      axios
+        .get(url, {
+          params: {
+            i: this.id,
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          let obj = response.data.meals[0];
+          this.title = obj.strMeal;
+          this.image = obj.strMealThumb;
+          this.foodCategory = obj.strCategory;
+          this.video = obj.strYoutube.replace("watch?v=", "embed/");
+
+          //formatting instructions
+          let instruction = obj.strInstructions.split("\r\n");
+          for (let i of instruction) {
+            if (!i == "") {
+              this.instructions.push(i);
+            }
           }
-        }
-        console.log(this.ingredient_list);
-      });
+          // formatting ingredients and the measurements
+          for (let i = 1; i < 21; i++) {
+            let str_i = "strIngredient" + i;
+            let str_m = "strMeasure" + i;
+            if (obj[str_i] == "" || obj[str_i] == null) break;
+            else {
+              let final = obj[str_m] + " " + obj[str_i];
+              this.ingredient_list.push(final);
+            }
+          }
+        });
+    }
+
     //Dictate the state of the bookmark button
     axios
       .get(
@@ -356,6 +321,27 @@ export default {
     });
   },
   methods: {
+
+    // increase test
+    increase() {
+      console.log("IT WORKS");
+      console.log(this.$store.state.userId)
+
+      var foodCategory = this.foodCategory
+      const db = getDatabase();
+      const dbRef = ref(db);
+      get(child(dbRef, `users/${this.$store.state.userId}/preferences/-NGeIxKCg15J-xKzyYPP/${this.foodCategory}`))
+        .then((snapshot) => {
+          console.log(snapshot);
+          let countVariable = Number(snapshot.val());
+          console.log(countVariable);
+          countVariable++;
+          var obj = {};
+          obj[foodCategory] = countVariable;
+          update(ref(dbRef, `users/${this.$store.state.userId}/preferences/-NGeIxKCg15J-xKzyYPP`), obj);
+        })
+
+    },
     // bookmarking functions
     bookmark() {
       console.log(this.$store.state.userId);
@@ -368,6 +354,14 @@ export default {
         }
       );
       this.bookmarked = true;
+
+      //add category to user's preference in firebase db
+      // axios.post(
+      //   `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${userId}/preferences/${this.foodCategory}.json`,
+      //   {
+      //     value: 1,
+      //   })
+
     },
     unbookmark() {
       const db = getDatabase();
@@ -605,6 +599,7 @@ ol li {
 }
 
 @media only screen and (max-width: 767px) {
+
   .delicious-btn.btn-4.active,
   .delicious-btn.btn-4:hover,
   .delicious-btn.btn-4:focus {
@@ -775,21 +770,20 @@ input[type="checkbox"]:checked:after {
   left: 6px;
 }
 
-input[type="checkbox"]:checked + .check {
+input[type="checkbox"]:checked+.check {
   opacity: 1;
 }
 
 /*food image  */
 .fancy-border {
   border: 25px solid #b88846;
-  border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='75' height='75'%3E%3Cg fill='none' stroke='%23B88846' stroke-width='2'%3E%3Cpath d='M1 1h73v73H1z'/%3E%3Cpath d='M8 8h59v59H8z'/%3E%3Cpath d='M8 8h16v16H8zM51 8h16v16H51zM51 51h16v16H51zM8 51h16v16H8z'/%3E%3C/g%3E%3Cg fill='%23B88846'%3E%3Ccircle cx='16' cy='16' r='2'/%3E%3Ccircle cx='59' cy='16' r='2'/%3E%3Ccircle cx='59' cy='59' r='2'/%3E%3Ccircle cx='16' cy='59' r='2'/%3E%3C/g%3E%3C/svg%3E")
-    25;
+  border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='75' height='75'%3E%3Cg fill='none' stroke='%23B88846' stroke-width='2'%3E%3Cpath d='M1 1h73v73H1z'/%3E%3Cpath d='M8 8h59v59H8z'/%3E%3Cpath d='M8 8h16v16H8zM51 8h16v16H51zM51 51h16v16H51zM8 51h16v16H8z'/%3E%3C/g%3E%3Cg fill='%23B88846'%3E%3Ccircle cx='16' cy='16' r='2'/%3E%3Ccircle cx='59' cy='16' r='2'/%3E%3Ccircle cx='59' cy='59' r='2'/%3E%3Ccircle cx='16' cy='59' r='2'/%3E%3C/g%3E%3C/svg%3E") 25;
 }
 
 .display-img {
   width: 100%;
   height: auto;
-  aspect-ratio: 2/1.4;
+  aspect-ratio: 2/1.5;
 }
 
 .outer {
