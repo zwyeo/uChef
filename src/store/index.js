@@ -94,7 +94,7 @@ export default createStore({
           })
           .then((res) => {
             const data = res.data.meals;
-            console.log(data);
+            // console.log(data);
             commit("getRecipes", data); // This will pass data into getRecipe mutation as payload
           });
       } else if (selectedCat.length != 0 && !userQuery.includes(",")) {
@@ -143,14 +143,14 @@ export default createStore({
       if (this.state.queryParam.length == 0) {
         axios.get(url, { params: { c: selectedCat } }).then((response) => {
           const data = response.data.meals;
-          console.log(data);
+          // console.log(data);
           commit("getCategoryRecipe", data);
         });
       } else if (this.state.recipes.length != 0) {
         //search query present and searched then filter
         axios.get(url, { params: { c: selectedCat } }).then((response) => {
           const data = response.data.meals;
-          console.log(data);
+          // console.log(data);
           for (let obj in data) {
             for (let robj in this.state.recipes) {
               if (data[obj].strMeal == this.state.recipes[robj].strMeal) {
@@ -158,7 +158,8 @@ export default createStore({
               }
             }
           }
-          console.log(commonrecipes);
+          // console.log(commonrecipes);
+          commit("getCategoryRecipe", commonrecipes);
         });
       }
     },
