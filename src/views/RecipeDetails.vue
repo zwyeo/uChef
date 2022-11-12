@@ -58,7 +58,7 @@
         <div class="col-12 col-md-4">
           <div class="receipe-ratings my-5">
             <div class="ratings">
-              <div v-if="rating == null || rating == 4">
+              <div v-if="ratings == null || ratings == 4">
                 <i class="fa fa-star" aria-hidden="true"></i>
                 <i class="fa fa-star" aria-hidden="true"></i>
                 <i class="fa fa-star" aria-hidden="true"></i>
@@ -66,7 +66,7 @@
                 <i class="fa fa-star-o" aria-hidden="true"></i>
               </div>
 
-              <div v-if="rating != null && rating == 0">
+              <div v-if="ratings != null && ratings == 0">
                 <i class="fa fa-star-o" aria-hidden="true"></i>
                 <i class="fa fa-star-o" aria-hidden="true"></i>
                 <i class="fa fa-star-o" aria-hidden="true"></i>
@@ -74,7 +74,7 @@
                 <i class="fa fa-star-o" aria-hidden="true"></i>
               </div>
 
-              <div v-if="rating != null && rating == 1">
+              <div v-if="ratings != null && ratings == 1">
                 <i class="fa fa-star" aria-hidden="true"></i>
                 <i class="fa fa-star-o" aria-hidden="true"></i>
                 <i class="fa fa-star-o" aria-hidden="true"></i>
@@ -82,7 +82,7 @@
                 <i class="fa fa-star-o" aria-hidden="true"></i>
               </div>
 
-              <div v-if="rating != null && rating == 2">
+              <div v-if="ratings != null && ratings == 2">
                 <i class="fa fa-star" aria-hidden="true"></i>
                 <i class="fa fa-star" aria-hidden="true"></i>
                 <i class="fa fa-star-o" aria-hidden="true"></i>
@@ -90,7 +90,7 @@
                 <i class="fa fa-star-o" aria-hidden="true"></i>
               </div>
 
-              <div v-if="rating != null && rating == 3">
+              <div v-if="ratings != null && ratings == 3">
                 <i class="fa fa-star" aria-hidden="true"></i>
                 <i class="fa fa-star" aria-hidden="true"></i>
                 <i class="fa fa-star" aria-hidden="true"></i>
@@ -98,7 +98,7 @@
                 <i class="fa fa-star-o" aria-hidden="true"></i>
               </div>
 
-              <div v-if="rating != null && rating == 5">
+              <div v-if="ratings != null && ratings == 5">
                 <i class="fa fa-star" aria-hidden="true"></i>
                 <i class="fa fa-star" aria-hidden="true"></i>
                 <i class="fa fa-star" aria-hidden="true"></i>
@@ -228,7 +228,6 @@ import {
   updates,
   set
 } from "firebase/database";
-import { ref as sRef } from 'firebase/storage';
 import ReviewBtn from "../components/ReviewButton.vue";
 import ReviewCard from "../components/ReviewCard.vue";
 export default {
@@ -246,7 +245,7 @@ export default {
       bookmarked: false,
       review_list: [],
       foodcategory: null,
-      rating: null,
+      ratings: null,
     };
   },
   created() {
@@ -349,14 +348,14 @@ export default {
           var rating = total_rating / num_of_rating;
           var remainder = rating % 1;
           if (remainder == 0) {
-            this.rating = rating
+            this.ratings = rating
           }
           else if (remainder >= 0.5) {
 
-            this.rating = Math.ceil(rating)
+            this.ratings = Math.ceil(rating)
           }
           else {
-            this.rating = Math.floor(rating)
+            this.ratings = Math.floor(rating)
           }
 
         }
@@ -382,6 +381,7 @@ export default {
       .catch((error) => {
         console.log(error);
       });
+
     //review card population
     let rurl = `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/recipes.json`;
     axios.get(rurl).then((response) => {
