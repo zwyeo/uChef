@@ -58,11 +58,54 @@
         <div class="col-12 col-md-4">
           <div class="receipe-ratings my-5">
             <div class="ratings">
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star-o" aria-hidden="true"></i>
+              <div v-if="rating == null || rating == 4">
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+              </div>
+
+              <div v-if="rating != null && rating == 0">
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+              </div>
+
+              <div v-if="rating != null && rating == 1">
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+              </div>
+
+              <div v-if="rating != null && rating == 2">
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+              </div>
+
+              <div v-if="rating != null && rating == 3">
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+              </div>
+
+              <div v-if="rating != null && rating == 5">
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+              </div>
+
             </div>
 
             <a v-if="!bookmarked" href="#" class="btn delicious-btn" @click="bookmark()" data-bs-toggle="modal"
@@ -203,6 +246,7 @@ export default {
       bookmarked: false,
       review_list: [],
       foodcategory: null,
+      ratings: null,
     };
   },
   created() {
@@ -287,6 +331,39 @@ export default {
         });
     }
 
+    //Rating
+    axios
+      .get(
+        `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/recipes/${this.id}.json`
+      )
+      .then((response) => {
+        if (response.data != null) {
+          var total_rating = 0
+          var num_of_rating = 0
+          for (let review in Object.values(response.data)[0]) {
+            // console.log(Object.values(response.data)[0][review].rating)
+            total_rating += Number(Object.values(response.data)[0][review].rating);
+            num_of_rating++;
+          }
+          var rating = total_rating / num_of_rating;
+          var remainder = rating % 1;
+          if (remainder == 0) {
+            this.rating = rating
+          }
+          else if (remainder >= 0.5) {
+
+            this.rating = Math.ceil(rating)
+          }
+          else {
+            this.rating = Math.floor(rating)
+          }
+
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
     //Dictate the state of the bookmark button
     axios
       .get(
@@ -305,7 +382,7 @@ export default {
         console.log(error);
       });
     //review card population
-    let rurl = `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/recipes/${this.id}/reviews.json`;
+    let rurl = `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/recipes.json`;
     axios.get(rurl).then((response) => {
       // console.log(response.data);
       let reviewsObj = response.data;
