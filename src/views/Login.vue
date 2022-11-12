@@ -150,7 +150,7 @@ export default {
         })
         .catch((error) => {
           const errorCode = error.code;
-          // const errorMessage = error.message;
+          const errorMessage = error.message;
           switch (errorCode) {
             case "auth/invalid-email":
               this.errorMsg = "Invalid email!";

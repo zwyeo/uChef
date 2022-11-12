@@ -139,6 +139,7 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
+import axios from "axios";
 
 export default {
   data() {
@@ -166,8 +167,10 @@ export default {
 
           this.$store.commit("set_userName", user.displayName);
           this.$store.commit("set_userId", user.uid);
+          // this.populateUserDB(user.uid);
           this.$store.state.prevRouteName = "register";
           this.$router.push("/");
+          this.populateUserDB(user.uid);
 
           // reset the values
           this.email = "";
@@ -196,6 +199,26 @@ export default {
               break;
           }
         });
+    },
+    populateUserDB(uid) {
+      const url = `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${uid}/preferences.json`;
+
+      axios.post(url, {
+        Beef: 0,
+        Breakfast: 0,
+        Chicken: 0,
+        Dessert: 0,
+        Goat: 0,
+        Lamb: 0,
+        Miscellaneous: 0,
+        Pasta: 0,
+        Pork: 0,
+        Seafood: 0,
+        Side: 0,
+        Starter: 0,
+        Vegan: 0,
+        Vegetarian: 0,
+      });
     },
   },
 };
