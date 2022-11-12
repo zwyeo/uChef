@@ -20,7 +20,7 @@ export default createStore({
       "Vegan",
       "Vegetarian",
     ],
-    selectedCategory: "Beef",
+    selectedCategory: "",
     queryParam: "",
     searchDesc: "Search food recipe",
     // This will store all the popular recipe from DB
@@ -39,16 +39,21 @@ export default createStore({
     // To get the current route name
     routeName: "",
     prevRouteName: "", // To bypass the signup/name bug
+    categoryRecipes: {},
   },
   mutations: {
     getRecipes(state, payload) {
       state.recipes = payload;
+      console.log(state.recipes);
     },
     // set the query param based on user search
     setQueryParam(state, newValue) {
       state.queryParam = newValue;
     },
-
+    getCategoryRecipe(state, payload) {
+      state.categoryRecipes = payload;
+      console.log(state.categoryRecipes);
+    },
     // To populate popularRecipe
     setPopularRecipe(state, setPopularRecipe) {
       state.popularRecipe = setPopularRecipe;
@@ -76,27 +81,61 @@ export default createStore({
     // This fn is to retrive recipe data from themealdb API
     getRecipes({ commit }) {
       let userQuery = this.state.queryParam;
-      let url = "https://themealdb.com/api/json/v1/1/search.php";
-      axios
-        .get(url, {
-          params: {
-            s: userQuery,
-          },
-        })
-        .then((res) => {
-          const data = res.data.meals;
-          console.log(data);
-          commit("getRecipes", data); // This will pass data into getRecipe mutation as payload
-        });
+      let selectedCat = this.state.selectedCategory;
+      if (selectedCat.length == 0) {
+        let url = "https://themealdb.com/api/json/v1/1/search.php";
+        axios
+          .get(url, {
+            params: {
+              s: userQuery,
+            },
+          })
+          .then((res) => {
+            const data = res.data.meals;
+            console.log(data);
+            commit("getRecipes", data); // This will pass data into getRecipe mutation as payload
+          });
+      } else {
+        //compare category filter & search results to get common
+        let commonrecipes = [];
+        let url = "https://themealdb.com/api/json/v1/1/search.php";
+        axios
+          .get(url, {
+            params: {
+              s: userQuery,
+            },
+          })
+          .then((res) => {
+            const data = res.data.meals;
+            let curl = "https://themealdb.com/api/json/v1/1/filter.php";
+            axios.get(curl, { params: { c: selectedCat } }).then((response) => {
+              const catdata = response.data.meals;
+              // console.log(data, catdata);
+              for (let searchobj in data) {
+                for (let catobj in catdata) {
+                  if (catdata[catobj].strMeal == data[searchobj].strMeal) {
+                    // console.log(data[searchobj].strMeal);
+                    commonrecipes.push(data[searchobj]);
+                  }
+                }
+              }
+              // console.log(commonrecipes);
+              commit("getRecipes", commonrecipes);
+            });
+          });
+      }
     },
     filterCategory({ commit }) {
-      let selectedCat = this.state.selectedCategory;
-      let url = "https://themealdb.com/api/json/v1/1/filter.php";
-      axios.get(url, { params: { c: selectedCat } }).then((response) => {
-        const data = response.data.meals;
-        console.log(data);
-        commit("getRecipes", data); // This will pass data into getRecipe mutation as payload
-      });
+      //if search query is empty
+      if (this.state.queryParam.length == 0) {
+        let selectedCat = this.state.selectedCategory;
+        let url = "https://themealdb.com/api/json/v1/1/filter.php";
+        axios.get(url, { params: { c: selectedCat } }).then((response) => {
+          const data = response.data.meals;
+          console.log(data);
+          commit("getCategoryRecipe", data);
+        });
+      }
     },
     postReview({ commit }) {
       console.log(
@@ -135,6 +174,7 @@ export default createStore({
           date: formatdate,
         }
       );
+      //reset fields
       this.state.reviewsubject = "";
       this.state.reviewcomments = "";
       this.state.starrating = "0";
