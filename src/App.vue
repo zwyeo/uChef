@@ -8,7 +8,7 @@
     >
     |
   </nav> -->
-  <router-view />git s
+  <router-view />
 </template>
 
 <style>

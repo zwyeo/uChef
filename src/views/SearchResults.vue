@@ -52,13 +52,7 @@ export default {
   data() {
     return {};
   },
-  created() {
-    for (let obj in this.$store.state.recipes) {
-      for (elements in this.$store.state.recipes[obj]) {
-      }
-    }
-    console.log(this.$store.state.recipes);
-  },
+  created() {},
 };
 </script>
 

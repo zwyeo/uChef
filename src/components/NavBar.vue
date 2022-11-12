@@ -39,6 +39,7 @@
                 {{ cat }}
               </option>
             </select>
+
             <label for="filter" class="float-end pe-2 pt-2">Filter By:</label>
             <div
               class="d-flex text-center rounded-pill w-50 pe-2 border border-secondary px-2 mt-2 bg-white"
