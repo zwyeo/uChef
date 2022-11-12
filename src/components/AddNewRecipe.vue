@@ -142,7 +142,6 @@
 <script>
 import axios from "axios";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { getDatabase, dbref } from "firebase/database";
 import { uuidv4 } from "@firebase/util";
 
 export default {

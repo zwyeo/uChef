@@ -16,6 +16,8 @@
             class="mb-5"
           ></recipe-card>
         </router-link>
+        <remove-recipe :recipe-id="recipe.id"></remove-recipe>
+        <update-recipe :recipe-id="recipe.id"></update-recipe>
       </div>
       <!-- <button class="btn btn-primary" v-on:click="getBookmarks">Click me</button> -->
     </div>
@@ -34,6 +36,7 @@ import NavBar from "../components/NavBar.vue";
 import RecipeCard from "../components/RecipeCard.vue";
 import AddNewRecipe from "../components/AddNewRecipe.vue";
 import RemoveRecipe from "../components/RemoveRecipe.vue";
+import UpdateRecipe from "../components/UpdateRecipe.vue";
 import { getDatabase, ref, onValue } from "firebase/database";
 
 export default {
@@ -46,7 +49,9 @@ export default {
   components: {
     NavBar,
     RecipeCard,
-    AddNewRecipe
+    AddNewRecipe,
+    RemoveRecipe,
+    UpdateRecipe
   },
   methods: {
     getRecipes() {

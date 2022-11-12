@@ -31,6 +31,7 @@
               v-model="$store.state.selectedCategory"
               @change="$store.dispatch('filterCategory')"
             >
+              <option value="" selected disabled>Select a category</option>
               <option
                 v-for="(cat, idx) of $store.state.foodCategories"
                 :key="idx"
