@@ -81,9 +81,11 @@ export default createStore({
     // This fn is to retrive recipe data from themealdb API
     getRecipes({ commit }) {
       let userQuery = this.state.queryParam;
+      console.log(userQuery.includes(","));
       let selectedCat = this.state.selectedCategory;
-      if (selectedCat.length == 0) {
-        let url = "https://themealdb.com/api/json/v1/1/search.php";
+      if (selectedCat.length == 0 && !userQuery.includes(",")) {
+        //vanilla search
+        let url = "https://themealdb.com/api/json/v2/9973533/search.php";
         axios
           .get(url, {
             params: {
@@ -95,10 +97,10 @@ export default createStore({
             console.log(data);
             commit("getRecipes", data); // This will pass data into getRecipe mutation as payload
           });
-      } else {
-        //compare category filter & search results to get common
+      } else if (selectedCat.length != 0 && !userQuery.includes(",")) {
+        //search + category fitler
         let commonrecipes = [];
-        let url = "https://themealdb.com/api/json/v1/1/search.php";
+        let url = "https://themealdb.com/api/json/v2/9973533/search.php";
         axios
           .get(url, {
             params: {
@@ -107,7 +109,7 @@ export default createStore({
           })
           .then((res) => {
             const data = res.data.meals;
-            let curl = "https://themealdb.com/api/json/v1/1/filter.php";
+            let curl = "https://themealdb.com/api/json/v2/9973533/filter.php";
             axios.get(curl, { params: { c: selectedCat } }).then((response) => {
               const catdata = response.data.meals;
               // console.log(data, catdata);
@@ -123,17 +125,40 @@ export default createStore({
               commit("getRecipes", commonrecipes);
             });
           });
+      } else if (userQuery.includes(",")) {
+        //multi ingredient search
+        let url = "https://themealdb.com/api/json/v2/9973533/filter.php";
+        userQuery = userQuery.replace(" ", "_");
+        axios.get(url, { params: { i: userQuery } }).then((response) => {
+          let data = response.data;
+          commit("getRecipes", data);
+        });
       }
     },
     filterCategory({ commit }) {
       //if search query is empty
+      let selectedCat = this.state.selectedCategory;
+      let url = "https://themealdb.com/api/json/v2/9973533/filter.php";
+      let commonrecipes = [];
       if (this.state.queryParam.length == 0) {
-        let selectedCat = this.state.selectedCategory;
-        let url = "https://themealdb.com/api/json/v1/1/filter.php";
         axios.get(url, { params: { c: selectedCat } }).then((response) => {
           const data = response.data.meals;
           console.log(data);
           commit("getCategoryRecipe", data);
+        });
+      } else if (this.state.recipes.length != 0) {
+        //search query present and searched then filter
+        axios.get(url, { params: { c: selectedCat } }).then((response) => {
+          const data = response.data.meals;
+          console.log(data);
+          for (let obj in data) {
+            for (let robj in this.state.recipes) {
+              if (data[obj].strMeal == this.state.recipes[robj].strMeal) {
+                commonrecipes.push(this.state.recipes[robj]);
+              }
+            }
+          }
+          console.log(commonrecipes);
         });
       }
     },
