@@ -472,7 +472,6 @@ export default {
                                             remove(deleteRef).then(() => {
                                                 console.log("Location removed");
                                                 axios.post(`https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${this.$store.state.userId}/recipes.json`, simpleFoodTemplate);
-                                                window.location.reload();
                                             })
                                         }
                                     }
