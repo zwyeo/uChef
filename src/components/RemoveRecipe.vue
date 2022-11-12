@@ -40,7 +40,7 @@
                         if (data[i].id == this.recipeId) {
                             let deleteRef = ref(db, `community/${i}`);
                             remove(deleteRef).then(() => {
-                                console.log("Location removed");
+                                // console.log("Location removed");
                                 get(usersRef)
                                 .then((snapshot) => {
                                     let data = snapshot.val();
@@ -49,7 +49,7 @@
                                         if (data[i].id == this.recipeId) {
                                             let deleteRef = ref(db, `users/${userId}/recipes/${i}`);
                                             remove(deleteRef).then(() => {
-                                                console.log("Location removed");
+                                                // console.log("Location removed");
                                                 window.location.href = "/my-recipes";
                                             })
                                         }
