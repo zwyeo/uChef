@@ -6,7 +6,6 @@
         <div class="card-body">
             <div class="receipe-content">
                 <h5>{{ title }}</h5>
-
                 <div class="ratings">
                 <i class="fa fa-star" aria-hidden="true"></i>
                 <i class="fa fa-star" aria-hidden="true"></i>
@@ -24,7 +23,7 @@
                         </router-link>
                     </div>
                     <div class="col">
-                        <remove-recipe :recipe-id="id"></remove-recipe>
+                        <remove-recipe :recipe-id="this.id"></remove-recipe>
                     </div>
                 </div>
             </div>
