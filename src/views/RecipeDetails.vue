@@ -201,7 +201,7 @@
 
       <div class="row">
         <div class="col-12">
-          <div class="section-heading text-left m-0">
+          <div class="section-heading text-left m-0" id="review-section">
             <h3>Reviews</h3>
             <p>See what others have to say</p>
           </div>
@@ -547,8 +547,7 @@ export default {
           }
           if (current > 0) {
             var final = current - 1;
-          }
-          else {
+          } else {
             var final = 0;
           }
 

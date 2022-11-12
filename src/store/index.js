@@ -202,7 +202,7 @@ export default createStore({
       this.state.starrating = "0";
       // this.state.dispatch("getReviews");
       // console.log(this.state.reviewlist);
-      // location.reload(); //to reload page
+      location.reload(); //to reload page
       // window.scrollTo(0, document.querySelector("#reviewSection").scrollHeight);
     },
     getReviews({ commit }) {

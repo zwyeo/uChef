@@ -56,13 +56,13 @@ const routes = [
     path: "/update-recipe-page/:id",
     name: "update-recipe-page",
     component: UpdateRecipePage,
-    props: true
+    props: true,
   },
   {
     path: "/add-recipe-page",
     name: "add-recipe-page",
     component: AddRecipePage,
-  }
+  },
 ];
 
 const router = createRouter({

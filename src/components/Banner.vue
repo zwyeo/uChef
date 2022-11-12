@@ -58,7 +58,9 @@
             broiled, or fried, the possibilities are nearly endless when it
             comes to creating a mouth-watering serving of chicken.
           </p>
-          <button class="text-btn">See Recipe</button>
+          <button class="text-btn" @click="searchCategory('chicken')">
+            See Chicken Category
+          </button>
         </div>
       </div>
       <div class="carousel-item" data-bs-interval="2000">
@@ -86,7 +88,9 @@
             muscle, it should give you up to about 44% edible beef, or about 460
             pounds of meat. That’s a lot of delicious steak dinners.
           </p>
-          <button class="text-btn">See Recipe</button>
+          <button class="text-btn" @click="searchCategory('beef')">
+            See Beef Category
+          </button>
         </div>
       </div>
 
@@ -112,7 +116,9 @@
             herring are all fish with high levels of Omega-3. This is considered
             the good fat and can actually be very healthy to your heart.
           </p>
-          <button class="text-btn">See Recipe</button>
+          <button class="text-btn" @click="searchCategory('fish')">
+            See Fish Category
+          </button>
         </div>
       </div>
       <div class="carousel-item" data-bs-interval="2000">
@@ -138,7 +144,9 @@
             coffee, cheeses, nuts, or other savory items. In some parts of the
             world there is no tradition of dessert to conclude a meal.
           </p>
-          <button class="text-btn">See Recipe</button>
+          <button class="text-btn" @click="searchCategory('dessert')">
+            See Desserts Category
+          </button>
         </div>
       </div>
     </div>
@@ -166,6 +174,13 @@
 <script>
 export default {
   name: "Banner",
+  methods: {
+    searchCategory(cat) {
+      this.$store.state.selectedCategory = cat;
+      this.$store.dispatch("filterCategory");
+      this.$router.push("/search-results");
+    },
+  },
 };
 </script>
 
