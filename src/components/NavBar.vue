@@ -1,339 +1,320 @@
 <template>
-  <div class="d-flex justify-content-center align-items-center">
-    <div>
-      <!-- Bootstrap Navbar Start -->
+  <!-- Search Wrapper -->
+  <!-- <div class="search-wrapper pt-2" :class="{ on: isSearchExpand }">
+    <div class="container">
+     
 
-      <!-- ##### Header Area Start ##### -->
-      <header class="header-area">
-        <!-- Top Header Area -->
-
-        <!-- Navbar Toggler -->
-        <div class="classy-navbar-toggler">
-          <span class="navbarToggler"
-            ><span></span><span></span><span></span
-          ></span>
-        </div>
-
-        <!-- Search Wrapper -->
-        <div class="search-wrapper" :class="{ on: isSearchExpand }">
-          <!-- Close Btn -->
-          <div class="close-btn" @click="closeSearchBox">
-            <i class="fa fa-times" aria-hidden="true"></i>
-          </div>
-
-          <div class="container">
-            <!-- filter buttons -->
-
-            <select
-              class="form-select w-25 float-end"
-              aria-label="Default select example"
-              id="filter"
-              v-model="$store.state.selectedCategory"
-              @change="$store.dispatch('filterCategory')"
-            >
-              <option value="" selected disabled>Select a category</option>
-              <option
-                v-for="(cat, idx) of $store.state.foodCategories"
-                :key="idx"
-              >
-                {{ cat }}
-              </option>
-            </select>
-
-            <label for="filter" class="float-end pe-2 pt-2">Filter By:</label>
-            <div
-              class="d-flex text-center rounded-pill w-50 pe-2 border border-secondary px-2 mt-2 bg-white"
-            >
-              <div class="pt-2 icon">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  class="bi bi-search mb-1"
-                  viewBox="0 0 16 16"
-                  @click="$store.dispatch('getRecipes')"
-                >
-                  <path
-                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
-                  ></path>
-                </svg>
-              </div>
-              <router-link :to="{ name: 'home', hash: '#popular-recipe' }">
-                <input
-                  type="text"
-                  :placeholder="$store.state.searchDesc"
-                  class="text-dark w-5 form-control rounded-pill input border-0 bg-white"
-                  v-model="searchQuery"
-                  style="background-color: #40ba37"
-                  @keyup.enter="onSearch"
-                />
-              </router-link>
-            </div>
-          </div>
-        </div>
-
-        <!-- Navbar Area -->
-        <div class="delicious-main-menu mt-5">
-          <div class="classy-nav-container breakpoint-off">
-            <div class="container">
-              <!-- Menu -->
-              <nav
-                class="classy-navbar justify-content-between"
-                id="deliciousNav"
-              >
-                <!-- Logo -->
-                <router-link to="/"
-                  ><a class="nav-brand"
-                    ><img src="../assets/logo.png" alt="uChef" /></a
-                ></router-link>
-
-                <!-- Navbar Toggler -->
-                <div class="classy-navbar-toggler">
-                  <span class="navbarToggler"
-                    ><span></span><span></span><span></span
-                  ></span>
-                </div>
-
-                <!-- Menu -->
-                <div class="classy-menu">
-                  <!-- close btn -->
-                  <div class="classycloseIcon">
-                    <div class="cross-wrap">
-                      <span class="top"></span><span class="bottom"></span>
-                    </div>
-                  </div>
-
-                  <!-- Nav Start -->
-                  <div class="classynav">
-                    <!-- HOME NAVBAR -->
-                    <ul>
-                      <li
-                        v-if="this.$store.state.routeName == 'home'"
-                        class="active"
-                      >
-                        <router-link to="/"> Home </router-link>
-                      </li>
-                      <li v-else>
-                        <router-link to="/"> Home </router-link>
-                      </li>
-
-                      <!-- MY-RECIPE NAVBAR -->
-                      <li
-                        v-if="
-                          this.$store.state.userId &&
-                          this.$store.state.routeName == 'my-recipes'
-                        "
-                        class="active"
-                      >
-                        <router-link to="/my-recipes">My Recipes</router-link>
-                      </li>
-                      <li
-                        v-if="
-                          this.$store.state.userId &&
-                          this.$store.state.routeName != 'my-recipes'
-                        "
-                      >
-                        <router-link to="/my-recipes">My Recipes</router-link>
-                      </li>
-                      <!-- TRIGGER LOGIN MODAL IF USER NOT LOGGED IN -->
-                      <li
-                        v-if="!this.$store.state.userId"
-                        data-bs-toggle="modal"
-                        data-bs-target="#loginModal"
-                      >
-                        <router-link to="/my-recipes">My Recipes</router-link>
-                      </li>
-                      <!-- MY-BOOKMARKS NAVBAR -->
-                      <li
-                        v-if="
-                          this.$store.state.userId &&
-                          this.$store.state.routeName == 'my-bookmarks'
-                        "
-                        class="active"
-                      >
-                        <router-link to="/my-bookmarks"
-                          >My Bookmarks</router-link
-                        >
-                      </li>
-                      <li
-                        v-if="
-                          this.$store.state.userId &&
-                          this.$store.state.routeName != 'my-bookmarks'
-                        "
-                      >
-                        <router-link to="/my-bookmarks"
-                          >My Bookmarks</router-link
-                        >
-                      </li>
-                      <!-- TRIGGER LOGIN MODAL IF USER NOT LOGGED IN -->
-                      <li
-                        v-if="!this.$store.state.userId"
-                        data-bs-toggle="modal"
-                        data-bs-target="#loginModal"
-                      >
-                        <router-link
-                          to="/my-bookmarks"
-                          :class="
-                            (this.$store.state.routeName == 'my-bookmarks' ||
-                              this.$store.state.routeName == '') ??
-                            active
-                          "
-                          >My Bookmarks</router-link
-                        >
-                      </li>
-                    </ul>
-                    <!-- Search Icon -->
-                    <div
-                      class="search-btn pb-3"
-                      style="padding-left: 400px"
-                      @click="openSearchBox"
-                    >
-                      <i class="fa fa-search" aria-hidden="true"></i>
-                    </div>
-
-                    <!-- LOGIN IF GUEST -->
-                    <!-- Login Icon -->
-                    <div
-                      v-if="!this.$store.state.userId"
-                      @click="goToLoginPage"
-                      class="search-btn login-style ps-5 pb-3"
-                      style="color: #b6b6b6"
-                    >
-                      <i class="fa fa-user-plus"></i>
-                      <span> LOGIN</span>
-                    </div>
-
-                    <!-- PROFILE IF GUEST -->
-                    <!-- Search Icon -->
-                    <div
-                      v-if="!this.$store.state.userId"
-                      class="ps-5 pb-3"
-                      style="color: #b6b6b6"
-                    >
-                      <i class="fa fa-user"></i>
-                      GUEST
-                    </div>
-
-                    <!-- LOGOUT USER IS AUTHENTICATED -->
-                    <!-- LOGOUT Icon -->
-                    <div
-                      v-if="this.$store.state.userId"
-                      data-bs-toggle="modal"
-                      data-bs-target="#logoutModal"
-                      class="search-btn login-style ps-5 pb-3"
-                      style="color: #b6b6b6"
-                    >
-                      <i class="fa fa-rotate-right"></i>
-                      <span> LOGOUT</span>
-                    </div>
-
-                    <!-- PROFILE IF AUTHENTICATED -->
-                    <!-- USER Icon -->
-                    <div
-                      v-if="this.$store.state.userId"
-                      class="ps-5 pb-3 text-success"
-                      style="color: #b6b6b6; font-weight: bolder"
-                    >
-                      <i class="fa fa-user"></i>
-                      {{ this.$store.state.userName }}
-                    </div>
-                  </div>
-                  <!-- Nav End -->
-                </div>
-              </nav>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <!-- LOGIN Modal -->
-      <div
-        class="modal fade"
-        id="loginModal"
-        tabindex="-1"
-        aria-labelledby="ModalLabel"
-        aria-hidden="true"
+      <select
+        class="form-select w-25 float-end"
+        aria-label="Default select example"
+        id="filter"
+        v-model="$store.state.selectedCategory"
+        @change="$store.dispatch('filterCategory')"
       >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">
-                Authethication is required!
-              </h1>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">
-              You need to login first so that we can save your unique recipes
-              and bookmarks.
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
+        <option value="" selected disabled>Select a category</option>
+        <option v-for="(cat, idx) of $store.state.foodCategories" :key="idx">
+          {{ cat }}
+        </option>
+      </select>
 
-              <button
-                type="button"
-                class="btn btn-primary"
-                @click="goToLoginPage"
-                data-bs-dismiss="modal"
-              >
-                Login
-              </button>
-            </div>
-          </div>
+      <label for="filter" class="float-end pe-2 pt-2">Filter By:</label>
+      <div
+        class="d-flex text-center rounded-pill w-25 pe-2 border border-secondary px-2 mt-3 bg-white"
+      >
+        <div class="pt-2 icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-search mb-1"
+            viewBox="0 0 16 16"
+            @click="$store.dispatch('getRecipes')"
+          >
+            <path
+              d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+            ></path>
+          </svg>
+        </div>
+        <router-link :to="{ name: 'home' }">
+          <input
+            type="text"
+            :placeholder="$store.state.searchDesc"
+            class="text-dark w-5 form-control rounded-pill input border-0 bg-white"
+            v-model="searchQuery"
+            style="background-color: #40ba37"
+            @keyup.enter="onSearch"
+          />
+        </router-link>
+      </div>
+    </div>
+  </div> -->
+
+  <nav class="navbar navbar-expand-lg my-0">
+    <div class="container-fluid ms-5">
+      <!-- Logo -->
+      <router-link to="/"
+        ><a class="nav-brand"
+          ><img
+            id="logo"
+            src="../assets/logo.png"
+            alt="uChef"
+            style="width: 10em" /></a
+      ></router-link>
+      <button
+        class="navbar-toggler order-md-last"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNavAltMarkup"
+        aria-controls="navbarNavAltMarkup"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav mx-5">
+          <!-- HOME NAV -->
+          <router-link to="/"
+            ><a
+              v-if="this.$store.state.routeName == 'home'"
+              class="nav-link active px-3 text-muted"
+              aria-current="page"
+              p
+              >Home</a
+            >
+            <a v-else class="nav-link px-3 text-muted" aria-current="page" p
+              >Home</a
+            >
+          </router-link>
+          <!-- MY RECIPES NAV -->
+          <router-link to="/my-recipes"
+            ><a
+              v-if="
+                this.$store.state.userId &&
+                this.$store.state.routeName == 'my-recipes'
+              "
+              class="nav-link active px-3 text-muted"
+              aria-current="page"
+              >MY RECIPES</a
+            >
+            <a
+              v-if="
+                this.$store.state.userId &&
+                this.$store.state.routeName != 'my-recipes'
+              "
+              class="nav-link px-3 text-muted"
+              aria-current="page"
+              >MY RECIPES</a
+            >
+            <!-- TRIGGER LOGIN MODAL IF USER NOT LOGGED IN -->
+            <a
+              v-if="!this.$store.state.userId"
+              class="nav-link px-3 text-muted"
+              data-bs-toggle="modal"
+              data-bs-target="#loginModal"
+              aria-current="page"
+              >MY RECIPES</a
+            >
+          </router-link>
+          <!-- MY-BOOKMARKS NAVBAR -->
+          <router-link to="/my-bookmarks"
+            ><a
+              v-if="
+                this.$store.state.userId &&
+                this.$store.state.routeName == 'my-bookmarks'
+              "
+              class="nav-link active px-3 text-muted"
+              aria-current="page"
+              >MY BOOKMARKS</a
+            >
+            <a
+              v-if="
+                this.$store.state.userId &&
+                this.$store.state.routeName != 'my-bookmarks'
+              "
+              class="nav-link px-3 text-muted"
+              aria-current="page"
+              >MY BOOKMARKS</a
+            >
+            <!-- TRIGGER LOGIN MODAL IF USER NOT LOGGED IN -->
+            <a
+              v-if="!this.$store.state.userId"
+              data-bs-toggle="modal"
+              data-bs-target="#loginModal"
+              class="nav-link px-3 text-muted"
+              aria-current="page"
+              >MY BOOKMARKS</a
+            >
+          </router-link>
         </div>
       </div>
-
-      <!-- LOGOUT Modal -->
+      <!-- SEARCH BAR -->
       <div
-        class="modal fade"
-        id="logoutModal"
-        tabindex="-1"
-        aria-labelledby="ModalLabel"
-        aria-hidden="true"
+        class="d-flex text-center rounded-pill w-25 pe-2 border border-secondary px-2 mb-2 bg-white"
       >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">
-                Pressed wrong?
-              </h1>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">Are you sure you want to log out?</div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button
-                type="button"
-                class="btn btn-primary"
-                @click="logOut"
-                data-bs-dismiss="modal"
-              >
-                Yes
-              </button>
-            </div>
-          </div>
+        <div class="pt-2 icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-search mb-1"
+            viewBox="0 0 16 16"
+            @click="$store.dispatch('getRecipes')"
+          >
+            <path
+              d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+            ></path>
+          </svg>
+        </div>
+
+        <input
+          type="text"
+          :placeholder="$store.state.searchDesc"
+          class="text-dark w-5 form-control rounded-pill input border-0 bg-white"
+          v-model="searchQuery"
+          style="background-color: #40ba37"
+          @keyup.enter="onSearch"
+        />
+      </div>
+
+      <!-- LOGIN IF GUEST -->
+      <!-- Login Icon -->
+      <div
+        v-if="!this.$store.state.userId"
+        @click="goToLoginPage"
+        class="search-btn login-style ps-5 pb-2"
+        style="color: #b6b6b6"
+      >
+        <i class="fa fa-user-plus"></i>
+        <span> LOGIN</span>
+      </div>
+
+      <!-- PROFILE IF GUEST -->
+      <!-- Search Icon -->
+      <div
+        v-if="!this.$store.state.userId"
+        class="ps-5 pb-2"
+        style="color: #b6b6b6"
+      >
+        <i class="fa fa-user"></i>
+        GUEST
+      </div>
+
+      <!-- LOGOUT USER IS AUTHENTICATED -->
+      <!-- LOGOUT Icon -->
+      <div
+        id="icons-style"
+        v-if="this.$store.state.userId"
+        data-bs-toggle="modal"
+        data-bs-target="#logoutModal"
+        class="search-btn login-style ps-5 pb-2"
+        style="color: #b6b6b6"
+      >
+        <i class="fa fa-rotate-right"></i>
+        <span> LOGOUT</span>
+      </div>
+
+      <!-- PROFILE IF AUTHENTICATED -->
+      <!-- USER Icon -->
+      <div
+        id="user-icon"
+        v-if="this.$store.state.userId"
+        class="ps-5 pb-2 text-success"
+        style="color: #b6b6b6; font-weight: bolder"
+      >
+        <i class="fa fa-user"></i>
+        {{ this.$store.state.userName }}
+      </div>
+    </div>
+  </nav>
+
+  <!-- LOGIN Modal -->
+  <div
+    class="modal fade"
+    id="loginModal"
+    tabindex="-1"
+    aria-labelledby="ModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">
+            Authethication is required!
+          </h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          You need to login first so that we can save your unique recipes and
+          bookmarks.
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+
+          <button
+            type="button"
+            class="btn btn-primary"
+            @click="goToLoginPage"
+            data-bs-dismiss="modal"
+          >
+            Login
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOGOUT Modal -->
+  <div
+    class="modal fade"
+    id="logoutModal"
+    tabindex="-1"
+    aria-labelledby="ModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">
+            Pressed wrong?
+          </h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">Are you sure you want to log out?</div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            @click="logOut"
+            data-bs-dismiss="modal"
+          >
+            Yes
+          </button>
         </div>
       </div>
     </div>
@@ -343,7 +324,7 @@
 <script>
 import { getAuth, signOut } from "firebase/auth";
 export default {
-  name: "NavBar",
+  name: "NavBarr",
   components: {},
   props: [],
   data() {
@@ -388,6 +369,7 @@ export default {
     },
     onSearch() {
       this.$store.dispatch("getRecipes");
+      this.$router.push("/search-results");
       this.closeSearchBox();
     },
   },
@@ -396,227 +378,45 @@ export default {
 </script>
 
 <style scoped>
-@import url(../css/font-awesome.min.css);
 @import url(../css/classy-nav.min.css);
-a {
-  text-decoration: none;
-}
-.login-style :hover {
-  color: #40ba37;
-  font-weight: bold;
-}
+@import url(../css/font-awesome.min.css);
 
 .input:focus {
   box-shadow: none;
   text-decoration: none;
 }
-/* Start */
-.search-wrapper {
-  width: 100%;
-  height: 70px;
-  position: fixed;
-  z-index: 200;
-  top: -80px;
-  left: 0;
-  background-color: #40ba37;
-  -webkit-transition-duration: 700ms;
-  transition-duration: 700ms;
-}
-.search-wrapper form {
-  position: relative;
-  z-index: 1;
-}
-.search-wrapper form input {
-  width: 90%;
-  height: 40px;
-  border: 2px solid #ffffff;
-  font-size: 12px;
-  font-style: italic;
-  padding: 0 20px;
-  margin: 15px 0;
-}
-@media only screen and (max-width: 767px) {
-  .search-wrapper form input {
-    width: 80%;
-  }
-}
-.search-wrapper form button {
-  position: absolute;
-  width: 60px;
-  height: 40px;
-  z-index: 1;
-  top: 15px;
-  border: none;
-  right: 10%;
+.login-style :hover {
   cursor: pointer;
-  outline: none;
+  color: #42b983;
 }
-@media only screen and (max-width: 767px) {
-  .search-wrapper form button {
-    right: 20%;
-  }
+a .nav-link.active {
+  background-color: #40ba37 !important;
+  border-bottom: 3px solid #1c8314;
+  color: white !important;
 }
-.search-wrapper .close-btn {
-  position: absolute;
-  width: 70px;
-  height: 100%;
-  background-color: #000000;
-  line-height: 50px;
-  color: #ffffff;
-  text-align: center;
-  cursor: pointer;
-  line-height: 70px;
-  font-size: 12px;
-  right: 0;
-  top: 0;
-  z-index: 100;
-}
-.search-wrapper.on {
-  top: 0;
-}
-.header-area {
-  position: relative;
-  z-index: 100;
-  width: 100%;
-}
-.header-area .top-header-area {
-  width: 100%;
-  height: 50px;
-  background-color: #ffffff;
-  border-bottom: 1px solid #dddee9;
-}
-@media only screen and (max-width: 767px) {
-  .header-area .top-header-area {
-    height: 70px;
-  }
-}
-.header-area .delicious-main-menu {
-  position: relative;
-  width: 100%;
-  z-index: 100;
-  height: 145px;
-}
-@media only screen and (max-width: 767px) {
-  .header-area .delicious-main-menu {
-    height: 80px;
-  }
-}
-.header-area .delicious-main-menu .classy-nav-container {
-  background-color: transparent;
-}
-.header-area .delicious-main-menu .classy-navbar {
-  height: 145px;
-  padding: 0;
-}
-@media only screen and (max-width: 767px) {
-  .header-area .delicious-main-menu .classy-navbar {
-    height: 80px;
-  }
-}
-.header-area .delicious-main-menu .classy-navbar .classynav ul li a {
-  font-weight: 600;
-}
-.header-area .delicious-main-menu .classy-navbar .classynav ul li a:hover,
-.header-area .delicious-main-menu .classy-navbar .classynav ul li a:focus {
-  font-weight: 600;
-}
-.header-area .delicious-main-menu .classy-navbar .classynav > ul > li > a {
+/* a .nav-link :hover {
+  color: #40ba37 !important;
+  font-weight: bold !important;
+} */
+
+a {
+  text-decoration: none;
   text-transform: uppercase;
-  padding: 12px 18px 11px;
-  background-color: transparent;
-  border-bottom: 3px solid transparent;
-  line-height: 1;
-  color: #474747;
-  font-weight: 600;
+  color: black;
 }
-.header-area .delicious-main-menu .classy-navbar .classynav > ul > li > a:hover,
-.header-area
-  .delicious-main-menu
-  .classy-navbar
-  .classynav
-  > ul
-  > li
-  > a:focus {
-  font-size: 14px;
-  color: #ffffff;
-  background-color: #40ba37;
-  border-bottom: 3px solid #1c8314;
-}
-.header-area
-  .delicious-main-menu
-  .classy-navbar
-  .classynav
-  > ul
-  > li
-  > a:hover::after,
-.header-area
-  .delicious-main-menu
-  .classy-navbar
-  .classynav
-  > ul
-  > li
-  > a:focus::after {
-  color: #ffffff;
-}
-.header-area
-  .delicious-main-menu
-  .classy-navbar
-  .classynav
-  > ul
-  > li.active
-  > a {
-  color: #ffffff;
-  background-color: #40ba37;
-  border-bottom: 3px solid #1c8314;
-}
-.header-area
-  .delicious-main-menu
-  .classy-navbar
-  .classynav
-  > ul
-  > li.active
-  > a::after {
-  color: #ffffff;
-}
-.header-area .delicious-main-menu .classynav .search-btn {
-  color: #b6b6b6;
-  /* margin-left: 150px; */
-  cursor: pointer;
-  -webkit-transition-duration: 500ms;
-  transition-duration: 500ms;
-}
-.header-area .delicious-main-menu .classynav .search-btn i {
-  -webkit-transition-duration: 500ms;
-  transition-duration: 500ms;
-}
-.header-area .delicious-main-menu .classynav .search-btn:hover i,
-.header-area .delicious-main-menu .classynav .search-btn:focus i {
-  color: #40ba37;
-}
-@media only screen and (min-width: 992px) and (max-width: 1199px) {
-  .header-area .delicious-main-menu .classynav .search-btn {
-    margin-left: 50px;
-    margin-bottom: 20px;
+
+@media screen and (max-width: 820px) {
+  #user-icon {
+    display: none;
   }
 }
-@media only screen and (min-width: 768px) and (max-width: 991px) {
-  .header-area .delicious-main-menu .classynav .search-btn {
-    margin-left: 30px;
-    margin-top: px;
+
+@media screen and (max-width: 650px) {
+  #logo {
+    display: none;
   }
-}
-@media only screen and (max-width: 767px) {
-  .header-area .delicious-main-menu .classynav .search-btn {
-    margin-left: 30px;
-    margin-top: 30px;
+  nav {
+    padding-top: 4em;
   }
-}
-@media only screen and (max-width: 767px) {
-  .header-area .nav-brand img {
-    max-width: 90px;
-  }
-}
-.nav-brand {
-  width: 90px;
 }
 </style>

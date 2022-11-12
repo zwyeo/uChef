@@ -1,5 +1,7 @@
 <template>
-  <nav-bar></nav-bar>
+  <div class="container-fluid px-5">
+    <nav-bar></nav-bar>
+  </div>
   <banner></banner>
   <div id="popular-recipe" class="container-fluid">
 
