@@ -59,6 +59,9 @@ export default {
 }
 .img-style {
   border-bottom: 3px solid #40ba37;
+  width: 500px;
+  height: 500px;
+  object-fit: cover;
 }
 .receipe-content {
   padding-top: 30px;

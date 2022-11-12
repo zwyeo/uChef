@@ -3,21 +3,17 @@
     <nav-bar></nav-bar>
     <h2 class="text-center p-5">My Recipes</h2>
     <div v-if="recipes.length != 0" class="row d-flex justify-content-center">
-      <div v-for="recipe in recipes" :key="recipe.id" class="col-xl-3 col-lg-6 border p-2 m-2">
+      <div v-for="recipe in recipes" :key="recipe.id" class="col-xl-4 col-lg-6">
         <router-link :to="{ name: 'recipe-details', params: { id: recipe.id } }">
 
-          <recipe-card
+          <recipe-card-special
             :title="recipe.title"
             :img="recipe.image"
+            :id="recipe.id"
             class="mb-5"
-          ></recipe-card>
+          ></recipe-card-special>
           
         </router-link>
-        
-        <router-link :to="{ name: 'update-recipe-page', params: { id: recipe.id } }">
-          <button class="btn btn-primary btn-sm">Edit Recipe</button>
-        </router-link>
-        <remove-recipe :recipe-id="recipe.id"></remove-recipe>
       </div>
     </div>
     <div v-else class="row">
@@ -32,7 +28,8 @@
 
 <script>
 import NavBar from "../components/NavBar.vue";
-import RecipeCard from "../components/RecipeCard.vue";
+import RecipeCard from "@/components/RecipeCard.vue";
+import RecipeCardSpecial from "../components/RecipeCardSpecial.vue";
 import AddNewRecipe from "../components/AddNewRecipe.vue";
 import RemoveRecipe from "../components/RemoveRecipe.vue";
 import { getDatabase, ref, onValue } from "firebase/database";
@@ -47,6 +44,7 @@ export default {
   components: {
     NavBar,
     RecipeCard,
+    RecipeCardSpecial,
     AddNewRecipe,
     RemoveRecipe
   },

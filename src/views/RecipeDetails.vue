@@ -51,7 +51,6 @@
               </div>
             </div>
             <!-- END of v-if-->
-
           </div>
         </div>
 
@@ -105,7 +104,6 @@
                 <i class="fa fa-star" aria-hidden="true"></i>
                 <i class="fa fa-star" aria-hidden="true"></i>
               </div>
-
             </div>
 
             <a v-if="!bookmarked" href="#" class="btn delicious-btn" @click="bookmark()" data-bs-toggle="modal"
@@ -138,7 +136,6 @@
                   <img src="../assets/img/core-img/salad.png" class="ingredient-img" />
                   &nbsp;<span class="item">{{ item }}</span>
                 </h6>
-
               </li>
             </ul>
 
@@ -153,7 +150,7 @@
             <h3>Reviews</h3>
             <p>See what others have to say</p>
           </div>
-          <div v-if="review_list.length > 0" id="reviewsSection">
+          <div v-if="review_list.length > 0">
             <review-card v-for="(review, index) of review_list" :key="index" :id="id" :user="review.user"
               :date="review.date" :rating="review.rating" :subject="review.subject" :message="review.message">
             </review-card>
@@ -226,7 +223,7 @@ import {
   remove,
   update,
   updates,
-  set
+  set,
 } from "firebase/database";
 import ReviewBtn from "../components/ReviewButton.vue";
 import ReviewCard from "../components/ReviewCard.vue";
@@ -265,7 +262,7 @@ export default {
           for (let entry in response.data) {
             // console.log(response.data[entry].id)
             if (response.data[entry].id == this.id) {
-              var obj = response.data[entry]
+              var obj = response.data[entry];
               this.videoExist = false;
               this.title = obj.title;
               this.image = obj.image;
@@ -290,11 +287,10 @@ export default {
                 }
               }
             }
-
           }
-        })
+        });
     }
-    // 
+    //
     else {
       axios
         .get(url, {
@@ -337,12 +333,14 @@ export default {
       )
       .then((response) => {
         if (response.data != null) {
-          console.log(response.data)
-          var total_rating = 0
-          var num_of_rating = 0
+          console.log(response.data);
+          var total_rating = 0;
+          var num_of_rating = 0;
           for (let review in Object.values(response.data)[0]) {
             // console.log(Object.values(response.data)[0][review].rating)
-            total_rating += Number(Object.values(response.data)[0][review].rating);
+            total_rating += Number(
+              Object.values(response.data)[0][review].rating
+            );
             num_of_rating++;
           }
           var rating = total_rating / num_of_rating;
@@ -383,19 +381,18 @@ export default {
       });
 
     //review card population
-    let rurl = `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/recipes.json`;
+    let rurl = `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/recipes/${this.id}/reviews.json`;
     axios.get(rurl).then((response) => {
       // console.log(response.data);
       let reviewsObj = response.data;
       for (let review in reviewsObj) {
         this.review_list.push(reviewsObj[review]);
       }
-      // console.log(this.review_list);
+
       this.review_list = this.review_list.reverse();
     });
   },
   methods: {
-
     // bookmarking functions
     bookmark() {
       console.log(this.$store.state.userId);
@@ -413,21 +410,28 @@ export default {
       //get current instances of the catogory in user's preferences
       var current = null;
       var str_id = null;
-      axios.get(`https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${this.$store.state.userId}/preferences.json`)
+      axios
+        .get(
+          `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${this.$store.state.userId}/preferences.json`
+        )
         .then((response) => {
-          console.log(response.data)
+          console.log(response.data);
           for (let bookmark in response.data) {
             str_id = bookmark;
             current = response.data[bookmark][this.foodCategory];
-            console.log(current)
+            console.log(current);
           }
           var final = current + 1;
 
           const db = getDatabase();
-          set(ref(db, `users/${this.$store.state.userId}/preferences/${str_id}/${this.foodCategory}`), final);
-        }
-        )
-
+          set(
+            ref(
+              db,
+              `users/${this.$store.state.userId}/preferences/${str_id}/${this.foodCategory}`
+            ),
+            final
+          );
+        });
     },
     unbookmark() {
       const db = getDatabase();
@@ -441,20 +445,28 @@ export default {
       // reduce food category by 1 from user's preferences
       var current = null;
       var str_id = null;
-      axios.get(`https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${this.$store.state.userId}/preferences.json`)
+      axios
+        .get(
+          `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${this.$store.state.userId}/preferences.json`
+        )
         .then((response) => {
-          console.log(response.data)
+          console.log(response.data);
           for (let bookmark in response.data) {
             str_id = bookmark;
             current = response.data[bookmark][this.foodCategory];
-            console.log(current)
+            console.log(current);
           }
           var final = current - 1;
 
           const db = getDatabase();
-          set(ref(db, `users/${this.$store.state.userId}/preferences/${str_id}/${this.foodCategory}`), final);
-        }
-        )
+          set(
+            ref(
+              db,
+              `users/${this.$store.state.userId}/preferences/${str_id}/${this.foodCategory}`
+            ),
+            final
+          );
+        });
     },
     //Video Modal Functions
     open() {

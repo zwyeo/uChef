@@ -4,60 +4,84 @@
 
         <h2 class="text-center pb-5">Update Recipe</h2>
 
+        <div class="row">
+            <div class="col-10 text-center">
+                <table class="table">
+                    <tr>
+                        <th><label for="newRecipeName">Recipe Name</label></th>
+                        <td><input id="newRecipeName" name="newRecipeName" type="text" class="form-control" v-model="newRecipeName" /></td>
+                    </tr>
+                    <tr>
+                        <th><label for="newRecipeCategory">Recipe Category</label></th>
+                        <td>
+                            <select
+                                id="newRecipeCategory"
+                                class="form-control"
+                                v-model="newRecipeCategory"
+                            >
+                                <option
+                                    v-for="category in $store.state.foodCategories"
+                                    :value="category"
+                                >
+                                    {{ category }}
+                                </option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="newRecipeInstructions">Instructions (Steps)</label></th>
+                        <td>
+                            <div id="newRecipeInstructions">
+                                <input v-for="i in noOfSteps" class="form-control" type="text" :placeholder="i" v-model="newRecipeInstructions[i-1]">
+                                <br>
+                                <button class="btn btn-small btn-primary" @click="this.noOfSteps++">Add Step</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="newRecipeIngredients">Ingredients Required</label></th>
+                        <td class="d-flex justify-content-center">
+                            <table id="newRecipeIngredients">
+                                <tr><td>Ingredient</td><td>Amount</td></tr>
+                                <tr v-for="i in noOfIngredients">
+                                    <td><input class="form-control ingredient" type="text" placeholder="e.g. salt" v-model="this.newRecipeIngredients[i-1]"></td>
+                                    <td><input class="form-control measure" type="text" placeholder="e.g. 1 tbsp" v-model="this.newRecipeIngredientsMeasure[i-1]"></td>
+                                </tr>
+                                <br>
+                                <tr><td colspan="2" class="text-center"><button class="btn btn-small btn-primary" @click="this.noOfIngredients++">Add Ingredient</button></td></tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="newRecipeImage">Upload Image</label></th>
+                        <td>
+                            <div v-if="newRecipeImagePreview == null">
+                                Preview:<br>
+                                <img :src="newRecipeImagePath" height="268" width="356" alt="">
+                            </div>
+                            <div v-else>
+                                Preview:<br>
+                                <img :src="newRecipeImagePreview" height="268" width="356" alt="">
+                            </div>
+                            <input type="file" class="form-control" @change="previewImage">
+                            <br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td class="text-center d-grid gap-2">
+                            <button type="button" class="btn btn-primary" @click="updateDatabase">Update</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+
         <div class="row d-flex justify-content-center">
-            <div class="col-md-4">
+            <div class="col">
                 <div class="form-group">
-                    <label for="newRecipeName">Recipe Name</label>
-                    <input id="newRecipeName" name="newRecipeName" type="text" class="form-control" v-model="newRecipeName" />
-                </div>
-                <div class="form-group">
-                    <label for="newRecipeCategory">Recipe Category</label>
-                    <select
-                        id="newRecipeCategory"
-                        class="form-control"
-                        v-model="newRecipeCategory"
-                    >
-                        <option
-                            v-for="category in $store.state.foodCategories"
-                            :value="category"
-                        >
-                            {{ category }}
-                        </option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="newRecipeInstructions">Instructions (Steps)</label>
-                    <div id="newRecipeInstructions">
-                        <input v-for="i in noOfSteps" class="form-control" type="text" :placeholder="i" v-model="newRecipeInstructions[i-1]">
-                        <button class="btn btn-small btn-primary" @click="this.noOfSteps++">Add Step</button>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="newRecipeIngredients">Ingredients Required</label>
-                    <table id="newRecipeIngredients">
-                        <tr><td>Ingredient</td><td>Amount</td></tr>
-                        <tr v-for="i in noOfIngredients">
-                            <td><input class="form-control ingredient" type="text" placeholder="e.g. salt" v-model="this.newRecipeIngredients[i-1]"></td>
-                            <td><input class="form-control measure" type="text" placeholder="e.g. 1 tbsp" v-model="this.newRecipeIngredientsMeasure[i-1]"></td>
-                        </tr>
-                    </table>
-                    <button class="btn btn-small btn-primary" @click="this.noOfIngredients++">Add Ingredient</button>
-                </div>
-                <div class="form-group">
-                    <label for="newRecipeImage">Upload Image</label>
-                    <div v-if="newRecipeImagePreview == null">
-                        Preview:
-                        <img :src="newRecipeImagePath" height="268" width="356" alt="">
-                    </div>
-                    <div v-else>
-                        Preview:
-                        <img :src="newRecipeImagePreview" height="268" width="356" alt="">
-                    </div>
-                    <input type="file" class="form-control" @change="previewImage">
-                </div>
-                <br>
-                <div class="form-group">
-                    <button type="button" class="btn btn-primary" @click="updateDatabase">Update</button>
+                    
                 </div>
             </div>
         </div>

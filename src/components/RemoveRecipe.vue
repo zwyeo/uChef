@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button class="btn btn-sm btn-danger"  data-bs-toggle="modal" data-bs-target="#warning">Delete Recipe</button>
+        <button class="btn btn-danger"  data-bs-toggle="modal" data-bs-target="#warning">Delete</button>
     </div>
 
     <!-- Modal -->
