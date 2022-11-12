@@ -6,6 +6,7 @@ import RecipeDetails from "../views/RecipeDetails.vue";
 import SearchResults from "../views/SearchResults.vue";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
+import AddRecipePage from "../views/AddRecipePage.vue";
 import UpdateRecipePage from "../views/UpdateRecipePage.vue";
 import store from "@/store";
 
@@ -56,6 +57,11 @@ const routes = [
     name: "update-recipe-page",
     component: UpdateRecipePage,
     props: true
+  },
+  {
+    path: "/add-recipe-page",
+    name: "add-recipe-page",
+    component: AddRecipePage,
   }
 ];
 

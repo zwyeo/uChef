@@ -21,7 +21,14 @@
         <img style="width: 500px; height: 500px;" src="../assets/img/core-img/noRecipes.png" alt="">
       </div>
     </div>
-    <add-new-recipe></add-new-recipe>
+    <router-link :to="{ name: 'add-recipe-page'}">
+      <button
+        class="btn btn-primary btn-circle btn-xl"
+        style="padding: 0.1%; position: fixed; bottom: 20px; right: 20px"
+      >
+        +
+      </button>
+    </router-link>
   </div>
   <h4 class="mt-5 mx-5"></h4>
 </template>
@@ -30,9 +37,9 @@
 import NavBar from "../components/NavBar.vue";
 import RecipeCard from "@/components/RecipeCard.vue";
 import RecipeCardSpecial from "../components/RecipeCardSpecial.vue";
-import AddNewRecipe from "../components/AddNewRecipe.vue";
 import RemoveRecipe from "../components/RemoveRecipe.vue";
 import { getDatabase, ref, onValue } from "firebase/database";
+import AddRecipePage from "./AddRecipePage.vue";
 
 export default {
   name: "MyRecipes",
@@ -45,8 +52,8 @@ export default {
     NavBar,
     RecipeCard,
     RecipeCardSpecial,
-    AddNewRecipe,
-    RemoveRecipe
+    RemoveRecipe,
+    AddRecipePage
   },
   methods: {
     getRecipes() {
@@ -74,4 +81,23 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  padding: 6px 0px;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.42857;
+}
+
+.btn-circle.btn-xl {
+  width: 70px;
+  height: 70px;
+  padding: 10px 16px;
+  border-radius: 35px;
+  font-size: 24px;
+  line-height: 1.33;
+}
+</style>
