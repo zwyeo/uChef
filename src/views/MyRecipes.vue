@@ -2,24 +2,23 @@
   <div class="container-fluid px-5">
     <nav-bar></nav-bar>
     <h2 class="text-center p-5">My Recipes</h2>
-    <div v-if="recipes.length != 0" class="row recipe-card-style">
-      <div
-        v-for="recipe in recipes"
-        :key="recipe.id"
-        class="col-xl-4 col-lg-6">
-        <router-link
-          :to="{ name: 'recipe-details', params: { id: recipe.id } }"
-        >
+    <div v-if="recipes.length != 0" class="row d-flex justify-content-center">
+      <div v-for="recipe in recipes" :key="recipe.id" class="col-xl-3 col-lg-6 border p-2 m-2">
+        <router-link :to="{ name: 'recipe-details', params: { id: recipe.id } }">
+
           <recipe-card
             :title="recipe.title"
             :img="recipe.image"
             class="mb-5"
           ></recipe-card>
+          
+        </router-link>
+        
+        <router-link :to="{ name: 'update-recipe-page', params: { id: recipe.id } }">
+          <button class="btn btn-primary btn-sm">Edit Recipe</button>
         </router-link>
         <remove-recipe :recipe-id="recipe.id"></remove-recipe>
-        <update-recipe :recipe-id="recipe.id"></update-recipe>
       </div>
-      <!-- <button class="btn btn-primary" v-on:click="getBookmarks">Click me</button> -->
     </div>
     <div v-else class="row">
       <div class="col d-flex justify-content-center">
@@ -36,7 +35,6 @@ import NavBar from "../components/NavBar.vue";
 import RecipeCard from "../components/RecipeCard.vue";
 import AddNewRecipe from "../components/AddNewRecipe.vue";
 import RemoveRecipe from "../components/RemoveRecipe.vue";
-import UpdateRecipe from "../components/UpdateRecipe.vue";
 import { getDatabase, ref, onValue } from "firebase/database";
 
 export default {
@@ -50,8 +48,7 @@ export default {
     NavBar,
     RecipeCard,
     AddNewRecipe,
-    RemoveRecipe,
-    UpdateRecipe
+    RemoveRecipe
   },
   methods: {
     getRecipes() {

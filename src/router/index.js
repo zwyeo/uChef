@@ -6,6 +6,7 @@ import RecipeDetails from "../views/RecipeDetails.vue";
 import SearchResults from "../views/SearchResults.vue";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
+import UpdateRecipePage from "../views/UpdateRecipePage.vue";
 import store from "@/store";
 
 import * as firebase from "firebase/app";
@@ -50,6 +51,12 @@ const routes = [
     name: "search-results",
     component: SearchResults,
   },
+  {
+    path: "/update-recipe-page/:id",
+    name: "update-recipe-page",
+    component: UpdateRecipePage,
+    props: true
+  }
 ];
 
 const router = createRouter({

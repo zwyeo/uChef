@@ -9,8 +9,6 @@
         <div class="fancy-border">
           <img class="display-img" :src="image" style="border" />
         </div>
-        <!-- BUTTON TEST -->
-        <button class="btn btn-primary" @click="increase()">INCREMENT</button>
       </div>
     </div>
   </div>
@@ -60,11 +58,54 @@
         <div class="col-12 col-md-4">
           <div class="receipe-ratings my-5">
             <div class="ratings">
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star" aria-hidden="true"></i>
-              <i class="fa fa-star-o" aria-hidden="true"></i>
+              <div v-if="rating == null || rating == 4">
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+              </div>
+
+              <div v-if="rating != null && rating == 0">
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+              </div>
+
+              <div v-if="rating != null && rating == 1">
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+              </div>
+
+              <div v-if="rating != null && rating == 2">
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+              </div>
+
+              <div v-if="rating != null && rating == 3">
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+              </div>
+
+              <div v-if="rating != null && rating == 5">
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+              </div>
+
             </div>
 
             <a v-if="!bookmarked" href="#" class="btn delicious-btn" @click="bookmark()" data-bs-toggle="modal"
@@ -98,9 +139,6 @@
                   &nbsp;<span class="item">{{ item }}</span>
                 </h6>
 
-                <div class="check">
-                  <input type="checkbox" name="a" />
-                </div>
               </li>
             </ul>
 
@@ -188,6 +226,7 @@ import {
   remove,
   update,
   updates,
+  set
 } from "firebase/database";
 import { ref as sRef } from 'firebase/storage';
 import ReviewBtn from "../components/ReviewButton.vue";
@@ -207,6 +246,7 @@ export default {
       bookmarked: false,
       review_list: [],
       foodcategory: null,
+      rating: null,
     };
   },
   created() {
@@ -222,13 +262,13 @@ export default {
           `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/community.json`
         )
         .then((response) => {
-          console.log(response.data)
+          // console.log(response.data)
           for (let entry in response.data) {
             // console.log(response.data[entry].id)
             if (response.data[entry].id == this.id) {
               var obj = response.data[entry]
               this.videoExist = false;
-              this.title = obj.strMeal;
+              this.title = obj.title;
               this.image = obj.image;
               this.foodCategory = obj.strCategory;
 
@@ -264,7 +304,7 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           let obj = response.data.meals[0];
           this.title = obj.strMeal;
           this.image = obj.strMealThumb;
@@ -291,6 +331,40 @@ export default {
         });
     }
 
+    //Rating
+    axios
+      .get(
+        `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/recipes/${this.id}.json`
+      )
+      .then((response) => {
+        if (response.data != null) {
+          console.log(response.data)
+          var total_rating = 0
+          var num_of_rating = 0
+          for (let review in Object.values(response.data)[0]) {
+            // console.log(Object.values(response.data)[0][review].rating)
+            total_rating += Number(Object.values(response.data)[0][review].rating);
+            num_of_rating++;
+          }
+          var rating = total_rating / num_of_rating;
+          var remainder = rating % 1;
+          if (remainder == 0) {
+            this.rating = rating
+          }
+          else if (remainder >= 0.5) {
+
+            this.rating = Math.ceil(rating)
+          }
+          else {
+            this.rating = Math.floor(rating)
+          }
+
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
     //Dictate the state of the bookmark button
     axios
       .get(
@@ -309,39 +383,19 @@ export default {
         console.log(error);
       });
     //review card population
-    let rurl = `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/recipes/${this.id}/reviews.json`;
+    let rurl = `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/recipes.json`;
     axios.get(rurl).then((response) => {
       // console.log(response.data);
       let reviewsObj = response.data;
       for (let review in reviewsObj) {
         this.review_list.push(reviewsObj[review]);
       }
-      console.log(this.review_list);
+      // console.log(this.review_list);
       this.review_list = this.review_list.reverse();
     });
   },
   methods: {
 
-    // increase test
-    increase() {
-      console.log("IT WORKS");
-      console.log(this.$store.state.userId)
-
-      var foodCategory = this.foodCategory
-      const db = getDatabase();
-      const dbRef = ref(db);
-      get(child(dbRef, `users/${this.$store.state.userId}/preferences/-NGeIxKCg15J-xKzyYPP/${this.foodCategory}`))
-        .then((snapshot) => {
-          console.log(snapshot);
-          let countVariable = Number(snapshot.val());
-          console.log(countVariable);
-          countVariable++;
-          var obj = {};
-          obj[foodCategory] = countVariable;
-          update(ref(dbRef, `users/${this.$store.state.userId}/preferences/-NGeIxKCg15J-xKzyYPP`), obj);
-        })
-
-    },
     // bookmarking functions
     bookmark() {
       console.log(this.$store.state.userId);
@@ -356,11 +410,23 @@ export default {
       this.bookmarked = true;
 
       //add category to user's preference in firebase db
-      // axios.post(
-      //   `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${userId}/preferences/${this.foodCategory}.json`,
-      //   {
-      //     value: 1,
-      //   })
+      //get current instances of the catogory in user's preferences
+      var current = null;
+      var str_id = null;
+      axios.get(`https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${this.$store.state.userId}/preferences.json`)
+        .then((response) => {
+          console.log(response.data)
+          for (let bookmark in response.data) {
+            str_id = bookmark;
+            current = response.data[bookmark][this.foodCategory];
+            console.log(current)
+          }
+          var final = current + 1;
+
+          const db = getDatabase();
+          set(ref(db, `users/${this.$store.state.userId}/preferences/${str_id}/${this.foodCategory}`), final);
+        }
+        )
 
     },
     unbookmark() {
@@ -371,6 +437,24 @@ export default {
         this.bookmarked = false;
         console.log("location removed");
       });
+
+      // reduce food category by 1 from user's preferences
+      var current = null;
+      var str_id = null;
+      axios.get(`https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${this.$store.state.userId}/preferences.json`)
+        .then((response) => {
+          console.log(response.data)
+          for (let bookmark in response.data) {
+            str_id = bookmark;
+            current = response.data[bookmark][this.foodCategory];
+            console.log(current)
+          }
+          var final = current - 1;
+
+          const db = getDatabase();
+          set(ref(db, `users/${this.$store.state.userId}/preferences/${str_id}/${this.foodCategory}`), final);
+        }
+        )
     },
     //Video Modal Functions
     open() {
