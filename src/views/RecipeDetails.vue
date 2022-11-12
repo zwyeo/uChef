@@ -158,10 +158,10 @@
       </div>
 
       <div class="row">
-        <review-card :id="id"></review-card>
         <div class="col-12">
-          <div class="section-heading text-left">
-            <h3>Leave a comment</h3>
+          <div class="section-heading text-left m-0">
+            <h3>Reviews</h3>
+            <p>See what others have to say</p>
           </div>
         </div>
       </div>
@@ -319,6 +319,7 @@ export default {
       instructions: [],
       ingredient_list: [],
       bookmarked: false,
+      review_list: [],
     };
   },
   created() {
@@ -375,6 +376,17 @@ export default {
       .catch((error) => {
         console.log(error);
       });
+    //review card population
+    let rurl = `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/recipes/${this.id}/reviews.json`;
+    axios.get(rurl).then((response) => {
+      // console.log(response.data);
+      let reviewsObj = response.data;
+      for (let review in reviewsObj) {
+        this.review_list.push(reviewsObj[review]);
+      }
+      console.log(this.review_list);
+      this.review_list = this.review_list.reverse();
+    });
   },
   methods: {
     // bookmarking functions

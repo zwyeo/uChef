@@ -11,22 +11,6 @@
     <div class="col-12">
       <div class="contact-form-area">
         <div class="row">
-          <!-- <div class="col-12 col-lg-6">
-              <input
-                type="text"
-                class="form-control"
-                id="name"
-                placeholder="Name"
-              />
-            </div>
-            <div class="col-12 col-lg-6">
-              <input
-                type="email"
-                class="form-control"
-                id="email"
-                placeholder="E-mail"
-              />
-            </div> -->
           <div class="col-12">
             <input
               type="text"
@@ -34,7 +18,7 @@
               id="subject"
               placeholder="Subject"
               v-model="$store.state.reviewsubject"
-              @change="validateForm"
+              @keyup="validateForm"
             />
           </div>
           <div class="col-12">
@@ -46,7 +30,7 @@
               rows="10"
               placeholder="Message"
               v-model="$store.state.reviewcomments"
-              @change="validateForm"
+              @keyup="validateForm"
             ></textarea>
           </div>
           <div class="col-12">

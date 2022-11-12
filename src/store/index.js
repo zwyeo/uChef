@@ -147,7 +147,7 @@ export default createStore({
       //trying to use axios call to refresh page
       //review card population
       let review_list = [];
-      let rurl = `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/recipes/${this.id}/reviews.json`;
+      let rurl = `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/recipes/${this.state.activerecipeid}/reviews.json`;
       axios.get(rurl).then((response) => {
         // console.log(response.data);
         let reviewsObj = response.data;
