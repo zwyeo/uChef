@@ -1,52 +1,54 @@
 <template>
-    <!-- This template is for use for the My Recipes Page only, as it incorporates the edit and delete buttons into the card -->
-    <!-- It should be the same, with the exception of the buttons inside the card -->
-    <div class="card card-style">
-        <img :src="img" class="img-style" :alt="title" />
-        <div class="card-body">
-            <div class="receipe-content">
-                <h5>{{ title }}</h5>
-                <div class="ratings">
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star-o" aria-hidden="true"></i>
-                </div>
-            </div>
-
-            <div class="container d-flex justify-content-center">
-                <div class="row row-cols-2">
-                    <div class="col">
-                        <router-link :to="{ name: 'update-recipe-page', params: { id: this.id } }">
-                            <button class="btn btn-primary">Edit</button>
-                        </router-link>
-                    </div>
-                    <div class="col">
-                        <remove-recipe :recipe-id="this.id"></remove-recipe>
-                    </div>
-                </div>
-            </div>
+  <!-- This template is for use for the My Recipes Page only, as it incorporates the edit and delete buttons into the card -->
+  <!-- It should be the same, with the exception of the buttons inside the card -->
+  <div class="card card-style animate__animated animate__bounceIn">
+    <img :src="img" class="img-style" :alt="title" />
+    <div class="card-body">
+      <div class="receipe-content">
+        <h5>{{ title }}</h5>
+        <div class="ratings">
+          <i class="fa fa-star" aria-hidden="true"></i>
+          <i class="fa fa-star" aria-hidden="true"></i>
+          <i class="fa fa-star" aria-hidden="true"></i>
+          <i class="fa fa-star" aria-hidden="true"></i>
+          <i class="fa fa-star-o" aria-hidden="true"></i>
         </div>
+      </div>
+
+      <div class="container d-flex justify-content-center">
+        <div class="row row-cols-2">
+          <div class="col">
+            <router-link
+              :to="{ name: 'update-recipe-page', params: { id: this.id } }"
+            >
+              <button class="btn btn-primary">Edit</button>
+            </router-link>
+          </div>
+          <div class="col">
+            <remove-recipe :recipe-id="this.id"></remove-recipe>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import RemoveRecipe from './RemoveRecipe.vue';
+import RemoveRecipe from "./RemoveRecipe.vue";
 
 export default {
   // to add ratings props!!
   name: "RecipeCardSpecial",
   data() {
-    return {}
+    return {};
   },
   props: ["title", "img", "id"],
   components: {
-    RemoveRecipe
+    RemoveRecipe,
   },
   created() {
     // console.log(this.id);
-  }
+  },
 };
 </script>
 

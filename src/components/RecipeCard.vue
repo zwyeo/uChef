@@ -1,5 +1,5 @@
 <template>
-  <div class="card card-style">
+  <div class="card card-style animate__animated animate__bounceIn">
     <img :src="img" class="img-style" :alt="title" />
     <div class="card-body">
       <div class="receipe-content">

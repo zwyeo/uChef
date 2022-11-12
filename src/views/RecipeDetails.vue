@@ -3,7 +3,7 @@
     <nav-bar></nav-bar>
   </div>
   <!-- Receipe Slider -->
-  <div class="container">
+  <div class="container animate__animated animate__backInLeft animate__fast">
     <div class="row">
       <div class="col-12">
         <div class="parent">
@@ -21,11 +21,13 @@
   </div>
 
   <!-- Receipe Content Area -->
-  <div class="receipe-content-area">
+  <div class="">
     <div class="container">
       <div class="row">
         <div class="col-12 col-md-8">
-          <div class="receipe-headline my-5">
+          <div
+            class="receipe-headline my-5 animate__animated animate__backInUp animate__delay-1s animate__fast"
+          >
             <h2>{{ title }}</h2>
             <!-- IF VIDEO EXISTS -->
             <div v-if="videoExist == true">
@@ -84,7 +86,9 @@
 
         <div class="col-12 col-md-4">
           <div class="receipe-ratings my-5">
-            <div class="ratings">
+            <div
+              class="ratings animate__animated animate__delay-1s animate__pulse animate__fast"
+            >
               <div v-if="ratings == null || ratings == 4">
                 <i class="fa fa-star" aria-hidden="true"></i>
                 <i class="fa fa-star" aria-hidden="true"></i>
@@ -137,7 +141,7 @@
             <a
               v-if="!bookmarked"
               href="#"
-              class="btn delicious-btn"
+              class="btn delicious-btn animate__animated animate__rubberBand animate__delay-1s animate__fast"
               @click="bookmark()"
               data-bs-toggle="modal"
               data-bs-target="#bookmarkModal"
@@ -146,7 +150,7 @@
             <a
               v-else
               href="#"
-              class="btn delicious-btn"
+              class="btn delicious-btn animate__animated animate__rubberBand animate__delay-1s animate__fast"
               @click="unbookmark()"
               data-bs-toggle="modal"
               data-bs-target="#unbookmarkModal"
@@ -157,7 +161,9 @@
       </div>
 
       <div class="row">
-        <div class="col-12 col-lg-8">
+        <div
+          class="col-12 col-lg-8 animate__animated animate__backInUp animate__delay-1s animate__fast"
+        >
           <!-- Single Preparation Step -->
           <div
             v-for="(item, index) in instructions"
@@ -171,7 +177,9 @@
         </div>
 
         <!-- Ingredients -->
-        <div class="col-12 col-lg-4">
+        <div
+          class="col-12 col-lg-4 animate__animated animate__backInRight animate__delay-1s animate__fast"
+        >
           <h4 class="">Ingredients</h4>
 
           <!-- Ingredient list -->
@@ -201,11 +209,17 @@
 
       <div class="row">
         <div class="col-12">
-          <div class="section-heading text-left m-0" id="review-section">
+          <div
+            class="section-heading text-left m-0 animate__animated animate__fadeInBottomLeft animate__delay-1s animate__fast"
+            id="review-section"
+          >
             <h3>Reviews</h3>
             <p>See what others have to say</p>
           </div>
-          <div v-if="review_list.length > 0">
+          <div
+            v-if="review_list.length > 0"
+            class="animate__bounceInUp animate__animated animate__delay-1s animate__fast"
+          >
             <review-card
               v-for="(review, index) of review_list"
               :key="index"
@@ -219,7 +233,11 @@
             </review-card>
           </div>
           <div v-else>
-            <p class="text-center pt-5 pb-5">No reviews yet.</p>
+            <p
+              class="text-center pt-5 pb-5 animate__animated animate__fadeInBottomLeft animate__delay-1s animate__fast"
+            >
+              No reviews yet.
+            </p>
           </div>
         </div>
       </div>
