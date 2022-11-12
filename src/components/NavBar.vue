@@ -399,32 +399,11 @@ export default {
 a {
   text-decoration: none;
 }
-input:focus {
-  color: #ff0000;
-}
 .login-style :hover {
   color: #40ba37;
   font-weight: bold;
 }
-.logoSize {
-  width: 50px;
-  height: 50px;
-}
-.navbar {
-  position: sticky;
-  z-index: 50;
-}
-.pill {
-  border: 1px solid gray;
-  width: 75px;
-  height: 25px;
-}
-.cookbook {
-  cursor: pointer;
-}
-.menu-dropdown {
-  cursor: pointer;
-}
+
 .input:focus {
   box-shadow: none;
   text-decoration: none;
