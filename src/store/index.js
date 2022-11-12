@@ -39,7 +39,6 @@ export default createStore({
     // To get the current route name
     routeName: "",
     prevRouteName: "", // To bypass the signup/name bug
-    categoryRecipes: {},
   },
   mutations: {
     getRecipes(state, payload) {
@@ -50,10 +49,7 @@ export default createStore({
     setQueryParam(state, newValue) {
       state.queryParam = newValue;
     },
-    getCategoryRecipe(state, payload) {
-      state.categoryRecipes = payload;
-      console.log(state.categoryRecipes);
-    },
+
     // To populate popularRecipe
     setPopularRecipe(state, setPopularRecipe) {
       state.popularRecipe = setPopularRecipe;
@@ -144,7 +140,7 @@ export default createStore({
         axios.get(url, { params: { c: selectedCat } }).then((response) => {
           const data = response.data.meals;
           // console.log(data);
-          commit("getCategoryRecipe", data);
+          commit("getRecipes", data);
         });
       } else if (this.state.recipes.length != 0) {
         //search query present and searched then filter

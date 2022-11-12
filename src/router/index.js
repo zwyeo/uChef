@@ -3,7 +3,7 @@ import Home from "../views/Home.vue";
 import MyRecipes from "../views/MyRecipes.vue";
 import MyBookmarks from "../views/MyBookmarks.vue";
 import RecipeDetails from "../views/RecipeDetails.vue";
-import SearchRecipeResults from "../views/SearchRecipeResults.vue";
+import SearchResults from "../views/SearchResults.vue";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import store from "@/store";
@@ -46,9 +46,9 @@ const routes = [
     props: true,
   },
   {
-    path: "/search-recipe-results",
-    name: "search-recipe-results",
-    component: SearchRecipeResults,
+    path: "/search-results",
+    name: "search-results",
+    component: SearchResults,
   },
 ];
 
