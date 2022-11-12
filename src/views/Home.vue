@@ -1,7 +1,7 @@
 <template>
   <nav-bar></nav-bar>
   <banner></banner>
-  <div id="popular-recipe" class="container-fluid px-5">
+  <div id="popular-recipe" class="container-fluid">
     <!-- POPULAR RECIPE SECTION -->
     <h2 class="text-center p-5">The Most Popular Recipes</h2>
     <div class="row recipe-card-style">
@@ -38,7 +38,7 @@
         >
           <recipe-card
             :title="recipe.title"
-            :img="recipe.img"
+            :img="recipe.image"
             class="mb-5"
           ></recipe-card>
         </router-link>
@@ -92,8 +92,8 @@ a {
 }
 
 .recipe-card-style {
-  padding-left: 15em;
-  padding-right: 15em;
+  padding-left: 5em;
+  padding-right: 5em;
 }
 
 /* Start */
