@@ -456,7 +456,12 @@ export default {
             current = response.data[bookmark][this.foodCategory];
             console.log(current);
           }
-          var final = current - 1;
+          if (current > 0) {
+            var final = current - 1;
+          }
+          else {
+            var final = 0;
+          }
 
           const db = getDatabase();
           set(
