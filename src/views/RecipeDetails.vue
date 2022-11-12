@@ -246,7 +246,7 @@ export default {
       bookmarked: false,
       review_list: [],
       foodcategory: null,
-      ratings: null,
+      rating: null,
     };
   },
   created() {
@@ -338,6 +338,7 @@ export default {
       )
       .then((response) => {
         if (response.data != null) {
+          console.log(response.data)
           var total_rating = 0
           var num_of_rating = 0
           for (let review in Object.values(response.data)[0]) {
