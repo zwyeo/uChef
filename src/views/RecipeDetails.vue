@@ -9,8 +9,6 @@
         <div class="fancy-border">
           <img class="display-img" :src="image" style="border" />
         </div>
-        <!-- BUTTON TEST -->
-        <button class="btn btn-primary" @click="increase()">INCREMENT</button>
       </div>
     </div>
   </div>
@@ -98,9 +96,6 @@
                   &nbsp;<span class="item">{{ item }}</span>
                 </h6>
 
-                <div class="check">
-                  <input type="checkbox" name="a" />
-                </div>
               </li>
             </ul>
 
@@ -188,6 +183,7 @@ import {
   remove,
   update,
   updates,
+  set
 } from "firebase/database";
 import { ref as sRef } from 'firebase/storage';
 import ReviewBtn from "../components/ReviewButton.vue";
@@ -222,13 +218,13 @@ export default {
           `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/community.json`
         )
         .then((response) => {
-          console.log(response.data)
+          // console.log(response.data)
           for (let entry in response.data) {
             // console.log(response.data[entry].id)
             if (response.data[entry].id == this.id) {
               var obj = response.data[entry]
               this.videoExist = false;
-              this.title = obj.strMeal;
+              this.title = obj.title;
               this.image = obj.image;
               this.foodCategory = obj.strCategory;
 
@@ -264,7 +260,7 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           let obj = response.data.meals[0];
           this.title = obj.strMeal;
           this.image = obj.strMealThumb;
@@ -316,32 +312,12 @@ export default {
       for (let review in reviewsObj) {
         this.review_list.push(reviewsObj[review]);
       }
-      console.log(this.review_list);
+      // console.log(this.review_list);
       this.review_list = this.review_list.reverse();
     });
   },
   methods: {
 
-    // increase test
-    increase() {
-      console.log("IT WORKS");
-      console.log(this.$store.state.userId)
-
-      var foodCategory = this.foodCategory
-      const db = getDatabase();
-      const dbRef = ref(db);
-      get(child(dbRef, `users/${this.$store.state.userId}/preferences/-NGeIxKCg15J-xKzyYPP/${this.foodCategory}`))
-        .then((snapshot) => {
-          console.log(snapshot);
-          let countVariable = Number(snapshot.val());
-          console.log(countVariable);
-          countVariable++;
-          var obj = {};
-          obj[foodCategory] = countVariable;
-          update(ref(dbRef, `users/${this.$store.state.userId}/preferences/-NGeIxKCg15J-xKzyYPP`), obj);
-        })
-
-    },
     // bookmarking functions
     bookmark() {
       console.log(this.$store.state.userId);
@@ -356,11 +332,23 @@ export default {
       this.bookmarked = true;
 
       //add category to user's preference in firebase db
-      // axios.post(
-      //   `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${userId}/preferences/${this.foodCategory}.json`,
-      //   {
-      //     value: 1,
-      //   })
+      //get current instances of the catogory in user's preferences
+      var current = null;
+      var str_id = null;
+      axios.get(`https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${this.$store.state.userId}/preferences.json`)
+        .then((response) => {
+          console.log(response.data)
+          for (let bookmark in response.data) {
+            str_id = bookmark;
+            current = response.data[bookmark][this.foodCategory];
+            console.log(current)
+          }
+          var final = current + 1;
+
+          const db = getDatabase();
+          set(ref(db, `users/${this.$store.state.userId}/preferences/${str_id}/${this.foodCategory}`), final);
+        }
+        )
 
     },
     unbookmark() {
@@ -371,6 +359,24 @@ export default {
         this.bookmarked = false;
         console.log("location removed");
       });
+
+      // reduce food category by 1 from user's preferences
+      var current = null;
+      var str_id = null;
+      axios.get(`https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${this.$store.state.userId}/preferences.json`)
+        .then((response) => {
+          console.log(response.data)
+          for (let bookmark in response.data) {
+            str_id = bookmark;
+            current = response.data[bookmark][this.foodCategory];
+            console.log(current)
+          }
+          var final = current - 1;
+
+          const db = getDatabase();
+          set(ref(db, `users/${this.$store.state.userId}/preferences/${str_id}/${this.foodCategory}`), final);
+        }
+        )
     },
     //Video Modal Functions
     open() {
