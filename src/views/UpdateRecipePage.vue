@@ -359,8 +359,11 @@ export default {
                                                     let updateRef = ref(db, `users/${userId}/recipes/${i}`);
                                                     remove(updateRef).then(() => {
                                                         console.log("Location removed");
-                                                        axios.post(`https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${this.$store.state.userId}/recipes.json`, simpleFoodTemplate);
-                                                        window.location.reload();
+                                                        axios.post(`https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${this.$store.state.userId}/recipes.json`, simpleFoodTemplate)
+                                                        .then((response) => {
+                                                            // console.log(response);
+                                                            window.location.reload();
+                                                        });
                                                     })
                                                 }
                                             }
@@ -471,7 +474,11 @@ export default {
                                             let deleteRef = ref(db, `users/${userId}/recipes/${i}`);
                                             remove(deleteRef).then(() => {
                                                 // console.log("Location removed");
-                                                axios.post(`https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${this.$store.state.userId}/recipes.json`, simpleFoodTemplate);
+                                                axios.post(`https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${this.$store.state.userId}/recipes.json`, simpleFoodTemplate)
+                                                .then((response) => {
+                                                    // console.log(response.data)
+                                                    window.location.reload();
+                                                });
                                             })
                                         }
                                     }
