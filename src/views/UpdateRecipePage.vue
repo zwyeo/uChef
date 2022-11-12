@@ -459,7 +459,7 @@ export default {
                         if (data[i].id == this.id) {
                             let updateRef = ref(db, `community/${i}`);
                             remove(updateRef).then(() => {
-                                console.log("location removed");
+                                //console.log("location removed");
                                 axios.post(`https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/community.json`,fullFoodTemplate);
 
                                 get(usersRef)
@@ -470,7 +470,7 @@ export default {
                                         if (data[i].id == this.id) {
                                             let deleteRef = ref(db, `users/${userId}/recipes/${i}`);
                                             remove(deleteRef).then(() => {
-                                                console.log("Location removed");
+                                                // console.log("Location removed");
                                                 axios.post(`https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${this.$store.state.userId}/recipes.json`, simpleFoodTemplate);
                                             })
                                         }
@@ -490,7 +490,7 @@ export default {
         }
     },
     created() {
-        console.log(this.id);
+        // console.log(this.id);
         this.$store.state.activerecipeid = this.id;
         this.getRecipe();
     }

@@ -132,7 +132,7 @@ export default {
             for (let i of steps) {
                 recipeInstructions += i.value + "\r\n";
             }
-            console.log(recipeInstructions);
+            // console.log(recipeInstructions);
             this.newRecipeInstructions = recipeInstructions;
             },
         getRecipeIngredients() {
@@ -168,7 +168,7 @@ export default {
         },
         previewImage(event) {
             this.newRecipeImage = event.target.files[0];
-            console.log(this.newRecipeImage);
+            // console.log(this.newRecipeImage);
             this.newRecipeImagePreview = URL.createObjectURL(this.newRecipeImage);
         },
         createNewRecipe() {
@@ -185,7 +185,7 @@ export default {
                         console.log("Download URL:" + this.newRecipeImagePath);
 
                         this.newRecipeId = uuidv4();
-                        console.log(this.newRecipeId);
+                        // console.log(this.newRecipeId);
                         this.getRecipeInstructions();
                         this.getRecipeIngredients();
 

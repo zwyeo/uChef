@@ -45,7 +45,7 @@ export default {
     RemoveRecipe
   },
   created() {
-    console.log(this.id);
+    // console.log(this.id);
   }
 };
 </script>
