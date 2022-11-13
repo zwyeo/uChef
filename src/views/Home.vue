@@ -6,16 +6,16 @@
   <div id="popular-recipe" class="container-fluid">
 
     <!-- RECOMMENDED FOR YOU SECTION -->
-    <!-- <div v-if="recommendations_required == true">
+    <div v-if="recommendations_required == true">
       <h2 class="text-center p-5">Recommended For You</h2>
       <div class="row recipe-card-style">
         <div v-for="recipe in recommendations_list" :key="recipe.id" class="col-xl-4 col-lg-6">
-          <router-link :to="{ name: 'recipe-details', params: { id: recipe.id } }">
+          <router-link :to="{ name: 'recipe-details', params: { id: recipe.idMeal } }">
             <recipe-card :title="recipe.strMeal" :img="recipe.strMealThumb" class="mb-5"></recipe-card>
           </router-link>
         </div>
       </div>
-    </div> -->
+    </div>
 
     <!-- POPULAR RECIPE SECTION -->
     <h2 class="text-center p-5">The Most Popular Recipes</h2>
@@ -131,7 +131,7 @@ export default {
                       .then(response => {
                         var objects = response.data.meals
                         this.recommendations_list.push(objects[0])
-                        // console.log(this.recommendations_list)
+                        console.log(this.recommendations_list)
 
                       })
 
