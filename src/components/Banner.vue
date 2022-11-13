@@ -179,6 +179,7 @@ export default {
       this.$store.state.queryParam = "";
       this.$store.state.selectedCategory = cat;
       this.$store.dispatch("getRecipeByCategory");
+      this.$store.dispatch("getCommunityRecipeBySearch");
       this.$router.push("/search-results");
     },
   },

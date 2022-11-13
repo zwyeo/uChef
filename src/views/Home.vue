@@ -102,6 +102,7 @@ export default {
     this.populateCommunityRecipe();
     // console.log(this.$store.state.userName);
     this.$store.state.queryParam = "";
+    this.$store.state.setsearch = "professional";
     if (this.$store.state.prevRouteName == "register") {
       this.$store.state.prevRouteName = "";
       location.reload();
