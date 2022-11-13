@@ -9,8 +9,8 @@
     <!-- RECOMMENDED FOR YOU SECTION -->
     <div v-if="recommendations_required == true">
       <h2 class="text-center p-5">Recommended For You</h2>
-      <div class="row recipe-card-style">
-        <div v-for="recipe in recommendations_list" :key="recipe.id" class="col-xl-4 col-lg-6">
+      <div class="row d-flex justify-content-center">
+        <div v-for="recipe in recommendations_list" :key="recipe.id" class="col-xxl-3 col-xl-4 col-md-6">
           <router-link :to="{ name: 'recipe-details', params: { id: recipe.idMeal } }">
             <recipe-card :title="recipe.strMeal" :img="recipe.strMealThumb" :id="recipe.idMeal" class="mb-5">
             </recipe-card>
@@ -21,8 +21,8 @@
 
     <!-- POPULAR RECIPE SECTION -->
     <h2 class="text-center p-5">The Most Popular Recipes</h2>
-    <div class="row recipe-card-style">
-      <div v-for="recipe in $store.state.popularRecipe" :key="recipe.id" class="col-xl-4 col-lg-6">
+    <div class="row d-flex justify-content-center">
+      <div v-for="recipe in $store.state.popularRecipe" :key="recipe.id" class="col-xxl-3 col-xl-4 col-md-6">
         <router-link :to="{ name: 'recipe-details', params: { id: recipe.id } }">
           <recipe-card :title="recipe.title" :img="recipe.img" :id="recipe.id" class="mb-5"></recipe-card>
         </router-link>
@@ -31,8 +31,8 @@
 
     <!-- COMMUNITY RECIPE SECTION -->
     <h2 class="text-center p-5">Our Community Recipes</h2>
-    <div class="row recipe-card-style">
-      <div v-for="recipe in $store.state.communityRecipe" :key="recipe.id" class="col-xl-4 col-lg-6">
+    <div class="row d-flex justify-content-center">
+      <div v-for="recipe in $store.state.communityRecipe" :key="recipe.id" class="col-xxl-3 col-xl-4 col-md-6">
         <router-link :to="{
           name: 'recipe-details',
           params: { id: recipe.id },
@@ -179,7 +179,7 @@ a {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .banner {
     display: none;
   }
