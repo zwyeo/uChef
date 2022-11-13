@@ -146,7 +146,7 @@ export default {
           this.$store.commit("set_userName", user.displayName);
           this.$store.commit("set_userId", user.uid);
           this.$router.push("/");
-          // console.log(this.$store.state.userId);
+          console.log(this.$store.state.userId);
         })
         .catch((error) => {
           const errorCode = error.code;
