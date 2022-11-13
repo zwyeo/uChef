@@ -19,7 +19,7 @@
     <div class="container">
       <div class="row">
         <div class="col-12 col-md-8">
-          <div class="receipe-headline my-5 animate__animated animate__backInUp animate__delay-1s animate__fast">
+          <div class="receipe-headline my-5">
             <h2>{{ title }}</h2>
             <!-- IF VIDEO EXISTS -->
             <div v-if="videoExist == true">
@@ -56,7 +56,7 @@
         </div>
 
         <div class="col-12 col-md-4">
-          <div class="receipe-ratings my-5">
+          <div class="receipe-ratings my-5 float-end">
             <div class="ratings animate__animated animate__delay-1s animate__pulse animate__fast">
               <div v-if="ratings == null || ratings == 4">
                 <i class="fa fa-star" aria-hidden="true"></i>
@@ -118,7 +118,7 @@
       </div>
 
       <div class="row">
-        <div class="col-12 col-lg-8 animate__animated animate__backInUp animate__delay-1s animate__fast">
+        <div class="col-12 col-lg-9 animate__animated animate__backInUp animate__delay-1s animate__fast">
           <!-- Single Preparation Step -->
           <div v-for="(item, index) in instructions" :key="item" class="single-preparation-step d-flex">
             <h4 v-if="index < 9">0{{ index + 1 }}</h4>
@@ -128,7 +128,7 @@
         </div>
 
         <!-- Ingredients -->
-        <div class="col-12 col-lg-4 animate__animated animate__backInRight animate__delay-1s animate__fast">
+        <div class="col-12 col-lg-3 animate__animated animate__backInRight animate__delay-1s animate__fast">
           <h4 class="">Ingredients</h4>
 
           <!-- Ingredient list -->
