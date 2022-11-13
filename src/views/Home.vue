@@ -10,7 +10,8 @@
       <div class="row recipe-card-style">
         <div v-for="recipe in recommendations_list" :key="recipe.id" class="col-xl-4 col-lg-6">
           <router-link :to="{ name: 'recipe-details', params: { id: recipe.idMeal } }">
-            <recipe-card :title="recipe.strMeal" :img="recipe.strMealThumb" class="mb-5"></recipe-card>
+            <recipe-card :title="recipe.strMeal" :img="recipe.strMealThumb" :id="recipe.idMeal" class="mb-5">
+            </recipe-card>
           </router-link>
         </div>
       </div>
@@ -21,7 +22,7 @@
     <div class="row recipe-card-style">
       <div v-for="recipe in $store.state.popularRecipe" :key="recipe.id" class="col-xl-4 col-lg-6">
         <router-link :to="{ name: 'recipe-details', params: { id: recipe.id } }">
-          <recipe-card :title="recipe.title" :img="recipe.img" class="mb-5"></recipe-card>
+          <recipe-card :title="recipe.title" :img="recipe.img" :id="recipe.id" class="mb-5"></recipe-card>
         </router-link>
       </div>
     </div>
@@ -34,7 +35,7 @@
           name: 'recipe-details',
           params: { id: recipe.id },
         }">
-          <recipe-card :title="recipe.title" :img="recipe.image" class="mb-5"></recipe-card>
+          <recipe-card :title="recipe.title" :img="recipe.image" :id="recipe.id" class="mb-5"></recipe-card>
         </router-link>
       </div>
     </div>
