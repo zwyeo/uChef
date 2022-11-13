@@ -99,7 +99,7 @@
           src="../assets/img/banner-img/fish-category.jpg"
           class="d-block w-100"
           alt="..."
-          style="height: 90vh; object-fit: cover"
+          style="height: 800px; object-fit: cover"
         />
         <div
           class="carousel-caption d-none d-md-block animate__animated animate__fadeInUp animate__delay-2 animate__slow carousel-label"

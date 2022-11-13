@@ -219,7 +219,6 @@
       <!-- PROFILE IF AUTHENTICATED -->
       <!-- USER Icon -->
       <div
-        id="user-icon"
         v-if="this.$store.state.userId"
         class="ps-5 pb-2 text-success"
         style="color: #b6b6b6; font-weight: bolder"
@@ -406,7 +405,7 @@ a {
 }
 
 @media screen and (max-width: 820px) {
-  #user-icon {
+  .user-icon {
     display: none;
   }
 }
