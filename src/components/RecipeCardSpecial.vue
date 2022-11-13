@@ -18,9 +18,7 @@
       <div class="container d-flex justify-content-center">
         <div class="row row-cols-2">
           <div class="col">
-            <router-link
-              :to="{ name: 'update-recipe-page', params: { id: this.id } }"
-            >
+            <router-link :to="{ name: 'update-recipe-page', params: { id: this.id } }">
               <button class="btn btn-primary">Edit</button>
             </router-link>
           </div>
@@ -85,16 +83,19 @@ export default {
   position: relative;
   z-index: 1;
 }
+
 .img-style {
   border-bottom: 3px solid #40ba37;
-  width: 500px;
-  height: 500px;
+  width: 100%;
+  height: auto;
   object-fit: cover;
 }
+
 .receipe-content {
   padding-top: 30px;
   text-align: center;
 }
+
 .receipe-content h5 {
   font-size: 18px;
   margin-bottom: 10px;
@@ -102,10 +103,12 @@ export default {
   -webkit-transition-duration: 500ms;
   transition-duration: 500ms;
 }
+
 .receipe-content h5:hover,
 .receipe-content h5:focus {
   color: #40ba37;
 }
+
 .ratings i {
   font-size: 11px;
   color: #fbb710;
