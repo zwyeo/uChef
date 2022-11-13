@@ -81,7 +81,7 @@ export default {
   name: "RecipeCardSpecial",
   data() {
     return {
-      ratings: null;
+      ratings: null,
     };
   },
   props: ["title", "img", "id"],
