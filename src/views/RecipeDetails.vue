@@ -400,22 +400,27 @@ export default {
   methods: {
     // bookmarking functions
     bookmark() {
-      console.log(this.$store.state.userId);
       let userId = this.$store.state.userId;
-      axios.post(
-        `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${userId}/bookmarks/${this.id}.json`,
-        {
-          title: this.title,
-          image: this.image,
-        }
-      );
-      this.bookmarked = true;
 
-      //add category to user's preference in firebase db
-      //get current instances of the catogory in user's preferences
-      var current = null;
-      var str_id = null;
-      axios
+      if (this.$store.state.userId == "") {
+        alert("Please login to bookmark!");
+        window.location.assign("/login");
+      } else {
+        axios.post(
+          `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${userId}/bookmarks/${this.id}.json`,
+          {
+            title: this.title,
+            image: this.image,
+          }
+        );
+        this.bookmarked = true;
+
+        //add category to user's preference in firebase db
+        //get current instances of the catogory in user's preferences
+        var current = null;
+        var str_id = null;
+
+        axios
         .get(
           `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${this.$store.state.userId}/preferences.json`
         )
@@ -437,6 +442,7 @@ export default {
             final
           );
         });
+      }
     },
     unbookmark() {
       const db = getDatabase();
@@ -573,7 +579,7 @@ ol li {
   left: 50%;
   z-index: 10;
   transform: translate(-50%, -50%);
-  display: block;
+  background-position: center;
 }
 
 /* Spacing */

@@ -2,15 +2,28 @@
   <div class="container-fluid px-5">
     <nav-bar></nav-bar>
   </div>
-  <banner></banner>
+  <div class="banner">
+    <banner></banner>
+  </div>
   <div id="popular-recipe" class="container-fluid">
     <!-- RECOMMENDED FOR YOU SECTION -->
     <div v-if="recommendations_required == true">
       <h2 class="text-center p-5">Recommended For You</h2>
-      <div class="row recipe-card-style">
-        <div v-for="recipe in recommendations_list" :key="recipe.id" class="col-xl-4 col-lg-6">
-          <router-link :to="{ name: 'recipe-details', params: { id: recipe.idMeal } }">
-            <recipe-card :title="recipe.strMeal" :img="recipe.strMealThumb" :id="recipe.idMeal" class="mb-5">
+      <div class="row d-flex justify-content-center">
+        <div
+          v-for="recipe in recommendations_list"
+          :key="recipe.id"
+          class="col-xl-4 col-md-6"
+        >
+          <router-link
+            :to="{ name: 'recipe-details', params: { id: recipe.idMeal } }"
+          >
+            <recipe-card
+              :title="recipe.strMeal"
+              :img="recipe.strMealThumb"
+              :id="recipe.idMeal"
+              class="mb-5"
+            >
             </recipe-card>
           </router-link>
         </div>
@@ -19,35 +32,55 @@
 
     <!-- POPULAR RECIPE SECTION -->
     <h2 class="text-center p-5">The Most Popular Recipes</h2>
-    <div class="row recipe-card-style">
-      <div v-for="recipe in $store.state.popularRecipe" :key="recipe.id" class="col-xl-4 col-lg-6">
-        <router-link :to="{ name: 'recipe-details', params: { id: recipe.id } }">
-          <recipe-card :title="recipe.title" :img="recipe.img" :id="recipe.id" class="mb-5"></recipe-card>
+    <div class="row d-flex justify-content-center">
+      <div
+        v-for="recipe in $store.state.popularRecipe"
+        :key="recipe.id"
+        class="col-xl-4 col-md-6"
+      >
+        <router-link
+          :to="{ name: 'recipe-details', params: { id: recipe.id } }"
+        >
+          <recipe-card
+            :title="recipe.title"
+            :img="recipe.img"
+            :id="recipe.id"
+            class="mb-5"
+          ></recipe-card>
         </router-link>
       </div>
     </div>
 
     <!-- COMMUNITY RECIPE SECTION -->
     <h2 class="text-center p-5">Our Community Recipes</h2>
-    <div class="row recipe-card-style">
-      <div v-for="recipe in $store.state.communityRecipe" :key="recipe.id" class="col-xl-4 col-lg-6">
-        <router-link :to="{
-          name: 'recipe-details',
-          params: { id: recipe.id },
-        }">
-          <recipe-card :title="recipe.title" :img="recipe.image" :id="recipe.id" class="mb-5"></recipe-card>
+    <div class="row d-flex justify-content-center">
+      <div
+        v-for="recipe in $store.state.communityRecipe"
+        :key="recipe.id"
+        class="col-xl-4 col-md-6"
+      >
+        <router-link
+          :to="{
+            name: 'recipe-details',
+            params: { id: recipe.id },
+          }"
+        >
+          <recipe-card
+            :title="recipe.title"
+            :img="recipe.image"
+            :id="recipe.id"
+            class="mb-5"
+          ></recipe-card>
         </router-link>
       </div>
     </div>
   </div>
-  <not-logged-in></not-logged-in>
 </template>
 
 <script>
 import NavBar from "../components/NavBar.vue";
 import RecipeCard from "@/components/RecipeCard.vue";
 import Banner from "@/components/Banner.vue";
-import NotLoggedIn from "../components/NotLoggedIn.vue";
 import axios from "axios";
 
 export default {
@@ -56,7 +89,6 @@ export default {
     NavBar,
     RecipeCard,
     Banner,
-    NotLoggedIn,
   },
   data() {
     return {
@@ -68,7 +100,9 @@ export default {
     // This will refresh the popular and community recipe list from DB
     this.populatePopularRecipe();
     this.populateCommunityRecipe();
-    console.log(this.$store.state.userName);
+    // console.log(this.$store.state.userName);
+    this.$store.state.queryParam = "";
+    this.$store.state.setsearch = "professional";
     if (this.$store.state.prevRouteName == "register") {
       this.$store.state.prevRouteName = "";
       location.reload();
@@ -171,6 +205,18 @@ a {
 
 /* Start */
 
+@media (max-width: 768px) {
+  .recipe-card-style {
+    padding: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .banner {
+    display: none;
+  }
+}
+
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
   .hero-slides .single-hero-slide {
     height: 650px;
@@ -223,17 +269,15 @@ a {
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
-
-  .breakpoint-on .classynav ul li.cn-dropdown-item>a::after,
-  .breakpoint-on .classynav ul li.megamenu-item>a::after {
+  .breakpoint-on .classynav ul li.cn-dropdown-item > a::after,
+  .breakpoint-on .classynav ul li.megamenu-item > a::after {
     top: 10px;
   }
 }
 
 @media only screen and (max-width: 767px) {
-
-  .breakpoint-on .classynav ul li.cn-dropdown-item>a::after,
-  .breakpoint-on .classynav ul li.megamenu-item>a::after {
+  .breakpoint-on .classynav ul li.cn-dropdown-item > a::after,
+  .breakpoint-on .classynav ul li.megamenu-item > a::after {
     top: 10px;
   }
 }
@@ -842,7 +886,10 @@ a {
   height: 20px;
 }
 
-.ingredients .custom-checkbox .custom-control-input:checked~.custom-control-label::before {
+.ingredients
+  .custom-checkbox
+  .custom-control-input:checked
+  ~ .custom-control-label::before {
   background-color: #40ba37;
 }
 

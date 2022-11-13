@@ -171,6 +171,13 @@ export default {
   display: inline-block;
   padding: 0 1px;
 }
+
+/* remove padding from card-style class when in mobile view */
+@media (max-width: 768px) {
+  .card-style {
+    padding: 0;
+  }
+}
 </style>
 
 <!-- <div class="card card-css p-2" style="width: 18rem">
