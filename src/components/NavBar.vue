@@ -62,7 +62,7 @@
             style="width: 10em" /></a
       ></router-link>
       <button
-        class="navbar-toggler order-md-last"
+        class="navbar-toggler"
         type="button"
         data-bs-toggle="collapse"
         data-bs-target="#navbarNavAltMarkup"
@@ -147,85 +147,88 @@
               >MY BOOKMARKS</a
             >
           </router-link>
-        </div>
-      </div>
-      <!-- SEARCH BAR -->
-      <div
-        class="d-flex text-center rounded-pill w-25 pe-2 border border-secondary px-2 mb-2 bg-white"
-      >
-        <div class="pt-2 icon">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            class="bi bi-search mb-1"
-            viewBox="0 0 16 16"
-            @click="$store.dispatch('getRecipes')"
+
+          <!-- INSERT -->
+          <!-- SEARCH BAR -->
+          <div
+            id="search-bar"
+            class="d-flex text-center rounded-pill pe-2 border border-secondary px-2 mb-2 bg-white"
+            style="width: 250px"
           >
-            <path
-              d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
-            ></path>
-          </svg>
+            <div class="pt-2 icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-search mb-1"
+                viewBox="0 0 16 16"
+                @click="$store.dispatch('getRecipes')"
+              >
+                <path
+                  d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+                ></path>
+              </svg>
+            </div>
+
+            <input
+              type="text"
+              :placeholder="$store.state.searchDesc"
+              class="text-dark w-5 form-control rounded-pill input border-0 bg-white"
+              v-model="searchQuery"
+              style="background-color: #40ba37"
+              @keyup.enter="onSearch"
+            />
+          </div>
+
+          <!-- LOGIN IF GUEST -->
+          <!-- Login Icon -->
+          <div
+            v-if="!this.$store.state.userId"
+            @click="goToLoginPage"
+            class="search-btn login-style ps-5 pt-2"
+            style="color: #b6b6b6"
+          >
+            <i class="fa fa-user-plus"></i>
+            <span> LOGIN</span>
+          </div>
+
+          <!-- PROFILE IF GUEST -->
+          <!-- Search Icon -->
+          <div
+            v-if="!this.$store.state.userId"
+            class="ps-5 pt-2 user-icon"
+            style="color: #b6b6b6"
+          >
+            <i class="fa fa-user"></i>
+            GUEST
+          </div>
+
+          <!-- LOGOUT USER IS AUTHENTICATED -->
+          <!-- LOGOUT Icon -->
+          <div
+            id="icons-style"
+            v-if="this.$store.state.userId"
+            data-bs-toggle="modal"
+            data-bs-target="#logoutModal"
+            class="search-btn login-style ps-5 pt-2"
+            style="color: #b6b6b6"
+          >
+            <i class="fa fa-rotate-right"></i>
+            <span> LOGOUT</span>
+          </div>
+
+          <!-- PROFILE IF AUTHENTICATED -->
+          <!-- USER Icon -->
+          <div
+            v-if="this.$store.state.userId"
+            class="ps-5 text-success pt-2 user-icon"
+            style="color: #b6b6b6; font-weight: bolder"
+          >
+            <i class="fa fa-user"></i>
+            {{ this.$store.state.userName }}
+          </div>
         </div>
-
-        <input
-          type="text"
-          :placeholder="$store.state.searchDesc"
-          class="text-dark w-5 form-control rounded-pill input border-0 bg-white"
-          v-model="searchQuery"
-          style="background-color: #40ba37"
-          @keyup.enter="onSearch"
-        />
-      </div>
-
-      <!-- LOGIN IF GUEST -->
-      <!-- Login Icon -->
-      <div
-        v-if="!this.$store.state.userId"
-        @click="goToLoginPage"
-        class="search-btn login-style ps-5 pb-2"
-        style="color: #b6b6b6"
-      >
-        <i class="fa fa-user-plus"></i>
-        <span> LOGIN</span>
-      </div>
-
-      <!-- PROFILE IF GUEST -->
-      <!-- Search Icon -->
-      <div
-        v-if="!this.$store.state.userId"
-        class="ps-5 pb-2"
-        style="color: #b6b6b6"
-      >
-        <i class="fa fa-user"></i>
-        GUEST
-      </div>
-
-      <!-- LOGOUT USER IS AUTHENTICATED -->
-      <!-- LOGOUT Icon -->
-      <div
-        id="icons-style"
-        v-if="this.$store.state.userId"
-        data-bs-toggle="modal"
-        data-bs-target="#logoutModal"
-        class="search-btn login-style ps-5 pb-2"
-        style="color: #b6b6b6"
-      >
-        <i class="fa fa-rotate-right"></i>
-        <span> LOGOUT</span>
-      </div>
-
-      <!-- PROFILE IF AUTHENTICATED -->
-      <!-- USER Icon -->
-      <div
-        id="user-icon"
-        v-if="this.$store.state.userId"
-        class="ps-5 pb-2 text-success"
-        style="color: #b6b6b6; font-weight: bolder"
-      >
-        <i class="fa fa-user"></i>
-        {{ this.$store.state.userName }}
       </div>
     </div>
   </nav>
@@ -406,17 +409,20 @@ a {
 }
 
 @media screen and (max-width: 820px) {
-  #user-icon {
+  .user-icon {
     display: none;
   }
 }
 
-@media screen and (max-width: 650px) {
-  #logo {
+@media screen and (max-width: 1125px) {
+  .user-icon {
     display: none;
   }
-  nav {
-    padding-top: 4em;
+}
+
+@media screen and (max-width: 600px) {
+  #search-bar {
+    width: 200px;
   }
 }
 </style>

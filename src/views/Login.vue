@@ -1,5 +1,5 @@
 <template>
-  <div class="w-25 mx-auto">
+  <div class="mx-auto" style="width: 400px">
     <img src="../assets/logo.png" alt="uChef Logo" />
     <!-- Pills navs -->
     <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
