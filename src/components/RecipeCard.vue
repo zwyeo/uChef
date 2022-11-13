@@ -142,9 +142,9 @@ export default {
 
 .img-style {
   border-bottom: 3px solid #40ba37;
-  width: 100%;
-  height: 25em;
-  object-fit: cover;
+  width: auto;
+  height: auto;
+
 }
 
 .receipe-content {
