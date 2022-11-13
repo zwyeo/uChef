@@ -24,6 +24,10 @@
               :id="recipe.idMeal"
               class="mb-5"
             >
+      <div class="row d-flex justify-content-center">
+        <div v-for="recipe in recommendations_list" :key="recipe.id" class="col-xxl-3 col-xl-4 col-md-6">
+          <router-link :to="{ name: 'recipe-details', params: { id: recipe.idMeal } }">
+            <recipe-card :title="recipe.strMeal" :img="recipe.strMealThumb" :id="recipe.idMeal" class="mb-5">
             </recipe-card>
           </router-link>
         </div>
@@ -47,6 +51,10 @@
             :id="recipe.id"
             class="mb-5"
           ></recipe-card>
+    <div class="row d-flex justify-content-center">
+      <div v-for="recipe in $store.state.popularRecipe" :key="recipe.id" class="col-xxl-3 col-xl-4 col-md-6">
+        <router-link :to="{ name: 'recipe-details', params: { id: recipe.id } }">
+          <recipe-card :title="recipe.title" :img="recipe.img" :id="recipe.id" class="mb-5"></recipe-card>
         </router-link>
       </div>
     </div>
@@ -71,6 +79,13 @@
             :id="recipe.id"
             class="mb-5"
           ></recipe-card>
+    <div class="row d-flex justify-content-center">
+      <div v-for="recipe in $store.state.communityRecipe" :key="recipe.id" class="col-xxl-3 col-xl-4 col-md-6">
+        <router-link :to="{
+          name: 'recipe-details',
+          params: { id: recipe.id },
+        }">
+          <recipe-card :title="recipe.title" :img="recipe.image" :id="recipe.id" class="mb-5"></recipe-card>
         </router-link>
       </div>
     </div>
@@ -212,7 +227,7 @@ a {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .banner {
     display: none;
   }

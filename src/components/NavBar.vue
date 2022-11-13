@@ -408,13 +408,7 @@ a {
   color: black;
 }
 
-@media screen and (max-width: 820px) {
-  .user-icon {
-    display: none;
-  }
-}
-
-@media screen and (max-width: 1125px) {
+@media screen and (max-width: 992px) {
   .user-icon {
     display: none;
   }
@@ -423,6 +417,54 @@ a {
 @media screen and (max-width: 600px) {
   #search-bar {
     width: 200px;
+  }
+}
+
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+  #search-bar {
+    position: absolute;
+    right: 0;
+    bottom: 4rem;
+    margin-top: 0.5rem;
+    margin-right: 0.5rem;
+  }
+  .login-style {
+    position: absolute;
+    right: 8rem;
+    top: 6rem;
+    margin-top: 0.5rem;
+    margin-right: 0.5rem;
+  }
+  .user-icon {
+    position: absolute;
+    right: 2rem;
+    top: 6rem;
+    margin-top: 0.5rem;
+    margin-right: 0.5rem;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .login-style {
+    position: absolute;
+    right: 5rem;
+    bottom: 4.75rem;
+    margin-top: 0.5rem;
+    margin-right: 2rem;
+  }
+  .user-icon {
+    position: absolute;
+    right: 0;
+    bottom: 4.75rem;
+    margin-top: 0.5rem;
+    margin-right: 0.5rem;
+  }
+  #search-bar {
+    position: absolute;
+    right: 13rem;
+    bottom: 4rem;
+    margin-top: 0.5rem;
+    margin-right: 0.5rem;
   }
 }
 </style>
