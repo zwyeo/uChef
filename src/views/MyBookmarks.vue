@@ -3,29 +3,19 @@
     <nav-bar></nav-bar>
     <h2 class="text-center p-5">My Bookmarks</h2>
     <div v-if="bookmarks.length != 0" class="row recipe-card-style">
-      <div
-        v-for="(recipe, id) in bookmarks"
-        :key="recipe"
-        class="col-xl-4 col-lg-6"
-      >
+      <div v-for="(recipe, id) in bookmarks" :key="recipe" class="col-xl-4 col-lg-6">
         <router-link :to="{ name: 'recipe-details', params: { id: id } }">
-          <recipe-card
-            v-for="elements in recipe"
-            :title="elements.title"
-            :img="elements.image"
-            class="mb-5"
-          ></recipe-card>
+          <recipe-card v-for="elements in recipe" :title="elements.title" :img="elements.image" :id="id"
+            :key="elements.title" class="mb-5">
+          </recipe-card>
+
         </router-link>
       </div>
       <!-- <button class="btn btn-primary" v-on:click="getBookmarks">Click me</button> -->
     </div>
     <div v-else class="row">
       <div class="col d-flex justify-content-center">
-        <img
-          style="width: 500px; height: 500px"
-          src="../assets/img/core-img/noBookmarks.png"
-          alt=""
-        />
+        <img style="width: 500px; height: 500px" src="../assets/img/core-img/noBookmarks.png" alt="" />
       </div>
     </div>
   </div>
@@ -71,4 +61,6 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+
+</style>

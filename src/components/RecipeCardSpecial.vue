@@ -7,11 +7,53 @@
       <div class="receipe-content">
         <h5>{{ title }}</h5>
         <div class="ratings">
-          <i class="fa fa-star" aria-hidden="true"></i>
-          <i class="fa fa-star" aria-hidden="true"></i>
-          <i class="fa fa-star" aria-hidden="true"></i>
-          <i class="fa fa-star" aria-hidden="true"></i>
-          <i class="fa fa-star-o" aria-hidden="true"></i>
+          <div v-if="ratings == null || ratings == 4">
+            <i class="fa fa-star" aria-hidden="true"></i>
+            <i class="fa fa-star" aria-hidden="true"></i>
+            <i class="fa fa-star" aria-hidden="true"></i>
+            <i class="fa fa-star" aria-hidden="true"></i>
+            <i class="fa fa-star-o" aria-hidden="true"></i>
+          </div>
+
+          <div v-if="ratings != null && ratings == 0">
+            <i class="fa fa-star-o" aria-hidden="true"></i>
+            <i class="fa fa-star-o" aria-hidden="true"></i>
+            <i class="fa fa-star-o" aria-hidden="true"></i>
+            <i class="fa fa-star-o" aria-hidden="true"></i>
+            <i class="fa fa-star-o" aria-hidden="true"></i>
+          </div>
+
+          <div v-if="ratings != null && ratings == 1">
+            <i class="fa fa-star" aria-hidden="true"></i>
+            <i class="fa fa-star-o" aria-hidden="true"></i>
+            <i class="fa fa-star-o" aria-hidden="true"></i>
+            <i class="fa fa-star-o" aria-hidden="true"></i>
+            <i class="fa fa-star-o" aria-hidden="true"></i>
+          </div>
+
+          <div v-if="ratings != null && ratings == 2">
+            <i class="fa fa-star" aria-hidden="true"></i>
+            <i class="fa fa-star" aria-hidden="true"></i>
+            <i class="fa fa-star-o" aria-hidden="true"></i>
+            <i class="fa fa-star-o" aria-hidden="true"></i>
+            <i class="fa fa-star-o" aria-hidden="true"></i>
+          </div>
+
+          <div v-if="ratings != null && ratings == 3">
+            <i class="fa fa-star" aria-hidden="true"></i>
+            <i class="fa fa-star" aria-hidden="true"></i>
+            <i class="fa fa-star" aria-hidden="true"></i>
+            <i class="fa fa-star-o" aria-hidden="true"></i>
+            <i class="fa fa-star-o" aria-hidden="true"></i>
+          </div>
+
+          <div v-if="ratings != null && ratings == 5">
+            <i class="fa fa-star" aria-hidden="true"></i>
+            <i class="fa fa-star" aria-hidden="true"></i>
+            <i class="fa fa-star" aria-hidden="true"></i>
+            <i class="fa fa-star" aria-hidden="true"></i>
+            <i class="fa fa-star" aria-hidden="true"></i>
+          </div>
         </div>
       </div>
 
@@ -38,7 +80,9 @@ export default {
   // to add ratings props!!
   name: "RecipeCardSpecial",
   data() {
-    return {};
+    return {
+      ratings: null;
+    };
   },
   props: ["title", "img", "id"],
   components: {
@@ -46,6 +90,38 @@ export default {
   },
   created() {
     // console.log(this.id);
+    //Rating
+    axios
+      .get(
+        `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/recipes/${this.id}.json`
+      )
+      .then((response) => {
+        if (response.data != null) {
+          console.log(response.data);
+          var total_rating = 0;
+          var num_of_rating = 0;
+          for (let review in Object.values(response.data)[0]) {
+            // console.log(Object.values(response.data)[0][review].rating)
+            total_rating += Number(
+              Object.values(response.data)[0][review].rating
+            );
+            num_of_rating++;
+          }
+          var rating = total_rating / num_of_rating;
+          var remainder = rating % 1;
+          if (remainder == 0) {
+            this.ratings = rating;
+          } else if (remainder >= 0.5) {
+            this.ratings = Math.ceil(rating);
+          } else {
+            this.ratings = Math.floor(rating);
+          }
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
   },
 };
 </script>
