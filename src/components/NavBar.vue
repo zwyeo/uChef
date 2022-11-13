@@ -255,8 +255,7 @@
           ></button>
         </div>
         <div class="modal-body">
-          You need to login first so that we can save your unique recipes and
-          bookmarks.
+          <img src="../assets/img/core-img/notLoggedIn.png" alt="">
         </div>
         <div class="modal-footer">
           <button
