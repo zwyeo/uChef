@@ -44,6 +44,8 @@ export default createStore({
     getRecipes(state, payload) {
       state.recipes = payload;
       console.log(state.recipes);
+      console.log(state.queryParam);
+      console.log(state.selectedCategory);
     },
     // set the query param based on user search
     setQueryParam(state, newValue) {
@@ -77,7 +79,7 @@ export default createStore({
     // This fn is to retrive recipe data from themealdb API
     getRecipes({ commit }) {
       let userQuery = this.state.queryParam;
-      console.log(userQuery.includes(","));
+      // console.log(userQuery.includes(","));
       let selectedCat = this.state.selectedCategory;
       if (selectedCat.length == 0 && !userQuery.includes(",")) {
         //vanilla search
@@ -126,7 +128,7 @@ export default createStore({
         let url = "https://themealdb.com/api/json/v2/9973533/filter.php";
         userQuery = userQuery.replace(" ", "_");
         axios.get(url, { params: { i: userQuery } }).then((response) => {
-          let data = response.data;
+          let data = response.data.meals;
           commit("getRecipes", data);
         });
       }
@@ -158,6 +160,7 @@ export default createStore({
           commit("getCategoryRecipe", commonrecipes);
         });
       }
+      this.state.selectedCategory = "";
     },
     postReview({ commit }) {
       console.log(
