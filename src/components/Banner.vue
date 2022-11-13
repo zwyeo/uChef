@@ -176,8 +176,10 @@ export default {
   name: "Banner",
   methods: {
     searchCategory(cat) {
+      this.$store.state.queryParam = "";
       this.$store.state.selectedCategory = cat;
-      this.$store.dispatch("filterCategory");
+      this.$store.dispatch("getRecipeByCategory");
+      this.$store.dispatch("getCommunityRecipeBySearch");
       this.$router.push("/search-results");
     },
   },

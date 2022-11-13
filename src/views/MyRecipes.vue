@@ -2,8 +2,8 @@
   <div class="container-fluid px-5">
     <nav-bar></nav-bar>
     <h2 class="text-center p-5">My Recipes</h2>
-    <div v-if="recipes.length != 0" class="row recipe-card-style">
-      <div v-for="recipe in recipes" :key="recipe.id" class="col-xl-4 col-lg-6">
+    <div v-if="recipes.length != 0" class="row d-flex justify-content-center">
+      <div v-for="recipe in recipes" :key="recipe.id" class="col-xl-4 col-md-6">
         <router-link :to="{ name: 'recipe-details', params: { id: recipe.id } }">
 
           <recipe-card-special
