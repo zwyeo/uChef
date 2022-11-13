@@ -33,7 +33,7 @@ export default createStore({
     reviewsubject: "",
     reviewcomments: "",
     reviewlist: [],
-    setsearch: "",
+    setsearch: "professional",
     // To track user session
     userId: "",
     userName: "",
@@ -46,10 +46,10 @@ export default createStore({
   mutations: {
     getRecipes(state, payload) {
       state.recipes = payload;
-      // console.log(state.recipes);
+      console.log(state.recipes);
       // console.log(state.recipes[0].id);
       // console.log(state.queryParam);
-      // console.log(state.selectedCategory);
+      console.log(state.selectedCategory);
     },
     getCommRecipes(state, payload) {
       state.commsearchrecipes = payload;
@@ -83,11 +83,13 @@ export default createStore({
     },
   },
   actions: {
-    // This fn is to retrive recipe data from themealdb API
+    // This fn is to retrive recipe data from themealdb API TO BE REPLACEEDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
     getRecipes({ commit }) {
       let userQuery = this.state.queryParam;
       // console.log(userQuery.includes(","));
       let selectedCat = this.state.selectedCategory;
+      console.log("userQuery: " + userQuery);
+      console.log("selectedCat:" + selectedCat);
       if (
         this.state.setsearch == "professional" ||
         this.state.setsearch == ""
@@ -169,6 +171,58 @@ export default createStore({
         });
       }
     },
+    // REDO SEARCH API------------------------------------------------
+    getRecipeBySearch({ commit }) {
+      const userQuery = this.state.queryParam;
+      const url = "https://themealdb.com/api/json/v2/9973533/search.php";
+
+      axios
+        .get(url, {
+          params: {
+            s: userQuery,
+          },
+        })
+        .then((res) => {
+          const data = res.data;
+          commit("getRecipes", data);
+        });
+    },
+    // FOR BANNER
+    getRecipeByCategory({ commit }) {
+      const category = this.state.selectedCategory;
+      const url = "https://themealdb.com/api/json/v2/9973533/filter.php";
+      axios.get(url, { params: { c: category } }).then((res) => {
+        const data = res.data;
+        commit("getRecipes", data);
+      });
+    },
+    // FOR SEARCHING COMMUNITY RECIPES
+    getCommunityRecipeBySearch({ commit }) {
+      const url =
+        "https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/community.json";
+
+      axios.get(url).then((res) => {
+        let commrecipes = [];
+        let userQuery = this.state.queryParam;
+        const data = res.data;
+        console.log(data);
+
+        for (let recipeObj in data) {
+          let commTitle = data[recipeObj].title.toLowerCase();
+          commTitle = commTitle.split(" ");
+          for (let word of commTitle) {
+            if (userQuery.includes(word)) {
+              commrecipes.push(data[recipeObj]);
+            }
+          }
+        }
+        this.state.commsearched = true;
+        commit("getCommRecipes", commrecipes);
+        console.log(this.state.commsearchrecipes);
+      });
+    },
+
+    // TO BE REPLACEEDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
     filterCategory({ commit }) {
       //if search query is empty
       let selectedCat = this.state.selectedCategory;
