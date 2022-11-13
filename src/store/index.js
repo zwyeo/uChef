@@ -46,8 +46,8 @@ export default createStore({
   mutations: {
     getRecipes(state, payload) {
       state.recipes = payload;
-      console.log(state.recipes);
-      console.log(state.recipes[0].id);
+      // console.log(state.recipes);
+      // console.log(state.recipes[0].id);
       // console.log(state.queryParam);
       // console.log(state.selectedCategory);
     },
@@ -155,6 +155,7 @@ export default createStore({
           for (let recipeobj in alldata) {
             let commtitle = alldata[recipeobj].title.toLowerCase();
             commtitle = commtitle.split(" ");
+            // console.log(commtitle);
             for (let word of commtitle) {
               if (userQuery.includes(word)) {
                 // console.log(alldata[recipeobj]);

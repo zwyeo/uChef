@@ -30,21 +30,28 @@
           $store.state.setsearch == ''
         "
       >
-        <div
-          v-for="recipe in $store.state.recipes"
-          :key="recipe.idMeal"
-          class="col-xl-4 col-lg-6"
-        >
-          <router-link
-            :to="{ name: 'recipe-details', params: { id: recipe.idMeal } }"
+        <div v-if="$store.state.recipes.length > 0">
+          <div
+            v-for="recipe in $store.state.recipes"
+            :key="recipe.idMeal"
+            class="col-xl-4 col-lg-6"
           >
-            <recipe-card
-              :title="recipe.strMeal"
-              :img="recipe.strMealThumb"
-              :id="recipe.idMeal"
-              class="mb-5"
-            ></recipe-card>
-          </router-link>
+            <router-link
+              :to="{ name: 'recipe-details', params: { id: recipe.idMeal } }"
+            >
+              <recipe-card
+                :title="recipe.strMeal"
+                :img="recipe.strMealThumb"
+                :id="recipe.idMeal"
+                class="mb-5"
+              ></recipe-card>
+            </router-link>
+          </div>
+        </div>
+        <div v-else>
+          <div class="col d-flex justify-content-center">
+            <h1>No Results</h1>
+          </div>
         </div>
       </div>
 
@@ -53,21 +60,28 @@
           $store.state.setsearch == 'community' && $store.state.commsearched
         "
       >
-        <div
-          v-for="recipe in $store.state.commsearchrecipes"
-          :key="recipe.id"
-          class="col-xl-4 col-lg-6"
-        >
-          <router-link
-            :to="{ name: 'recipe-details', params: { id: recipe.id } }"
+        <div v-if="$store.state.commsearchrecipes.length > 0">
+          <div
+            v-for="recipe in $store.state.commsearchrecipes"
+            :key="recipe.id"
+            class="col-xl-4 col-lg-6"
           >
-            <recipe-card
-              :title="recipe.title"
-              :img="recipe.image"
-              :id="recipe.id"
-              class="mb-5"
-            ></recipe-card>
-          </router-link>
+            <router-link
+              :to="{ name: 'recipe-details', params: { id: recipe.id } }"
+            >
+              <recipe-card
+                :title="recipe.title"
+                :img="recipe.image"
+                :id="recipe.id"
+                class="mb-5"
+              ></recipe-card>
+            </router-link>
+          </div>
+        </div>
+        <div v-else>
+          <div class="col d-flex justify-content-center">
+            <h1>No Results</h1>
+          </div>
         </div>
       </div>
       <!-- <button class="btn btn-primary" v-on:click="getRecipe">Click me</button> -->

@@ -10,9 +10,20 @@
     <div v-if="recommendations_required == true">
       <h2 class="text-center p-5">Recommended For You</h2>
       <div class="row recipe-card-style">
-        <div v-for="recipe in recommendations_list" :key="recipe.id" class="col-xl-4 col-lg-6">
-          <router-link :to="{ name: 'recipe-details', params: { id: recipe.idMeal } }">
-            <recipe-card :title="recipe.strMeal" :img="recipe.strMealThumb" :id="recipe.idMeal" class="mb-5">
+        <div
+          v-for="recipe in recommendations_list"
+          :key="recipe.id"
+          class="col-xl-4 col-lg-6"
+        >
+          <router-link
+            :to="{ name: 'recipe-details', params: { id: recipe.idMeal } }"
+          >
+            <recipe-card
+              :title="recipe.strMeal"
+              :img="recipe.strMealThumb"
+              :id="recipe.idMeal"
+              class="mb-5"
+            >
             </recipe-card>
           </router-link>
         </div>
@@ -22,9 +33,20 @@
     <!-- POPULAR RECIPE SECTION -->
     <h2 class="text-center p-5">The Most Popular Recipes</h2>
     <div class="row recipe-card-style">
-      <div v-for="recipe in $store.state.popularRecipe" :key="recipe.id" class="col-xl-4 col-lg-6">
-        <router-link :to="{ name: 'recipe-details', params: { id: recipe.id } }">
-          <recipe-card :title="recipe.title" :img="recipe.img" :id="recipe.id" class="mb-5"></recipe-card>
+      <div
+        v-for="recipe in $store.state.popularRecipe"
+        :key="recipe.id"
+        class="col-xl-4 col-lg-6"
+      >
+        <router-link
+          :to="{ name: 'recipe-details', params: { id: recipe.id } }"
+        >
+          <recipe-card
+            :title="recipe.title"
+            :img="recipe.img"
+            :id="recipe.id"
+            class="mb-5"
+          ></recipe-card>
         </router-link>
       </div>
     </div>
@@ -32,12 +54,23 @@
     <!-- COMMUNITY RECIPE SECTION -->
     <h2 class="text-center p-5">Our Community Recipes</h2>
     <div class="row recipe-card-style">
-      <div v-for="recipe in $store.state.communityRecipe" :key="recipe.id" class="col-xl-4 col-lg-6">
-        <router-link :to="{
-          name: 'recipe-details',
-          params: { id: recipe.id },
-        }">
-          <recipe-card :title="recipe.title" :img="recipe.image" :id="recipe.id" class="mb-5"></recipe-card>
+      <div
+        v-for="recipe in $store.state.communityRecipe"
+        :key="recipe.id"
+        class="col-xl-4 col-lg-6"
+      >
+        <router-link
+          :to="{
+            name: 'recipe-details',
+            params: { id: recipe.id },
+          }"
+        >
+          <recipe-card
+            :title="recipe.title"
+            :img="recipe.image"
+            :id="recipe.id"
+            class="mb-5"
+          ></recipe-card>
         </router-link>
       </div>
     </div>
@@ -237,17 +270,15 @@ a {
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
-
-  .breakpoint-on .classynav ul li.cn-dropdown-item>a::after,
-  .breakpoint-on .classynav ul li.megamenu-item>a::after {
+  .breakpoint-on .classynav ul li.cn-dropdown-item > a::after,
+  .breakpoint-on .classynav ul li.megamenu-item > a::after {
     top: 10px;
   }
 }
 
 @media only screen and (max-width: 767px) {
-
-  .breakpoint-on .classynav ul li.cn-dropdown-item>a::after,
-  .breakpoint-on .classynav ul li.megamenu-item>a::after {
+  .breakpoint-on .classynav ul li.cn-dropdown-item > a::after,
+  .breakpoint-on .classynav ul li.megamenu-item > a::after {
     top: 10px;
   }
 }
@@ -856,7 +887,10 @@ a {
   height: 20px;
 }
 
-.ingredients .custom-checkbox .custom-control-input:checked~.custom-control-label::before {
+.ingredients
+  .custom-checkbox
+  .custom-control-input:checked
+  ~ .custom-control-label::before {
   background-color: #40ba37;
 }
 
