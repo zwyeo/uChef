@@ -2,7 +2,9 @@
   <div class="container-fluid px-5">
     <nav-bar></nav-bar>
   </div>
-  <banner></banner>
+  <div class="banner">
+    <banner></banner>
+  </div>
   <div id="popular-recipe" class="container-fluid">
     <!-- RECOMMENDED FOR YOU SECTION -->
     <div v-if="recommendations_required == true">
@@ -170,6 +172,18 @@ a {
 }
 
 /* Start */
+
+@media (max-width: 768px) {
+  .recipe-card-style {
+    padding: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .banner {
+    display: none;
+  }
+}
 
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
   .hero-slides .single-hero-slide {
