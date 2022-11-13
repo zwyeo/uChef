@@ -25,9 +25,7 @@
     <div class="container">
       <div class="row">
         <div class="col-12 col-md-8">
-          <div
-            class="receipe-headline my-5 animate__animated animate__backInUp animate__delay-1s animate__fast"
-          >
+          <div class="receipe-headline my-5">
             <h2>{{ title }}</h2>
             <!-- IF VIDEO EXISTS -->
             <div v-if="videoExist == true">
