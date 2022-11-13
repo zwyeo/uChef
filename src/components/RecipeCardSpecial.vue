@@ -75,6 +75,7 @@
 
 <script>
 import RemoveRecipe from "./RemoveRecipe.vue";
+import axios from "axios";
 
 export default {
   // to add ratings props!!
