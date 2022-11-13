@@ -33,19 +33,26 @@ export default createStore({
     reviewsubject: "",
     reviewcomments: "",
     reviewlist: [],
+    setsearch: "",
     // To track user session
     userId: "",
     userName: "",
     // To get the current route name
     routeName: "",
     prevRouteName: "", // To bypass the signup/name bug
+    commsearched: false,
+    commsearchrecipes: {},
   },
   mutations: {
     getRecipes(state, payload) {
       state.recipes = payload;
       console.log(state.recipes);
-      console.log(state.queryParam);
-      console.log(state.selectedCategory);
+      console.log(state.recipes[0].id);
+      // console.log(state.queryParam);
+      // console.log(state.selectedCategory);
+    },
+    getCommRecipes(state, payload) {
+      state.commsearchrecipes = payload;
     },
     // set the query param based on user search
     setQueryParam(state, newValue) {
@@ -81,55 +88,83 @@ export default createStore({
       let userQuery = this.state.queryParam;
       // console.log(userQuery.includes(","));
       let selectedCat = this.state.selectedCategory;
-      if (selectedCat.length == 0 && !userQuery.includes(",")) {
-        //vanilla search
-        let url = "https://themealdb.com/api/json/v2/9973533/search.php";
-        axios
-          .get(url, {
-            params: {
-              s: userQuery,
-            },
-          })
-          .then((res) => {
-            const data = res.data.meals;
-            // console.log(data);
-            commit("getRecipes", data); // This will pass data into getRecipe mutation as payload
-          });
-      } else if (selectedCat.length != 0 && !userQuery.includes(",")) {
-        //search + category fitler
-        let commonrecipes = [];
-        let url = "https://themealdb.com/api/json/v2/9973533/search.php";
-        axios
-          .get(url, {
-            params: {
-              s: userQuery,
-            },
-          })
-          .then((res) => {
-            const data = res.data.meals;
-            let curl = "https://themealdb.com/api/json/v2/9973533/filter.php";
-            axios.get(curl, { params: { c: selectedCat } }).then((response) => {
-              const catdata = response.data.meals;
-              // console.log(data, catdata);
-              for (let searchobj in data) {
-                for (let catobj in catdata) {
-                  if (catdata[catobj].strMeal == data[searchobj].strMeal) {
-                    // console.log(data[searchobj].strMeal);
-                    commonrecipes.push(data[searchobj]);
-                  }
-                }
-              }
-              // console.log(commonrecipes);
-              commit("getRecipes", commonrecipes);
+      if (
+        this.state.setsearch == "professional" ||
+        this.state.setsearch == ""
+      ) {
+        if (selectedCat.length == 0 && !userQuery.includes(",")) {
+          //vanilla search
+          let url = "https://themealdb.com/api/json/v2/9973533/search.php";
+          axios
+            .get(url, {
+              params: {
+                s: userQuery,
+              },
+            })
+            .then((res) => {
+              const data = res.data.meals;
+              // console.log(data);
+              commit("getRecipes", data); // This will pass data into getRecipe mutation as payload
             });
+        } else if (selectedCat.length != 0 && !userQuery.includes(",")) {
+          //search + category fitler
+          let commonrecipes = [];
+          let url = "https://themealdb.com/api/json/v2/9973533/search.php";
+          axios
+            .get(url, {
+              params: {
+                s: userQuery,
+              },
+            })
+            .then((res) => {
+              const data = res.data.meals;
+              let curl = "https://themealdb.com/api/json/v2/9973533/filter.php";
+              axios
+                .get(curl, { params: { c: selectedCat } })
+                .then((response) => {
+                  const catdata = response.data.meals;
+                  // console.log(data, catdata);
+                  for (let searchobj in data) {
+                    for (let catobj in catdata) {
+                      if (catdata[catobj].strMeal == data[searchobj].strMeal) {
+                        // console.log(data[searchobj].strMeal);
+                        commonrecipes.push(data[searchobj]);
+                      }
+                    }
+                  }
+                  // console.log(commonrecipes);
+                  commit("getRecipes", commonrecipes);
+                });
+            });
+        } else if (userQuery.includes(",")) {
+          //multi ingredient search
+          let url = "https://themealdb.com/api/json/v2/9973533/filter.php";
+          userQuery = userQuery.replace(" ", "_");
+          axios.get(url, { params: { i: userQuery } }).then((response) => {
+            let data = response.data.meals;
+            commit("getRecipes", data);
           });
-      } else if (userQuery.includes(",")) {
-        //multi ingredient search
-        let url = "https://themealdb.com/api/json/v2/9973533/filter.php";
-        userQuery = userQuery.replace(" ", "_");
-        axios.get(url, { params: { i: userQuery } }).then((response) => {
-          let data = response.data.meals;
-          commit("getRecipes", data);
+        }
+      } else if (this.state.setsearch == "community") {
+        let commrecipes = [];
+        let url =
+          "https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/community.json";
+        axios.get(url).then((response) => {
+          // console.log(response.data);
+          let alldata = response.data;
+          for (let recipeobj in alldata) {
+            let commtitle = alldata[recipeobj].title.toLowerCase();
+            commtitle = commtitle.split(" ");
+            for (let word of commtitle) {
+              if (userQuery.includes(word)) {
+                // console.log(alldata[recipeobj]);
+                commrecipes.push(alldata[recipeobj]);
+              }
+            }
+          }
+          // console.log(commrecipes);
+          this.state.commsearched = true;
+          commit("getCommRecipes", commrecipes);
         });
       }
     },
