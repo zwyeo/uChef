@@ -84,7 +84,7 @@
     <div
       v-if="
         this.$store.state.setsearch == 'community' &&
-        this.$store.state.commsearchrecipes.meals == null
+        this.$store.state.commsearchrecipes == null
       "
       class="row d-flex justify-content-center"
     >
