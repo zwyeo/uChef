@@ -3,7 +3,7 @@
     <nav-bar></nav-bar>
     <h2 class="text-center p-5">My Bookmarks</h2>
     <div v-if="bookmarks.length != 0" class="row d-flex justify-content-center">
-      <div v-for="(recipe, id) in bookmarks" :key="recipe" class="col-xxl-3 col-xl-4 col-md-6">
+      <div v-for="(recipe, id) in bookmarks" :key="recipe" class="col-xl-4 col-md-6">
         <router-link :to="{ name: 'recipe-details', params: { id: id } }">
           <recipe-card v-for="elements in recipe" :title="elements.title" :img="elements.image" :id="id"
             :key="elements.title" class="mb-5">

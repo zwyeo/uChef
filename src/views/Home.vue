@@ -25,7 +25,7 @@
               class="mb-5"
             >
       <div class="row d-flex justify-content-center">
-        <div v-for="recipe in recommendations_list" :key="recipe.id" class="col-xxl-3 col-xl-4 col-md-6">
+        <div v-for="recipe in recommendations_list" :key="recipe.id" class="col-xl-4 col-md-6">
           <router-link :to="{ name: 'recipe-details', params: { id: recipe.idMeal } }">
             <recipe-card :title="recipe.strMeal" :img="recipe.strMealThumb" :id="recipe.idMeal" class="mb-5">
             </recipe-card>
@@ -52,7 +52,7 @@
             class="mb-5"
           ></recipe-card>
     <div class="row d-flex justify-content-center">
-      <div v-for="recipe in $store.state.popularRecipe" :key="recipe.id" class="col-xxl-3 col-xl-4 col-md-6">
+      <div v-for="recipe in $store.state.popularRecipe" :key="recipe.id" class="col-xl-4 col-md-6">
         <router-link :to="{ name: 'recipe-details', params: { id: recipe.id } }">
           <recipe-card :title="recipe.title" :img="recipe.img" :id="recipe.id" class="mb-5"></recipe-card>
         </router-link>
@@ -80,7 +80,7 @@
             class="mb-5"
           ></recipe-card>
     <div class="row d-flex justify-content-center">
-      <div v-for="recipe in $store.state.communityRecipe" :key="recipe.id" class="col-xxl-3 col-xl-4 col-md-6">
+      <div v-for="recipe in $store.state.communityRecipe" :key="recipe.id" class="col-xl-4 col-md-6">
         <router-link :to="{
           name: 'recipe-details',
           params: { id: recipe.id },
@@ -90,14 +90,12 @@
       </div>
     </div>
   </div>
-  <not-logged-in></not-logged-in>
 </template>
 
 <script>
 import NavBar from "../components/NavBar.vue";
 import RecipeCard from "@/components/RecipeCard.vue";
 import Banner from "@/components/Banner.vue";
-import NotLoggedIn from "../components/NotLoggedIn.vue";
 import axios from "axios";
 
 export default {
@@ -106,7 +104,6 @@ export default {
     NavBar,
     RecipeCard,
     Banner,
-    NotLoggedIn,
   },
   data() {
     return {
