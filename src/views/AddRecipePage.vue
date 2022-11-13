@@ -255,9 +255,23 @@ export default {
                             fullFoodTemplate[measure] = this.newRecipeIngredientsMeasure[i-1]
                         }
 
-                        axios.post(`https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${this.$store.state.userId}/recipes.json`, simpleFoodTemplate);
-                        axios.post(`https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/community.json`, fullFoodTemplate);
-
+                        axios.post(`https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${this.$store.state.userId}/recipes.json`, simpleFoodTemplate)
+                        .then((response) => {
+                            console.log(response.data);
+                            axios.post(`https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/community/${this.newRecipeId}.json`, fullFoodTemplate)
+                            .then((response) => {
+                                console.log(response.data);
+                                window.location.href = "/my-recipes";
+                            })
+                            .catch(error => {
+                                console.log(error);
+                                this.error = error;
+                            })
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            this.error = error;
+                        });
                         // clear inputs
                         this.newRecipeId = "";
                         this.newRecipeName = "";
@@ -273,8 +287,6 @@ export default {
                         this.newRecipeImagePath = null;
                         
                         this.error = null;
-
-                        window.location.href = "/my-recipes";
                     })
                 })
             } else {

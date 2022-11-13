@@ -163,7 +163,7 @@ export default {
 .img-style {
   border-bottom: 3px solid #40ba37;
   width: 100%;
-  height: auto;
+  height: 25em;
   object-fit: cover;
 }
 
