@@ -4,7 +4,6 @@
   </div>
   <banner></banner>
   <div id="popular-recipe" class="container-fluid">
-
     <!-- RECOMMENDED FOR YOU SECTION -->
     <div v-if="recommendations_required == true">
       <h2 class="text-center p-5">Recommended For You</h2>
@@ -48,7 +47,7 @@ import NavBar from "../components/NavBar.vue";
 import RecipeCard from "@/components/RecipeCard.vue";
 import Banner from "@/components/Banner.vue";
 import NotLoggedIn from "../components/NotLoggedIn.vue";
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   name: "Home",
@@ -65,10 +64,10 @@ export default {
     };
   },
   created() {
-
     // This will refresh the popular and community recipe list from DB
     this.populatePopularRecipe();
     this.populateCommunityRecipe();
+    console.log(this.$store.state.userName);
     if (this.$store.state.prevRouteName == "register") {
       this.$store.state.prevRouteName = "";
       location.reload();
@@ -81,13 +80,12 @@ export default {
         .get(
           `https://wad-proj-22042-default-rtdb.asia-southeast1.firebasedatabase.app/users/${this.$store.state.userId}/preferences.json`
         )
-        .then(response => {
-
-          var obj = response.data
+        .then((response) => {
+          var obj = response.data;
           // console.log(Object.values(obj)[0])
-          var reviews = Object.values(obj)[0]
+          var reviews = Object.values(obj)[0];
           for (let review in reviews) {
-            review_list.push([review, Number(reviews[review])])
+            review_list.push([review, Number(reviews[review])]);
           }
           // console.log(review_list);
           //sort according
@@ -101,55 +99,52 @@ export default {
             //get recipe data from meal db for top 3 categories
 
             //top category
-            var url = "https://themealdb.com/api/json/v1/1/filter.php?"
-            axios.get(url, {
-              params: {
-                c: review_list[0][0]
-              }
-            })
-              .then(response => {
-                var objects = response.data.meals
-                this.recommendations_list.push(objects[0], objects[1], objects[2])
+            var url = "https://themealdb.com/api/json/v1/1/filter.php?";
+            axios
+              .get(url, {
+                params: {
+                  c: review_list[0][0],
+                },
+              })
+              .then((response) => {
+                var objects = response.data.meals;
+                this.recommendations_list.push(
+                  objects[0],
+                  objects[1],
+                  objects[2]
+                );
                 // console.log(this.recommendations_list)
 
                 //second category
-                axios.get(url, {
-                  params: {
-                    c: review_list[1][0]
-                  }
-                })
-                  .then(response => {
-                    var objects = response.data.meals
-                    this.recommendations_list.push(objects[0], objects[1])
+                axios
+                  .get(url, {
+                    params: {
+                      c: review_list[1][0],
+                    },
+                  })
+                  .then((response) => {
+                    var objects = response.data.meals;
+                    this.recommendations_list.push(objects[0], objects[1]);
 
                     //third category
-                    axios.get(url, {
-                      params: {
-                        c: review_list[2][0]
-                      }
-                    })
-                      .then(response => {
-                        var objects = response.data.meals
-                        this.recommendations_list.push(objects[0])
-                        console.log(this.recommendations_list)
-
+                    axios
+                      .get(url, {
+                        params: {
+                          c: review_list[2][0],
+                        },
                       })
-
-                  })
-
-              })
-
-
-
-
+                      .then((response) => {
+                        var objects = response.data.meals;
+                        this.recommendations_list.push(objects[0]);
+                        // console.log(this.recommendations_list)
+                      });
+                  });
+              });
           }
-        })
+        });
     }
 
-    console.log(this.recommendations_list)
-
-
-
+    console.log(this.recommendations_list);
   },
   methods: {
     populatePopularRecipe() {

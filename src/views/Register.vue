@@ -162,12 +162,13 @@ export default {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
+          console.log("THISSSS");
           console.log(user);
+          console.log(this.name);
           updateProfile(user, { displayName: this.name });
 
           this.$store.commit("set_userName", user.displayName);
           this.$store.commit("set_userId", user.uid);
-          // this.populateUserDB(user.uid);
           this.$store.state.prevRouteName = "register";
           this.$router.push("/");
           this.populateUserDB(user.uid);
